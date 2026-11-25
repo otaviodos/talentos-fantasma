@@ -597,9 +597,12 @@ function compute(){
   let obj=null;
   if(cur){const items=ITEMS.filter(it=>per[it.id][cur]&&per[it.id][cur].miss>0).map(it=>({id:it.id,miss:per[it.id][cur].miss,eta:etaOf(RI,it.id,per[it.id][cur].miss)})).sort((a,b)=>okey(a.id)-okey(b.id));
     obj={t:cur,items,eta:maxEta(items.map(x=>x.eta))};}
+  const nexts=[...S.tiers].sort().filter(T=>T!==cur&&(!cur||T>cur)&&tstat[T].done<tstat[T].n).map(T=>{
+    const items=ITEMS.filter(it=>per[it.id][T]&&per[it.id][T].miss>0).map(it=>{const c=S.tiers.filter(k=>k<=T).reduce((a,k)=>a+(per[it.id][k]?per[it.id][k].miss:0),0);return {id:it.id,miss:per[it.id][T].miss,eta:etaOf(RI,it.id,c)};}).sort((a,b)=>okey(a.id)-okey(b.id));
+    return {t:T,items,eta:maxEta(items.map(x=>x.eta)),lock:!unl.has(T)};});
   const near=TAL.filter(t=>unl.has(t.t)&&!tal[t.id].complete&&!tal[t.id].ready).map(t=>{const ms=tal[t.id].parts.filter(p=>!p.done&&p.miss>0);return {t,miss:ms,fr:ms.reduce((x,p)=>x+p.miss/p.q,0),eta:maxEta(ms.map(p=>etaOf(RI,p.id,p.cum)))};}).sort((a,b)=>a.fr-b.fr||tal[a.t.id].rank-tal[b.t.id].rank);
   const fl=pend.map(r=>r.id);
-  return {left:avail,rows,byId,per,tal,tstat,bon,ready,unl,cur,nextLock,obj,near,RI,etaAll:maxEta(pend.map(r=>r.eta)),focus:fl[0]||null,next:fl[1]||null,overall:T?C/T:1,complete:rows.filter(r=>r.miss===0).length};
+  return {nexts,left:avail,rows,byId,per,tal,tstat,bon,ready,unl,cur,nextLock,obj,near,RI,etaAll:maxEta(pend.map(r=>r.eta)),focus:fl[0]||null,next:fl[1]||null,overall:T?C/T:1,complete:rows.filter(r=>r.miss===0).length};
 }
 
 const tierChips=loc=>[1,2,3,4].map(k=>'<button type="button" class="chipT" data-act="tier" data-t="'+k+'" data-k="tier-'+loc+'-'+k+'" title="Estocar itens até o Tier '+k+'" aria-pressed="'+(k<=Math.max(...S.tiers))+'"'+(ro()?' disabled':'')+'>T'+k+'</button>').join('');
@@ -675,6 +678,7 @@ function renderResumo(R){
    if(pv.length&&mode!=='loading')h+='<div class="paslist"><div class="ot">PASSIVOS · caem junto, registre sempre</div>'+pv.map(r=>'<button type="button" class="obrow" data-act="open" data-item="'+r.id+'" data-k="pv-'+r.id+'">'+ico(r.id,22)+'<span class="on">'+esc(shortNm(r.id))+' <span class="rpk">tem '+nf(S.balance[r.id]||0)+'</span></span><b>'+(r.miss?nf(r.miss):'✓')+'</b><span class="eta">'+(r.miss?(r.eta===undefined?'':etaTxt(r.eta)):'completo')+'</span></button>').join('')+'</div>';}
   if(ob&&ob.items.length)h+='<div class="oblist"><div class="ot">PARA FECHAR O T'+ob.t+(ob.eta===undefined?'':ob.eta===null?' · previsão incompleta':' · '+etaTxt(ob.eta))+'</div>'+ob.items.map(x=>'<button type="button" class="obrow'+(x.id===f?' cur':'')+'" data-act="open" data-item="'+x.id+'" data-k="ob-'+x.id+'">'+ico(x.id,22)+'<span class="on">'+esc(shortNm(x.id))+(dropShort(x.id)?' <span class="rpk">'+esc(dropShort(x.id))+'</span>':'')+'</span><b>'+nf(x.miss)+'</b>'+(x.eta===undefined?'':'<span class="eta">'+etaTxt(x.eta)+'</span>')+'</button>').join('')+'</div>';
   else if(ob)h+='<div class="fhint">Tudo o que falta no T'+ob.t+' já está no Balance: entregue os talentos prontos.</div>';
+  for(const nx of R.nexts)h+='<div class="oblist"><div class="ot">PARA O T'+nx.t+(nx.lock?' · estocando':'')+(nx.items.length?(nx.eta===undefined?'':nx.eta===null?' · previsão incompleta':' · '+etaTxt(nx.eta)):'')+'</div>'+(nx.items.length?nx.items.map(x=>'<button type="button" class="obrow" data-act="open" data-item="'+x.id+'" data-k="nx'+nx.t+'-'+x.id+'">'+ico(x.id,22)+'<span class="on">'+esc(shortNm(x.id))+(dropShort(x.id)?' <span class="rpk">'+esc(dropShort(x.id))+'</span>':'')+'</span><b>'+nf(x.miss)+'</b>'+(x.eta===undefined?'':'<span class="eta">'+etaTxt(x.eta)+'</span>')+'</button>').join(''):'<div class="pk">Tudo o que o T'+nx.t+' pede já está no depósito.</div>')+'</div>';
   h+='</div></section>';
   h+='<section class="card c-lib"><div class="lbl">PRÓXIMA LIBERAÇÃO</div>'+libHtml(R,'r')+'</section>';
   const doneT=TAL.filter(t=>R.tal[t.id].complete).length;
