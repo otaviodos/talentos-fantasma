@@ -189,7 +189,7 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 .nmcard .tin{min-height:38px;padding:6px 9px;font-size:15px}
 .asktag{border:0;cursor:pointer;font-family:inherit}
 .oblist{display:grid;gap:0;margin-top:12px;border-top:1px solid var(--ambLine);padding-top:8px}
-.oblist .ot{font-size:12px;font-weight:700;color:var(--brown);letter-spacing:.04em;margin-bottom:2px}
+.paslist .ot,.oblist .ot{font-size:12px;font-weight:700;color:var(--brown);letter-spacing:.04em;margin-bottom:2px}
 .obrow{display:flex;align-items:center;gap:8px;border:0;background:none;padding:6px 0;font-size:14px;color:var(--ambInk);text-align:left;width:100%;border-top:1px solid var(--ambLine)}
 .obrow:first-of-type{border-top:0}
 .obrow .on{flex:1;min-width:0}.obrow b{font-weight:700;font-variant-numeric:tabular-nums}.obrow.cur .on{font-weight:700}
@@ -209,6 +209,8 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 .lrow{display:grid;grid-template-columns:32px minmax(0,1fr) 128px;gap:10px;align-items:center;padding:6px 8px;border:1px solid var(--line);border-radius:10px}
 .lrow input,.dlin input{border:1.5px solid var(--line2);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 8px;font-size:16px;min-height:40px;width:100%;text-align:right;font-variant-numeric:tabular-nums;font-family:inherit}
 .lrow input.bad,.dlin input.bad{border-color:var(--bad)}
+.lrow.lreq{border-color:var(--ambLine);background:var(--amb2)}
+.paslist{margin-top:12px;border-top:1px solid var(--ambLine);padding-top:8px}
 .lnm,.onm{display:grid;min-width:0}.lnm b,.onm b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lnm small,.onm small{font-size:12px;color:var(--mut)}
 .orow{display:grid;grid-template-columns:22px 30px minmax(0,1fr) auto auto auto;gap:8px;align-items:center;padding:6px 8px;border:1px solid var(--line);border-radius:10px}
 .orow.p{grid-template-columns:22px 30px minmax(0,1fr) auto}
@@ -574,6 +576,8 @@ function renderResumo(R){
     h+=focusHint(f,R);
     h+='<div class="fact"><button type="button" class="btn pri" data-act="loot" data-k="f-loot"'+(ro()?' disabled':'')+'>Registrar loot</button><button type="button" class="btn" data-act="open" data-item="'+f+'" data-k="f-open">Ficha do item</button></div>';
   }
+  {const pv=ITEMS.filter(i=>ordOf(i.id)==='P'&&R.byId[i.id]).map(i=>R.byId[i.id]);
+   if(pv.length&&mode!=='loading')h+='<div class="paslist"><div class="ot">PASSIVOS · caem junto, registre sempre</div>'+pv.map(r=>'<button type="button" class="obrow" data-act="open" data-item="'+r.id+'" data-k="pv-'+r.id+'">'+ico(r.id,22)+'<span class="on">'+esc(shortNm(r.id))+' <span class="rpk">tem '+nf(S.balance[r.id]||0)+'</span></span><b>'+(r.miss?nf(r.miss):'✓')+'</b><span class="eta">'+(r.miss?(r.eta===undefined?'':etaTxt(r.eta)):'completo')+'</span></button>').join('')+'</div>';}
   if(ob&&ob.items.length)h+='<div class="oblist"><div class="ot">PARA FECHAR O T'+ob.t+(ob.eta===undefined?'':ob.eta===null?' · previsão incompleta':' · '+etaTxt(ob.eta))+'</div>'+ob.items.map(x=>'<button type="button" class="obrow'+(x.id===f?' cur':'')+'" data-act="open" data-item="'+x.id+'" data-k="ob-'+x.id+'">'+ico(x.id,22)+'<span class="on">'+esc(shortNm(x.id))+(dropShort(x.id)?' <span class="rpk">'+esc(dropShort(x.id))+'</span>':'')+'</span><b>'+nf(x.miss)+'</b>'+(x.eta===undefined?'':'<span class="eta">'+etaTxt(x.eta)+'</span>')+'</button>').join('')+'</div>';
   else if(ob)h+='<div class="fhint">Tudo o que falta no T'+ob.t+' já está no Balance: entregue os talentos prontos.</div>';
   h+='</div></section>';
@@ -678,13 +682,16 @@ function itemSheet(R){
 }
 function lootSheet(R){
   const drop=ui.lootMode!=='total';
-  const ids=(ui.lootAll?ITEMS.map(i=>i.id):R.rows.map(r=>r.id)).sort((a,b)=>okey(a)-okey(b));
+  const all=(ui.lootAll?ITEMS.map(i=>i.id):R.rows.filter(actv).map(r=>r.id)).sort((a,b)=>okey(a)-okey(b)),pas=ITEMS.filter(i=>ordOf(i.id)==='P').map(i=>i.id).sort((a,b)=>okey(a)-okey(b)),ids=all.filter(id=>!pas.includes(id));
+  const lrow=(id,rq)=>{const b=S.balance[id]||0;return '<label class="lrow'+(rq?' lreq':'')+'">'+ico(id,32)+'<span class="lnm"><b>'+esc(shortNm(id))+'</b><small>'+(dropShort(id)?esc(dropShort(id))+' · ':'')+'tem '+nf(b)+'</small></span><input type="text" inputmode="numeric" enterkeyhint="next" autocomplete="off" data-loot="'+id+'"'+(rq?' data-pas="1"':'')+' data-k="loot-'+id+'" data-bal0="'+b+'" placeholder="'+(drop?'+0':nf(b))+'" aria-label="'+esc(nm(id))+'"'+(rq?' required':'')+'></label>';};
   return '<div class="shh"><div><b id="shT">Registrar loot</b><div class="pk">Preencha só os itens que mudaram. Vai para o Balance e para o histórico da previsão.</div></div>'+closeBtn+'</div>'
   +'<div class="ph" style="margin:0"><span class="seg" role="group" aria-label="Como lançar"><button type="button" data-act="lootmode" data-v="drop" aria-pressed="'+drop+'">Dropei (soma)</button><button type="button" data-act="lootmode" data-v="total" aria-pressed="'+!drop+'">Tenho (total)</button></span></div>'
-  +'<div class="lootlist">'+ids.map(id=>{const b=S.balance[id]||0;return '<label class="lrow">'+ico(id,32)+'<span class="lnm"><b>'+esc(shortNm(id))+'</b><small>'+(dropShort(id)?esc(dropShort(id))+' · ':'')+'tem '+nf(b)+'</small></span><input type="text" inputmode="numeric" enterkeyhint="next" autocomplete="off" data-loot="'+id+'" data-k="loot-'+id+'" data-bal0="'+b+'" placeholder="'+(drop?'+0':nf(b))+'" aria-label="'+esc(nm(id))+'"></label>';}).join('')+'</div>'
+  +(pas.length?'<div class="olbl">PASSIVOS · PREENCHA SEMPRE, MESMO QUE SEJA 0</div><div class="lootlist">'+pas.map(id=>lrow(id,true)).join('')+'</div><div class="olbl">ITENS</div>':'')
+  +'<div class="lootlist">'+ids.map(id=>lrow(id,false)).join('')+'</div>'
   +'<div class="fact"><button type="button" class="btn pri" data-act="lootgo"'+(ro()?' disabled':'')+'>Lançar</button><button type="button" class="lnk" data-act="lootall">'+(ui.lootAll?'Mostrar só o estoque':'Mostrar todos os itens')+'</button></div>'
   +'<p class="hint">Aceita 1590, 1.590, 1,5k e 2kk. Em “Tenho (total)” o número substitui o Balance; a diferença conta como drop de hoje.</p>';
 }
+const actv=r=>Object.values(r.tiers).some(x=>x.done<x.tot);
 function lootVals(){const o={};document.querySelectorAll('#sheet [data-loot]').forEach(el=>{if(el.value.trim())o[el.dataset.loot]=el.value;});return o;}
 function rerenderSheet(after){const sh=document.querySelector('#sheet .sh'),st=sh?sh.scrollTop:0;$('sheet').dataset.type='';render();if(after)after();const n=document.querySelector('#sheet .sh');if(n)n.scrollTop=st;}
 function lootGo(){
@@ -693,20 +700,22 @@ function lootGo(){
     const v=drop?parseQty(x.replace(/^\+/,''),0):parseQty(x,cur);if(v===null){el.classList.add('bad');bad=true;continue;}
     const nv=drop?cur+v:v;if(nv!==cur)ch.push([id,cur,nv]);}
   if(bad){toast('Corrija os valores marcados em vermelho.');return;}
+  const miss=[...document.querySelectorAll('#sheet [data-pas]')].filter(el=>!el.value.trim());
+  if(miss.length){miss.forEach(el=>el.classList.add('bad'));miss[0].focus();toast('Preencha os passivos ('+miss.map(el=>shortNm(el.dataset.loot)).join(' e ')+'), mesmo que seja 0.');return;}
   if(!ch.length){toast('Nada para lançar.');return;}
   const ph=JSON.stringify(S.hist),pu=JSON.stringify(S.upd);
   for(const [id,cur,nv] of ch){setBal(id,nv);logDelta(id,nv-cur);}
   ui.sheet=null;commit();
   toast('Lançado: '+ch.map(([id,c,n])=>(n>=c?'+':'−')+nf(Math.abs(n-c))+' '+shortNm(id)).join(', ')+'.',[{label:'Desfazer',fn:()=>{for(const [id,cur] of ch)setBal(id,cur);S.hist=JSON.parse(ph);S.upd=JSON.parse(pu);commit();toast('Lançamento desfeito.');}}]);
 }
-function ordIds(){return compute().rows.map(r=>r.id).sort((a,b)=>okey(a)-okey(b));}
+function ordIds(){return compute().rows.filter(actv).map(r=>r.id).sort((a,b)=>okey(a)-okey(b));}
 function setOrder(list){list.forEach((id,i)=>{S.items[id]=Object.assign({},S.items[id],{order:i+1});});}
 function ordMove(id,d){if(ro())return;const L=ordIds().filter(x=>ordOf(x)!=='P'),i=L.indexOf(id),j=i+d;if(i<0||j<0||j>=L.length)return;[L[i],L[j]]=[L[j],L[i]];setOrder(L);save();rerenderSheet();}
 function ordPassive(id){if(ro())return;const L=ordIds().filter(x=>ordOf(x)!=='P');
   if(ordOf(id)==='P'){L.push(id);setOrder(L);}else{S.items[id]=Object.assign({},S.items[id],{order:'P'});setOrder(L.filter(x=>x!==id));}
   save();rerenderSheet();}
 function ordemSheet(R){
-  const ids=R.rows.map(r=>r.id).sort((a,b)=>okey(a)-okey(b)),act=ids.filter(id=>ordOf(id)!=='P'),pas=ids.filter(id=>ordOf(id)==='P');
+  const ids=R.rows.filter(actv).map(r=>r.id).sort((a,b)=>okey(a)-okey(b)),act=ids.filter(id=>ordOf(id)!=='P'),pas=ids.filter(id=>ordOf(id)==='P');
   const info=id=>'<span class="onm"><b>'+esc(shortNm(id))+'</b><small>'+(dropShort(id)?esc(dropShort(id))+' · ':'')+(R.byId[id].miss?'falta '+nf(R.byId[id].miss):'completo')+'</small></span>';
   return '<div class="shh"><div><b id="shT">Ordem de farm</b><div class="pk">O Foco segue esta ordem: o primeiro item com falta no estoque até o tier escolhido. Passivos caem junto e ficam no fim da fila.</div></div>'+closeBtn+'</div>'
   +'<div class="ordlist">'+act.map((id,i)=>'<div class="orow"><span class="onum">'+(i+1)+'</span>'+ico(id,30)+info(id)+'<button type="button" class="ob" data-act="ordmv" data-item="'+id+'" data-v="-1" data-k="om-u-'+id+'" aria-label="Subir '+esc(shortNm(id))+'"'+(i===0||ro()?' disabled':'')+'>↑</button><button type="button" class="ob" data-act="ordmv" data-item="'+id+'" data-v="1" data-k="om-d-'+id+'" aria-label="Descer '+esc(shortNm(id))+'"'+(i===act.length-1||ro()?' disabled':'')+'>↓</button><button type="button" class="ob w" data-act="ordp" data-item="'+id+'" data-k="om-p-'+id+'"'+(ro()?' disabled':'')+'>Passivo</button></div>').join('')+'</div>'
@@ -744,7 +753,7 @@ function namesSheet(){
 function namesText(){return 'NOMES DOS ITENS - Talentos Fantasma (para atualizar o projeto)\nid | nome | Pokémon que dropa | usado em\n'+ITEMS.map(it=>it.id+' | '+nm(it.id)+(noName(it.id)?' (provisório)':'')+' | '+(pokeOf(it.id)==='ALL'?'Todos os Fantasma':pokeOf(it.id)||'(a definir)')+' | '+useTxt(it.id)).join('\n');}
 function helpHtml(){return '<div class="shh"><div><b id="shT">Como funciona</b></div>'+closeBtn+'</div><ul class="help">'
 +'<li><b>Balance</b>: quanto você tem agora de cada item. Aceita 2622, +500 (soma), -200 (tira), 10k e 2kk.</li>'
-+'<li><b>Registrar loot</b>: lance o que dropou (soma) ou o total que tem. Cada lançamento vai para o histórico, que calcula o seu ritmo dos últimos 7 dias e a <b>previsão em dias</b>.</li>'
++'<li><b>Registrar loot</b>: lance o que dropou (soma) ou o total que tem. Os passivos (Ghost Essence e Orb) ficam no topo e são obrigatórios, mesmo que seja 0. Cada lançamento vai para o histórico, que calcula o seu ritmo dos últimos 7 dias e a <b>previsão em dias</b>.</li>'
 +'<li><b>Entregar</b>: toque no item do talento. A página marca a entrega e desconta do Balance; no aviso há “Não descontar”. Se o Balance não cobre, ela pergunta quanto você tem no jogo. Tocar de novo desmarca e devolve ao Balance.</li>'
 +'<li><b>Tiers em sequência</b>: um tier só libera com o anterior 100% concluído e o pagamento (T2: 50.000.000; T3: 200.000.000; T4: 400.000.000 e nível 550). Em tier travado não dá para entregar; os itens ficam guardados no Balance.</li>'
 +'<li><b>Estocando até</b>: até qual tier você está guardando itens no stash. A falta, o progresso e o Foco contam todos os tiers até ele.</li>'
