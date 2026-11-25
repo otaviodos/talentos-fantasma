@@ -1,0 +1,26 @@
+{
+ "name": "Talentos Fantasma",
+ "short_name": "Fantasma",
+ "description": "Acompanhamento de materiais dos talentos Fantasma",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "any",
+ "background_color": "#F4F6FA",
+ "theme_color": "#1F3A5F",
+ "lang": "pt-BR",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}

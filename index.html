@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1F3A5F">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Fantasma">
+<meta name="description" content="Acompanhamento de materiais dos talentos Fantasma: Balance por item, talentos por tier e bônus liberados.">
+<title>Acompanhamento de Materiais</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: painel de farm de um jogador experiente: direto, denso, sem enfeite
+   IDEA: a planilha "Resumo por Item" do Otavio virou um app de bolso com tela cheia no desktop
+   PICTURE: cartão FOCO AGORA em âmbar + banco de itens com barras de etapa nas cores dos tiers
+   COLOUR and TYPE: navy 1F3A5F, âmbar FFE9A8, verde 1E7B4B, tiers T1 0E7490 / T2 2F6DB5 / T3 6B4FB0 / T4 A21CAF; Rubik
+   LAYOUT: celular = abas embaixo (Resumo, Itens, Talentos, Bônus); desktop = resumo no topo, itens + bônus, talentos em grade */
+:root{color-scheme:light;--bg:#F4F6FA;--card:#fff;--line:#E3E8EF;--line2:#D3DAE5;--navy:#1F3A5F;--ink:#1F2937;--ink2:#4B5563;--mut:#6B7280;--amb:#FFE9A8;--amb2:#FFF6D6;--ambInk:#4A3000;--brown:#8A5A00;--orange:#C2410C;--ok:#1E7B4B;--okBg:#CDEFDB;--okSoft:#E6F6EC;--bad:#B42318;--badBg:#FAD4D0;--badSoft:#FDECEA;--mid:#FFF3CC;--par:#E7F0FB;--parInk:#2F6DB5;--r:14px}
+*{box-sizing:border-box;min-width:0}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Rubik,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-variant-numeric:tabular-nums;overflow-x:clip;-webkit-tap-highlight-color:transparent}
+body.lock{overflow:hidden}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+button:disabled{cursor:default;opacity:.55}
+:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+[hidden]{display:none!important}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;background:var(--navy);color:#fff;padding:calc(8px + env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 8px max(14px,env(safe-area-inset-left))}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+.brand svg{width:34px;height:34px;flex:none}
+.brand b{display:block;font-size:17px;font-weight:600;line-height:1.15}
+.brand small{display:block;font-size:12px;opacity:.78}
+.tsel{display:flex;align-items:center;gap:6px;font-size:13px}
+.chipT{border:1.5px solid rgba(255,255,255,.45);background:transparent;color:#fff;border-radius:999px;padding:3px 11px;font-size:13px;font-weight:600;min-height:32px}
+.chipT[aria-pressed=true]{background:#fff;color:var(--navy);border-color:#fff}
+.tsel.light{margin:0 0 12px;color:var(--mut);flex-wrap:wrap}
+.tsel.light .chipT{border-color:var(--line2);color:var(--navy);background:#fff;min-height:36px;padding:4px 14px}
+.tsel.light .chipT[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.sync{font-size:12px;white-space:nowrap;opacity:.92}
+.sync::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#9CA3AF;margin-right:6px;vertical-align:1px}
+.sync.ok::before{background:#7BC796}.sync.w::before{background:#F5C451}.sync.bad::before{background:#F28B82}
+.icb{width:40px;height:40px;border-radius:10px;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:22px;line-height:1;flex:none}
+.menu{position:fixed;z-index:35;top:calc(60px + env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(15,23,42,.18);padding:6px;display:grid;min-width:250px}
+.menu button{border:0;background:none;text-align:left;padding:11px 12px;border-radius:8px;font-size:15px}
+.menu button:hover{background:#F1F5F9}
+.main{max-width:1680px;margin:0 auto;padding:14px max(14px,env(safe-area-inset-right)) 28px max(14px,env(safe-area-inset-left));display:grid;gap:16px;align-items:start}
+.panel{display:none}
+.panel.on{display:block}
+.ph{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:2px 0 10px}
+.ph h2{margin:0;font-size:19px;font-weight:600;color:var(--navy)}
+.cnt{font-size:13px;color:var(--mut)}
+.sp{margin-left:auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.lbl{font-size:12px;font-weight:600;color:var(--mut);letter-spacing:.02em;margin-bottom:6px}
+.pk{font-size:13px;color:var(--mut)}
+.seg{display:inline-flex;background:#E9EDF3;border-radius:10px;padding:3px}
+.seg button{border:0;background:transparent;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;color:var(--ink2);min-height:32px}
+.seg button[aria-pressed=true]{background:#fff;color:var(--navy);box-shadow:0 1px 2px rgba(15,23,42,.12)}
+.btn{border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:10px;padding:7px 14px;font-weight:600;font-size:14px;min-height:40px}
+.btn:hover{background:#F2F7FD}
+.btn.pri{background:var(--navy);color:#fff}
+.btn.pri:hover{background:#2B4C78}
+.btn.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.ghost{border-color:var(--line2);color:var(--ink2)}
+.btn.sm{min-height:34px;padding:4px 12px;font-size:13px}
+.lnk{border:0;background:none;color:var(--mut);text-decoration:underline;font-size:13px;padding:6px 4px}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.p-ok{background:var(--okBg);color:var(--ok)}.p-mid{background:var(--mid);color:var(--brown)}.p-bad{background:var(--badBg);color:var(--bad)}.p-par{background:var(--par);color:var(--parInk)}
+.mk{font-weight:700;font-style:normal}.mk.f{color:var(--orange)}.mk.n{color:#93A1C3}
+.rgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))}
+.focus{background:var(--amb2);border:1px solid #EFD48A;border-radius:var(--r);overflow:hidden}
+.focus .hd{background:var(--amb);color:var(--ambInk);font-size:12px;font-weight:700;letter-spacing:.06em;padding:7px 14px}
+.focus .bd{padding:12px 14px 14px}
+.fname{font-size:20px;font-weight:600;color:var(--ambInk);line-height:1.2}
+.fpoke{font-size:13px;color:var(--brown)}
+.fbig{font-size:clamp(34px,5vw,46px);font-weight:700;color:var(--ambInk);line-height:1;margin:8px 0 10px}
+.fbig small,.nbig small{font-size:14px;font-weight:500;color:var(--brown)}
+.fhint{font-size:13px;color:var(--brown);margin-top:8px}
+.fact{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.nname{font-size:17px;font-weight:600;color:var(--navy);line-height:1.25}
+.nbig{font-size:28px;font-weight:700;line-height:1.1;margin:6px 0 8px}
+.nbig small{color:var(--mut)}
+.pgrid{display:flex;gap:14px;align-items:center}
+.ring{flex:none}
+.pline{font-size:14px;color:var(--ink2);line-height:1.6}.pline b{font-size:18px;color:var(--ink)}
+.tbars{display:grid;gap:6px;margin-top:12px}
+.tb{display:grid;grid-template-columns:26px minmax(0,1fr) 46px;gap:8px;align-items:center;font-size:12px;font-weight:600}
+.tbb{height:8px;background:#E9EDF3;border-radius:4px;overflow:hidden}
+.tbb i{display:block;height:100%}
+.tb span:last-child{text-align:right;color:var(--mut)}
+.rl{display:flex;align-items:center;gap:8px;padding:7px 0;border:0;border-top:1px solid var(--line);font-size:13px;background:none;width:100%;text-align:left}
+.rl:first-child{border-top:0}
+.rl .rtx{flex:1;color:var(--ink2)}
+.rl .rnm{font-weight:600;color:var(--ink)}
+.tid{display:inline-block;font-size:12px;font-weight:700;color:#fff;border-radius:6px;padding:2px 7px;white-space:nowrap;background:var(--tc,#1F3A5F)}
+.imp{background:#E7F0FB;border:1px solid #BCD3F0;border-radius:var(--r);padding:12px 14px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.imp p{margin:0;flex:1 1 260px}
+.stg{display:flex;gap:3px;height:10px;width:100%}
+.stg .s{position:relative;flex:1 1 0;background:#E3E8EF;border-radius:3px;overflow:hidden}
+.stg .s i{position:absolute;top:0;bottom:0;left:0}
+.cap{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--mut);margin-top:4px}
+.cap b{color:var(--ink)}
+.ilist{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.irow{display:grid;grid-template-columns:16px minmax(0,1.35fr) 140px 96px minmax(0,1.5fr) 118px;gap:10px;align-items:center;padding:9px 14px;border-top:1px solid var(--line);cursor:pointer}
+.irow:hover{background:#FAFBFD}
+.ilist>.irow:first-child{border-top:0}
+.ihead{cursor:default;background:#F8FAFC;font-size:12px;font-weight:600;color:var(--mut);padding:8px 14px}
+.ihead:hover{background:#F8FAFC}
+.irow.f{background:var(--amb2)}.irow.f:hover{background:#FFF1C4}
+.irow.n{background:#FFFAF4}
+.irow.done .nm,.irow.done .c-fal b{color:var(--mut)}
+.nm{display:block;font-weight:600;line-height:1.25}
+.c-nm .pk{display:block}
+.mbal{display:none}
+.r{text-align:right}.c{text-align:center}
+.bal{display:flex;gap:4px;align-items:center}
+.bal input,.bigin input{width:100%;text-align:right;background:var(--amb2);border:1.5px solid #E8D59A;border-radius:9px;padding:6px 9px;font-weight:600;font-size:16px;min-height:38px}
+.bal input:focus,.bigin input:focus,.tin:focus,.addrow input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(31,58,95,.15)}
+input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
+.plus{flex:none;width:36px;height:38px;border-radius:9px;border:1.5px solid var(--line2);background:#fff;color:var(--navy);font-size:18px;font-weight:700}
+.c-fal{text-align:right}
+.c-fal b{display:block;font-size:17px;font-weight:700}
+.c-fal small{display:block;font-size:11px;color:var(--mut)}
+.c-st{text-align:center}
+.empty{padding:18px;text-align:center;color:var(--mut)}
+.outb{margin-top:10px}
+.olist{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ochip{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;min-height:34px}
+.ttabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:10px;padding:1px}
+.ttab{flex:none;display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--line2);background:#fff;border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px;min-height:40px;color:var(--ink2)}
+.ttab .dot{width:9px;height:9px;border-radius:50%;background:var(--tc)}
+.ttab .tcnt{font-size:12px;color:var(--mut);font-weight:500}
+.ttab[aria-selected=true]{background:var(--tc);border-color:var(--tc);color:#fff}
+.ttab[aria-selected=true] .dot{background:#fff}.ttab[aria-selected=true] .tcnt{color:rgba(255,255,255,.86)}
+.tierhd{background:var(--ts);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-bottom:12px;display:grid;gap:8px}
+.tr1{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.tr1 b{font-size:17px;color:var(--tc)}
+.tr1 span{font-size:13px;color:var(--ink2)}
+.tbar{height:8px;background:rgba(255,255,255,.85);border-radius:4px;overflow:hidden}
+.tbar i{display:block;height:100%;background:var(--tc)}
+.tr2{font-size:13px;color:var(--ink2)}
+.tr3{display:flex;flex-wrap:wrap;gap:8px}
+.tcards{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr))}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:11px 12px;display:grid;gap:7px;align-content:start}
+.tcard.feito{background:#F7FBF8;border-color:#CFE8D8}
+.tline{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.tbon{font-size:12px;font-weight:600;color:var(--tc);background:var(--ts);border-radius:6px;padding:2px 7px}
+.lvl{font-size:11px;font-weight:700;color:var(--brown);background:var(--mid);border-radius:6px;padding:2px 6px}
+.ttx{font-size:14px;color:var(--ink2);line-height:1.35}
+.parts{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.part{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line2);background:#fff;border-radius:999px;padding:4px 10px 4px 5px;font-size:13px;min-height:34px;text-align:left}
+.part .bx{width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:none}
+.part .q{font-weight:700}
+.part .tg{font-size:11px;opacity:.92}
+.part.done{background:var(--ok);border-color:var(--ok);color:#fff}
+.part.done .bx{background:#fff;color:var(--ok);border-color:#fff}
+.part.cov{background:var(--okSoft);border-color:#A7D8B8;color:var(--ok)}
+.part.miss{background:var(--badSoft);border-color:#F2B8B1;color:var(--bad)}
+.tcard.feito{gap:5px;padding:9px 12px}
+.tcard.feito .ttx{font-size:13px}
+.tcard.feito .part{min-height:28px;padding:2px 9px 2px 4px;font-size:12px}
+.tcard.feito .part .bx{width:17px;height:17px;font-size:11px}
+.part.done .tg{display:none}
+.pact{border:1.5px dashed #9FB0C8;background:#fff;color:var(--navy);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;min-height:34px}
+.unl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:12px}
+.ub{border:1.5px solid var(--line2);background:#fff;border-radius:12px;padding:7px 4px;display:grid;gap:1px;justify-items:center;min-height:52px}
+.ub b{font-size:15px;color:var(--tc)}
+.ub span{font-size:11px;color:var(--mut)}
+.ub.on{background:var(--ts);border-color:var(--tc)}
+.ub.on span{color:var(--tc);font-weight:600}
+.ub:disabled{opacity:1}
+.bsum{display:flex;flex-wrap:wrap;gap:6px}
+.bchip{background:var(--okSoft);color:var(--ok);border-radius:999px;padding:4px 10px;font-size:13px;font-weight:600}
+.bg{margin-top:14px}
+.bgh{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;align-items:center;padding:5px 0}
+.bl{font-size:14px}
+.bv b{font-size:15px;color:var(--ok)}.bv b.z{color:var(--mut);font-weight:500}
+.bv small{font-size:12px;color:var(--mut)}
+.bbar{grid-column:1/-1;display:flex;height:6px;background:#E9EDF3;border-radius:3px;overflow:hidden}
+.bbar i{display:block;height:100%}
+.pend{grid-column:1/-1;font-size:12px;color:var(--brown)}
+.scrim{position:fixed;inset:0;z-index:50;background:rgba(15,23,42,.48);display:flex;align-items:flex-end;justify-content:center}
+.sh{background:#fff;width:100%;max-width:620px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom));display:grid;gap:12px;align-content:start;overscroll-behavior:contain}
+.shh{display:flex;align-items:flex-start;gap:10px}
+.shh>div:first-child{margin-right:auto}
+.shh b{font-size:19px;color:var(--navy)}
+.x{width:40px;height:40px;border-radius:10px;border:1px solid var(--line2);background:#fff;font-size:20px;flex:none;line-height:1}
+.bigin input{font-size:30px;font-weight:700;text-align:center;min-height:60px}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.addrow{display:flex;gap:6px}
+.addrow input{flex:1;border:1.5px solid var(--line2);border-radius:9px;padding:8px 10px;font-size:16px;min-height:42px}
+.sstat{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.okt{color:var(--ok)}
+.strow{display:grid;grid-template-columns:118px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:13px;padding:3px 0}
+.strow .tt{font-weight:600}
+.splist{display:grid;gap:6px}
+.sprow{display:grid;grid-template-columns:22px auto minmax(0,1fr) auto;gap:3px 8px;align-items:center;border:1.5px solid var(--line2);border-radius:10px;background:#fff;padding:7px 10px;text-align:left;font-size:13px}
+.sprow .spq{font-weight:700;text-align:right}
+.sprow .spt{grid-column:3/-1;font-size:12px}
+.sprow .bx{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line2);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.sprow.done{border-color:#A7D8B8;background:var(--okSoft)}
+.sprow.done .bx{background:var(--ok);color:#fff;border-color:var(--ok)}
+.sprow.miss .spt{color:var(--bad)}.sprow.cov .spt,.sprow.done .spt{color:var(--ok)}
+.shset{display:grid;grid-template-columns:130px minmax(0,1fr);gap:10px}
+.shset label{display:grid;gap:4px;font-size:12px;font-weight:600;color:var(--mut)}
+.tin{border:1.5px solid #E8D59A;background:var(--amb2);border-radius:9px;padding:8px 10px;font-size:16px;min-height:42px;font-weight:500;width:100%}
+.hint{font-size:12px;color:var(--mut);margin:0}
+.ta{width:100%;min-height:240px;font:13px/1.45 ui-monospace,Consolas,monospace;border:1.5px solid var(--line2);border-radius:10px;padding:10px}
+.ask{font-size:11px;font-weight:700;color:var(--brown);background:var(--mid);padding:1px 6px;border-radius:6px}
+.help{margin:0;padding-left:18px;display:grid;gap:8px;font-size:14px;color:var(--ink2)}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.tabbar button{position:relative;border:0;background:none;display:grid;justify-items:center;gap:2px;padding:8px 2px 7px;font-size:12px;font-weight:500;color:var(--mut);min-height:58px}
+.tabbar svg{width:23px;height:23px}
+.tabbar button[aria-current=page]{color:var(--navy);font-weight:700}
+.badge{position:absolute;top:4px;left:calc(50% + 7px);background:var(--orange);color:#fff;font-size:11px;font-style:normal;font-weight:700;border-radius:999px;padding:1px 6px;min-width:18px;line-height:1.4}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;width:min(640px,calc(100% - 24px));display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:#16263D;color:#fff;border-radius:12px;padding:10px 12px;font-size:14px;box-shadow:0 10px 30px rgba(15,23,42,.25)}
+.toast span{flex:1 1 220px}
+.toast button{border:0;background:#fff;color:var(--navy);border-radius:8px;padding:6px 12px;font-weight:600;font-size:13px;min-height:34px}
+.toast .tx{background:transparent;color:#fff;font-size:18px;padding:0 6px}
+@media(min-width:700px){.scrim{align-items:center;padding:24px}.sh{border-radius:18px;padding:20px}}
+@media(min-width:1000px){
+ .tabbar,.mobonly{display:none!important}
+ .panel{display:block}
+ .main{grid-template-columns:minmax(0,2fr) minmax(0,1fr);grid-template-areas:"res res" "itn bon" "tal bon";padding-top:18px}
+ #bonus{position:sticky;top:72px;max-height:calc(100vh - 88px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+ #resumo{grid-area:res}#itens{grid-area:itn}#bonus{grid-area:bon}#talentos{grid-area:tal}
+ .rgrid{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.25fr)}
+}
+@media(max-width:999.98px){
+ .deskonly{display:none!important}
+ .main{padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+ .toast{bottom:calc(72px + env(safe-area-inset-bottom))}
+ .ihead{display:none}
+ .irow{grid-template-columns:14px minmax(0,1fr) auto;grid-template-areas:"mk nm fal" "mk stg stg";row-gap:6px;padding:10px 12px}
+ .c-mk{grid-area:mk;align-self:start;padding-top:1px}.c-nm{grid-area:nm}.c-fal{grid-area:fal;align-self:start}.c-stg{grid-area:stg}
+ .c-bal,.c-st{display:none}
+ .mbal{display:inline}
+}
+@media(max-width:520px){.part{font-size:12.5px;padding:3px 9px 3px 4px;min-height:32px}.ttx{font-size:13px}.tcard{padding:10px}.irow{padding:8px 12px}.tierhd{padding:10px 12px}.tr3 .btn{min-height:34px}.brand small{display:none}.sync{font-size:0}.sync::before{margin:0}.top{gap:10px}.ph h2{font-size:18px}}
+@media(prefers-reduced-motion:no-preference){.stg .s i,.tbb i,.bbar i,.tbar i{transition:width .3s ease}}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 28a20 20 0 0 1 40 0v30l-6.7-6-6.6 6-6.7-6-6.7 6-6.6-6-6.7 6z" fill="#fff"/><ellipse cx="25" cy="30" rx="3.6" ry="5" fill="#1F3A5F"/><ellipse cx="39" cy="30" rx="3.6" ry="5" fill="#1F3A5F"/></svg><div><b>Talentos Fantasma</b><small>Acompanhamento de materiais</small></div></div>
+<div class="tsel deskonly" id="tselD"></div>
+<span id="sync" class="sync w">Carregando…</span>
+<button type="button" class="icb" data-act="menu" aria-label="Mais opções" aria-haspopup="true">⋯</button>
+</header>
+<div id="menu" class="menu" hidden>
+<button type="button" data-act="ia">Copiar para IA</button>
+<button type="button" data-act="bk">Copiar backup</button>
+<button type="button" data-act="rs">Restaurar backup</button>
+<button type="button" data-act="link">Copiar link com meus dados</button>
+<button type="button" data-act="help">Como funciona</button>
+</div>
+<main class="main">
+<section id="resumo" class="panel on" aria-label="Resumo"></section>
+<section id="itens" class="panel" aria-label="Banco de itens"></section>
+<section id="bonus" class="panel" aria-label="Bônus"></section>
+<section id="talentos" class="panel" aria-label="Talentos"></section>
+</main>
+<nav class="tabbar" id="tabbar" aria-label="Seções"></nav>
+<div id="sheet" class="scrim" hidden></div>
+<div id="toast" class="toast" role="status" hidden></div>
+<script>
+{
+const ITEMS=[
+{id:'bc',name:'Primal Big Crystal',poke:'Sableye',order:1},
+{id:'ce',name:'Primal Creepy Eye',poke:'Dusclops',order:2},
+{id:'ds',name:'Primal Doll Star',poke:'Banette',order:3},
+{id:'miss',name:'Primal Miss Traces',poke:'Misdreavus',order:4},
+{id:'mimi',name:'Primal Yellow Mimikyu Head',poke:'Mimikyu',order:5},
+{id:'hands',name:'Primal Ghost Hands',poke:'Dusknoir',order:6},
+{id:'halo',name:'Primal White Halo',poke:'Shedinja',order:7},
+{id:'hat',name:'Primal Witch Hat',poke:'Mismagius',order:8},
+{id:'ge',name:'Ghost Essence',poke:'ALL',order:'P'},
+{id:'orb',name:'Mythic Ghost Orb',poke:'ALL',order:'P'},
+{id:'t1a',name:'Pena rosa',poke:'',order:11,ask:1},
+{id:'t1b',name:'Gema roxa',poke:'',order:12,ask:1},
+{id:'t1c',name:'Pena verde',poke:'',order:13,ask:1},
+{id:'t1e',name:'Fragmento cinza',poke:'',order:14,ask:1},
+{id:'t1f',name:'Fragmento roxo',poke:'',order:15,ask:1},
+{id:'t1g',name:'Item azul',poke:'',order:16,ask:1},
+{id:'t1h',name:'Cristal roxo',poke:'',order:17,ask:1},
+{id:'t4p',name:'Item roxo do Tier 4',poke:'',order:21,ask:1},
+{id:'ms1',name:'Mega stone vermelha',poke:'',order:22,ask:1},
+{id:'ms2',name:'Mega stone amarela',poke:'',order:23,ask:1},
+{id:'ms3',name:'Mega stone azul',poke:'',order:24,ask:1}];
+const IX={};ITEMS.forEach((it,i)=>{IX[it.id]=i;});
+const TIER={1:{c:'#0E7490',s:'#E0F2F7',unlock:''},2:{c:'#2F6DB5',s:'#E7F0FB',unlock:'50.000.000'},3:{c:'#6B4FB0',s:'#F0EBFA',unlock:'200.000.000'},4:{c:'#A21CAF',s:'#F8E8FA',unlock:'400.000.000'}};
+const BON={dano:['Dano Fantasma','Base'],defesa:['Defesa Fantasma','Base'],cap:['Chance de captura','Captura'],moon:['Moon Balls','Captura'],crit:['Captura crítica','Captura'],shiny:['Respawn shiny','Captura'],cc:['Chance crítica','Combate'],cd:['Dano crítico','Combate'],prec:['Precisão contra evasão','Combate'],eva:['Evasão','Combate'],resc:['Resistência crítica','Combate'],mer:['Bolas no Sistema de Mérito','Bolas e drops'],pre:['Premier Balls','Bolas e drops'],ali:['Alliance Balls','Bolas e drops'],mm:['Mega stones míticas seladas','Bolas e drops'],ml:['Mega stones lendárias seladas','Bolas e drops']};
+const GROUPS=['Base','Captura','Combate','Bolas e drops'];
+const DN3='Golpes do tipo Fantasma causam 3% mais dano.',DN5='Golpes do tipo Fantasma causam 5% mais dano.',DF3='Aumenta a defesa dos Pokémon do tipo Fantasma em 3%.',DF5='Aumenta a defesa dos Pokémon do tipo Fantasma em 5%.';
+const CAP='Aumenta a chance de capturar Pokémon do tipo Fantasma em 2%.',MOON='Moon Balls: chance de capturar Pokémon do tipo Fantasma aumentada em 2%.',CRIT='Aumenta a chance de captura crítica de Pokémon do tipo Fantasma em 2%.',SH4='Derrotar Pokémon do tipo Fantasma aumenta em 4% a chance de seu respawn ser shiny.',SH2='Derrotar Pokémon do tipo Fantasma aumenta em 2% a chance de seu respawn ser shiny.';
+const CC=p=>'Contra Pokémon do tipo Fantasma, aumenta a chance crítica em '+p+'%.',CD=p=>'Contra Pokémon do tipo Fantasma, aumenta o dano crítico em '+p+'%.',PR=p=>'Golpes do tipo Fantasma ganham '+p+'% de precisão contra evasão.',EV=p=>'Contra golpes do tipo Fantasma, seus Pokémon ganham '+p+'% de evasão.',RC='Contra golpes do tipo Fantasma, seus Pokémon ganham 5% de resistência crítica.';
+const MER='Tipo Fantasma: bolas contam +5% só no Sistema de Mérito. Não altera mínimo, outros bônus ou gasto. Sem Premier/Alliance.',PRE='Premier Balls: chance de capturar Pokémon do tipo Fantasma aumentada em 5%.',ALI='Alliance Balls: chance de capturar Pokémon do tipo Fantasma aumentada em 5%.',MM='Pokémon do tipo Fantasma soltam mega stones míticas seladas 25% mais vezes.',ML='Pokémon do tipo Fantasma soltam mega stones lendárias seladas 10% mais vezes.';
+const c2=p=>({ge:2000,[p]:5000,orb:3}),c3=p=>({ge:3000,hat:3500,[p]:3500,orb:6}),c4=p=>({ge:5000,t4p:5000,[p]:5000,orb:3});
+const RAW=[
+[1,DN3,{t1a:50},'dano',3],[1,DF3,{t1a:50},'defesa',3],[1,DN5,{t1b:5,t1c:3},'dano',5],[1,DF5,{t1b:5,t1c:3},'defesa',5],[1,DN5,{orb:3,t1e:3,t1f:120},'dano',5],[1,DF5,{orb:3,t1e:3,t1f:120},'defesa',5],[1,DN5,{orb:3,t1e:3,t1f:500,hat:750,t4p:1000},'dano',5,350],[1,DN3,{orb:3,t1e:3,t1f:120},'dano',3],[1,DN3,{orb:2,ge:100,t1g:500},'dano',3],[1,DN5,{orb:3,ge:500,t1h:10000},'dano',5,350],
+[2,CAP,c2('bc'),'cap',2],[2,CAP,c2('ds'),'cap',2],[2,CAP,c2('ce'),'cap',2],[2,MOON,c2('halo'),'moon',2],[2,MOON,c2('hands'),'moon',2],[2,MOON,c2('mimi'),'moon',2],[2,CRIT,c2('miss'),'crit',2],[2,CRIT,c2('bc'),'crit',2],[2,CRIT,c2('ds'),'crit',2],[2,SH4,c2('ce'),'shiny',4],[2,SH4,c2('halo'),'shiny',4],[2,SH2,c2('hands'),'shiny',2],
+[3,CC(3),c3('mimi'),'cc',3],[3,CC(2),c3('miss'),'cc',2],[3,CD(3),c3('bc'),'cd',3],[3,CD(3),c3('ds'),'cd',3],[3,CD(4),c3('ce'),'cd',4],[3,PR(2),c3('halo'),'prec',2],[3,PR(2),c3('hands'),'prec',2],[3,PR(1),c3('mimi'),'prec',1],[3,EV(2),c3('miss'),'eva',2],[3,EV(2),c3('bc'),'eva',2],[3,EV(1),c3('ds'),'eva',1],[3,RC,c3('ce'),'resc',5],[3,RC,c3('halo'),'resc',5],[3,RC,c3('hands'),'resc',5],[3,RC,c3('mimi'),'resc',5],[3,RC,c3('miss'),'resc',5],[3,RC,c3('bc'),'resc',5],
+[4,MER,c4('ds'),'mer',5],[4,MER,c4('ce'),'mer',5],[4,PRE,c4('halo'),'pre',5],[4,PRE,c4('hands'),'pre',5],[4,ALI,c4('mimi'),'ali',5],[4,ALI,c4('miss'),'ali',5],[4,MM,{ge:5000,ms1:3,ms2:2,orb:3},'mm',25],[4,MM,{ge:5000,ms3:5,orb:3},'mm',25],[4,ML,{ge:5000,ms1:2,ms2:3,orb:3},'ml',10],[4,ML,{ge:5000,ms1:3,ms2:2,orb:3},'ml',10]];
+const TAL=[],TX={},cnt={};
+RAW.forEach(([t,x,c,cat,v,l])=>{cnt[t]=(cnt[t]||0)+1;const o={id:'t'+t+'-'+String(cnt[t]).padStart(2,'0'),t,n:cnt[t],x,c,cat,v,l:l||0,i:TAL.length};TAL.push(o);TX[o.id]=o;});
+const PAGES='https://otaviodos.github.io/talentos-fantasma/';
+const KEY='fantasma-materiais-v2',OLDKEY='fantasma-materiais-v1';
+const ICON={
+resumo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>',
+itens:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>',
+talentos:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>',
+bonus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8C10 4 6 4 6 6.5S10 8 12 8c2 0 6 .5 6-1.5S14 4 12 8z"/></svg>'};
+const blank=()=>({v:2,balance:{},parts:{},tiers:[2,3],unlocked:[],items:{}});
+let S=blank(),mode='loading',ref=null,canWrite=true,edit=null,last=null,liveT=null,renderT=null,pendingRender=false;
+const ui={tab:'resumo',ttab:2,ifil:'pend',tfil:'pend',sheet:null,confirmTier:0,showOut:false,importData:null};
+const $=id=>document.getElementById(id);
+const nf=n=>Math.round(n).toLocaleString('pt-BR');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const tn=t=>'T'+t.t+'-'+String(t.n).padStart(2,'0');
+const pc=r=>r.miss>0?Math.min(99,Math.round(r.pct*100)):100;
+const isDesk=()=>window.matchMedia('(min-width:1000px)').matches;
+const ro=()=>!canWrite||mode==='loading';
+const nm=id=>(S.items[id]&&S.items[id].name)||ITEMS[IX[id]].name;
+const shortNm=id=>nm(id).replace(/^Primal\s+/i,'');
+const ordOf=id=>{const o=S.items[id]&&S.items[id].order;return o!==undefined?o:ITEMS[IX[id]].order;};
+const okey=id=>{const o=ordOf(id);return (o==='P'?100:(o||50))+IX[id]/1000;};
+const pokeTxt=id=>{const p=ITEMS[IX[id]].poke;return p==='ALL'?'Qualquer Pokémon':p||'Sem Pokémon';};
+const label=id=>{const p=ITEMS[IX[id]].poke;return p?nm(id)+' ('+(p==='ALL'?'qualquer Pokémon':p)+')':nm(id);};
+
+function norm(x){
+  const s=blank();if(!x||typeof x!=='object')return s;
+  if(x.balance&&typeof x.balance==='object')for(const it of ITEMS){const v=Number(x.balance[it.id]);if(Number.isFinite(v)&&v>0)s.balance[it.id]=Math.min(Math.floor(v),1e12);}
+  if(x.parts&&typeof x.parts==='object')for(const t of TAL){const p=x.parts[t.id];if(!p||typeof p!=='object')continue;const o={};for(const k of Object.keys(t.c))if(p[k]===true)o[k]=true;if(Object.keys(o).length)s.parts[t.id]=o;}
+  if(x.done&&typeof x.done==='object')for(const t of TAL)if(x.done[t.id]===true){const o={};for(const k of Object.keys(t.c))o[k]=true;s.parts[t.id]=o;}
+  if(Array.isArray(x.tiers)){const t=[1,2,3,4].filter(n=>x.tiers.includes(n));if(t.length)s.tiers=t;}
+  if(Array.isArray(x.unlocked))s.unlocked=[2,3,4].filter(n=>x.unlocked.includes(n));
+  if(x.items&&typeof x.items==='object')for(const it of ITEMS){const o=x.items[it.id];if(!o||typeof o!=='object')continue;const e={};
+    if(o.order==='P')e.order='P';else if(Number.isFinite(Number(o.order))&&Number(o.order)>=1)e.order=Math.min(Math.floor(Number(o.order)),999);
+    if(typeof o.name==='string'&&o.name.trim())e.name=o.name.trim().slice(0,60);
+    if(Object.keys(e).length)s.items[it.id]=e;}
+  return s;
+}
+
+function compute(){
+  const sel=new Set(S.tiers),avail={},per={},tal={};
+  ITEMS.forEach(it=>{avail[it.id]=S.balance[it.id]||0;per[it.id]={};});
+  const seq=[...TAL].sort((a,b)=>(sel.has(a.t)?0:1)-(sel.has(b.t)?0:1)||a.t-b.t||a.i-b.i);
+  const nextOf={};
+  for(const t of seq){
+    const P0=S.parts[t.id]||{},parts=[];let nd=0,ok=true;
+    for(const [id,q] of Object.entries(t.c)){
+      const P=per[id][t.t]||(per[id][t.t]={tot:0,done:0,alloc:0,miss:0});
+      P.tot+=q;
+      if(P0[id]){nd++;P.done+=q;parts.push({id,q,done:true,alloc:0,miss:0});continue;}
+      const a=Math.min(avail[id],q),m=q-a;avail[id]-=a;P.alloc+=a;P.miss+=m;
+      if(m>0){ok=false;if(sel.has(t.t)&&!nextOf[id])nextOf[id]={t,q,a,m};}
+      parts.push({id,q,done:false,alloc:a,miss:m});
+    }
+    const n=parts.length,complete=nd===n;
+    tal[t.id]={parts,nd,n,complete,ready:!complete&&ok,status:complete?'feito':ok?'pronto':nd>0?'parcial':'falta'};
+  }
+  const rows=[],byId={};
+  for(const it of ITEMS){
+    const P=per[it.id];let tot=0,miss=0;const tiers={};
+    for(const T of S.tiers)if(P[T]&&P[T].tot){tiers[T]=P[T];tot+=P[T].tot;miss+=P[T].miss;}
+    if(!tot)continue;
+    const cov=tot-miss,r={id:it.id,tot,miss,cov,pct:cov/tot,tiers,next:nextOf[it.id]||null,status:miss===0?'Completo':cov>0?'Em andamento':'Sem progresso'};
+    rows.push(r);byId[it.id]=r;
+  }
+  rows.sort((a,b)=>okey(a.id)-okey(b.id));
+  const pend=rows.filter(r=>r.miss>0),T=rows.reduce((s,r)=>s+r.tot,0),C=rows.reduce((s,r)=>s+r.cov,0);
+  const tstat={};for(const k of [1,2,3,4]){const L=TAL.filter(x=>x.t===k);tstat[k]={n:L.length,done:L.filter(x=>tal[x.id].complete).length,ready:L.filter(x=>tal[x.id].ready).length};}
+  const unl=new Set([1,...S.unlocked]),bon={};
+  Object.keys(BON).forEach(k=>{bon[k]={on:0,pend:0,max:0,pendT:new Set()};});
+  for(const t of TAL){const b=bon[t.cat];b.max+=t.v;if(tal[t.id].complete){if(unl.has(t.t))b.on+=t.v;else{b.pend+=t.v;b.pendT.add(t.t);}}}
+  for(const k of [2,3,4]){bon.dano.max++;bon.defesa.max++;if(unl.has(k)){bon.dano.on++;bon.defesa.on++;}}
+  const ready=TAL.filter(t=>sel.has(t.t)&&tal[t.id].ready);
+  return {rows,byId,per,tal,tstat,bon,ready,focus:pend[0]?pend[0].id:null,next:pend[1]?pend[1].id:null,overall:T?C/T:1,complete:rows.filter(r=>r.miss===0).length};
+}
+
+const tierChips=loc=>[1,2,3,4].map(k=>'<button type="button" class="chipT" data-act="tier" data-t="'+k+'" data-k="tier-'+loc+'-'+k+'" aria-pressed="'+S.tiers.includes(k)+'"'+(ro()?' disabled':'')+'>T'+k+'</button>').join('');
+const stHtml=r=>{const c=r.status==='Completo'?'p-ok':r.status==='Em andamento'?'p-mid':'p-bad';return '<span class="pill '+c+'">'+r.status+'</span>';};
+function stgHtml(r,withCap){
+  const Ts=S.tiers.filter(k=>r.tiers[k]);
+  const segs=Ts.map(k=>{const x=r.tiers[k],c=TIER[k].c;return '<span class="s" style="flex:'+x.tot+'" title="Tier '+k+': entregue '+nf(x.done)+', no Balance '+nf(x.alloc)+', falta '+nf(x.miss)+'"><i style="width:'+(x.done/x.tot*100)+'%;background:'+c+'"></i><i style="left:'+(x.done/x.tot*100)+'%;width:'+(x.alloc/x.tot*100)+'%;background:'+c+';opacity:.4"></i></span>';}).join('');
+  let h='<span class="stg">'+segs+'</span>';
+  if(withCap!==false)h+='<span class="cap"><span>'+Ts.map(k=>{const x=r.tiers[k];return '<b style="color:'+TIER[k].c+'">T'+k+'</b> '+(x.miss?nf(x.miss):'✓');}).join(' · ')+'</span><b>'+pc(r)+'%</b></span>';
+  return h;
+}
+const mkHtml=(r,R)=>r.id===R.focus?'<i class="mk f" title="Foco agora">▶</i>':r.id===R.next?'<i class="mk n" title="Próximo">▷</i>':'';
+const rowCls=(r,R)=>r.id===R.focus?'f':r.id===R.next?'n':r.miss===0?'done':'';
+const falHtml=r=>'<b>'+nf(r.miss)+'</b><small'+(r.next?' title="Faltam '+nf(r.next.m)+' para cobrir o '+tn(r.next.t)+'"':'')+'>'+(r.next?'próx. '+nf(r.next.m):'completo')+'</small>';
+const balField=(loc,id)=>'<span class="bal"><input type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" data-k="'+loc+'-bal-'+id+'" data-bal="'+id+'" value="'+nf(S.balance[id]||0)+'" aria-label="Balance de '+esc(nm(id))+'"'+(ro()?' disabled':'')+'><button type="button" class="plus" data-act="open" data-item="'+id+'" data-k="'+loc+'-open-'+id+'" aria-label="Somar loot em '+esc(nm(id))+'">+</button></span>';
+const itemRow=(r,R)=>'<div class="irow '+rowCls(r,R)+'" data-item="'+r.id+'" data-act="open"><span class="c-mk">'+mkHtml(r,R)+'</span><span class="c-nm"><span class="nm">'+esc(nm(r.id))+'</span><span class="pk">'+esc(pokeTxt(r.id))+(ordOf(r.id)==='P'?' · Passivo':'')+'<span class="mbal"> · Balance '+nf(S.balance[r.id]||0)+'</span></span></span><span class="c-bal">'+balField('l',r.id)+'</span><span class="c-fal">'+falHtml(r)+'</span><span class="c-stg">'+stgHtml(r)+'</span><span class="c-st">'+stHtml(r)+'</span></div>';
+function ring(p){const R0=31,C=2*Math.PI*R0,v=Math.round(p*100);return '<svg class="ring" width="84" height="84" viewBox="0 0 84 84" role="img" aria-label="'+v+'% do farm"><circle cx="42" cy="42" r="'+R0+'" fill="none" stroke="#E9EDF3" stroke-width="10"/><circle cx="42" cy="42" r="'+R0+'" fill="none" stroke="#1E7B4B" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-p)).toFixed(1)+'" transform="rotate(-90 42 42)"/><text x="42" y="41" text-anchor="middle" font-size="18" font-weight="700" fill="#1F2937">'+v+'%</text><text x="42" y="56" text-anchor="middle" font-size="10" fill="#6B7280">do farm</text></svg>';}
+
+function render(){
+  const a=document.activeElement,k=a&&a.dataset?a.dataset.k:null;
+  const R=compute();last=R;
+  renderTop();renderResumo(R);renderItens(R);renderTal(R);renderBonus(R);renderSheet(R,true);renderTabbar(R);
+  if(k){const el=document.querySelector('[data-k="'+k+'"]');if(el&&!el.disabled&&el!==document.activeElement){el.focus({preventScroll:true});if(el.matches('input[type=text]'))try{el.select();}catch(e){}}}
+}
+function liveRender(){
+  liveT=null;const R=compute();last=R;const a=document.activeElement;
+  renderTop();renderResumo(R);renderTal(R);renderBonus(R);renderTabbar(R);
+  if($('itens').contains(a))patchItens(R);else renderItens(R);
+  if(ui.sheet&&ui.sheet.type==='item'){if($('sheet').contains(a))patchSheet(R);else renderSheet(R,true);}
+}
+function schedule(){clearTimeout(liveT);liveT=null;if(renderT)return;renderT=setTimeout(()=>{renderT=null;render();},0);}
+function scheduleLive(){clearTimeout(liveT);liveT=setTimeout(liveRender,120);}
+function typing(){const a=document.activeElement;return !!(a&&a.matches&&a.matches('input[type=text],textarea'));}
+function renderSafe(){if(typing()){pendingRender=true;liveRender();}else render();}
+
+function renderTop(){$('tselD').innerHTML='<span>Tiers no total</span>'+tierChips('d');}
+function renderResumo(R){
+  const f=R.focus,n=R.next,rf=f&&R.byId[f],rn=n&&R.byId[n];
+  let h='<div class="tsel light mobonly"><span>Tiers no total</span>'+tierChips('m')+'</div>';
+  if(ui.importData){const d=ui.importData,nt=TAL.filter(t=>{const p=d.parts[t.id];return p&&Object.keys(t.c).every(k=>p[k]);}).length;
+    h+='<div class="imp"><p><b>Este link traz dados de outro aparelho:</b> '+nt+' talentos concluídos e Balance de '+Object.keys(d.balance).length+' itens. Importar substitui os dados deste aparelho.</p><button type="button" class="btn pri" data-act="imp">Importar</button><button type="button" class="btn ghost" data-act="impno">Ignorar</button></div>';}
+  h+='<div class="rgrid"><section class="focus"><div class="hd"><span class="mk" style="color:var(--orange)">▶</span> FOCO AGORA</div><div class="bd">';
+  if(mode==='loading')h+='<div class="fname">Carregando…</div>';
+  else if(!R.rows.length)h+='<div class="fname">Nenhum item com demanda nos tiers do total</div>';
+  else if(!f)h+='<div class="fname">Tudo concluído nos tiers do total</div>';
+  else h+='<div class="fname">'+esc(nm(f))+'</div><div class="fpoke">'+esc(pokeTxt(f))+'</div><div class="fbig">'+nf(rf.miss)+' <small>itens</small></div>'+stgHtml(rf)+(rf.next?'<div class="fhint">Próximo talento: <b>'+tn(rf.next.t)+'</b> precisa de '+nf(rf.next.q)+'; o Balance cobre '+nf(rf.next.a)+', faltam <b>'+nf(rf.next.m)+'</b>.</div>':'')+'<div class="fact"><button type="button" class="btn pri" data-act="open" data-item="'+f+'" data-k="f-open">Somar loot</button></div>';
+  h+='</div></section><section class="card"><div class="lbl"><span class="mk n">▷</span> PRÓXIMO</div>';
+  h+=rn?'<div class="nname">'+esc(nm(n))+'</div><div class="pk">'+esc(pokeTxt(n))+'</div><div class="nbig">'+nf(rn.miss)+' <small>itens</small></div>'+stgHtml(rn):'<div class="pk">'+(f?'Nenhum: o foco é o último item com falta.':'—')+'</div>';
+  const doneT=TAL.filter(t=>R.tal[t.id].complete).length;
+  h+='</section><section class="card"><div class="lbl">PROGRESSO</div><div class="pgrid">'+ring(R.overall)+'<div><div class="pline"><b>'+R.complete+'</b>/'+R.rows.length+' itens completos</div><div class="pline"><b>'+doneT+'</b>/'+TAL.length+' talentos concluídos</div></div></div><div class="tbars">'+[1,2,3,4].map(k=>{const z=R.tstat[k];return '<div class="tb"><span style="color:'+TIER[k].c+'">T'+k+'</span><span class="tbb"><i style="width:'+(z.done/z.n*100)+'%;background:'+TIER[k].c+'"></i></span><span>'+z.done+'/'+z.n+'</span></div>';}).join('')+'</div></section>';
+  h+='<section class="card"><div class="lbl">DÁ PARA CONCLUIR AGORA</div>';
+  h+=R.ready.length?R.ready.slice(0,4).map(t=>'<div class="rl"><span class="tid" style="--tc:'+TIER[t.t].c+'">'+tn(t)+'</span><span class="rtx">+'+t.v+'% '+BON[t.cat][0]+'</span><button type="button" class="btn sm" data-act="tcomp" data-tid="'+t.id+'" data-k="rc-'+t.id+'"'+(ro()?' disabled':'')+'>Concluir</button></div>').join('')+(R.ready.length>4?'<div class="pk">e mais '+(R.ready.length-4)+' na aba Talentos.</div>':''):'<div class="pk">Nenhum talento fecha só com o Balance de agora.</div>';
+  const near=R.rows.filter(r=>r.next).sort((a,b)=>a.next.m-b.next.m).slice(0,4);
+  h+='<div class="lbl" style="margin-top:12px">QUASE LÁ</div>'+(near.length?near.map(r=>'<button type="button" class="rl" data-act="open" data-item="'+r.id+'" data-k="near-'+r.id+'"><span class="rnm">'+esc(shortNm(r.id))+'</span><span class="rtx">faltam <b>'+nf(r.next.m)+'</b> p/ '+tn(r.next.t)+'</span></button>').join(''):'<div class="pk">Nada pendente.</div>')+'</section></div>';
+  $('resumo').innerHTML=h;
+}
+function renderItens(R){
+  const rows=R.rows.filter(r=>ui.ifil==='all'||r.miss>0),pend=R.rows.filter(r=>r.miss>0).length;
+  let h='<div class="ph"><h2>Banco de itens</h2><span class="cnt">'+pend+' com falta · '+R.rows.length+' nos tiers do total</span><span class="seg sp" role="group" aria-label="Filtro de itens"><button type="button" data-act="ifil" data-v="pend" aria-pressed="'+(ui.ifil==='pend')+'">Com falta</button><button type="button" data-act="ifil" data-v="all" aria-pressed="'+(ui.ifil==='all')+'">Todos</button></span></div>';
+  h+='<div class="ilist"><div class="irow ihead"><span></span><span>Item</span><span class="r">Balance</span><span class="r">Falta</span><span>Etapas (T2, T3…) e %</span><span class="c">Status</span></div>';
+  h+=rows.map(r=>itemRow(r,R)).join('');
+  if(!rows.length)h+='<div class="empty">'+(R.rows.length?'Nenhum item com falta nos tiers do total.':'Nenhum item com demanda nos tiers do total.')+'</div>';
+  h+='</div>';
+  const out=ITEMS.filter(it=>!R.byId[it.id]);
+  if(out.length)h+='<div class="outb"><button type="button" class="lnk" data-act="out">'+(ui.showOut?'Esconder':'Mostrar')+' itens fora dos tiers do total ('+out.length+')</button>'+(ui.showOut?'<div class="olist">'+out.map(it=>'<button type="button" class="ochip" data-act="open" data-item="'+it.id+'">'+esc(nm(it.id))+' · '+nf(S.balance[it.id]||0)+'</button>').join('')+'</div>':'')+'</div>';
+  $('itens').innerHTML=h;
+}
+function patchItens(R){
+  for(const el of document.querySelectorAll('#itens .irow[data-item]')){
+    const r=R.byId[el.dataset.item];if(!r)continue;
+    el.className='irow '+rowCls(r,R);
+    el.querySelector('.c-mk').innerHTML=mkHtml(r,R);
+    el.querySelector('.c-fal').innerHTML=falHtml(r);
+    el.querySelector('.c-stg').innerHTML=stgHtml(r);
+    el.querySelector('.c-st').innerHTML=stHtml(r);
+  }
+}
+const STL={feito:['Concluído','p-ok'],pronto:['Pronto para concluir','p-mid'],parcial:['Parcial','p-par'],falta:['Faltam itens','p-bad']};
+function talCard(x,z){
+  const [lab,cls]=STL[z.status];
+  const parts=z.parts.map(p=>{const st=p.done?'done':p.miss?'miss':'cov',tg=p.done?'entregue':p.miss?(p.alloc?'tem '+nf(p.alloc)+' · falta '+nf(p.miss):'falta '+nf(p.miss)):'no Balance';
+    return '<button type="button" class="part '+st+'" data-act="part" data-tid="'+x.id+'" data-item="'+p.id+'" data-k="part-'+x.id+'-'+p.id+'" aria-pressed="'+p.done+'" title="'+(p.done?'Desmarcar entrega':'Marcar como entregue')+'"'+(ro()?' disabled':'')+'><span class="bx">'+(p.done?'✓':'')+'</span><span class="q">'+nf(p.q)+'</span><span>'+esc(shortNm(p.id))+'</span><span class="tg">· '+tg+'</span></button>';}).join('');
+  const act=z.complete?'<button type="button" class="lnk" data-act="tundo" data-tid="'+x.id+'" data-k="tundo-'+x.id+'"'+(ro()?' disabled':'')+'>Desmarcar</button>':'<button type="button" class="pact" data-act="tcomp" data-tid="'+x.id+'" data-k="tcomp-'+x.id+'"'+(ro()?' disabled':'')+'>✓ Concluir talento</button>';
+  return '<article class="tcard '+z.status+'" style="--tc:'+TIER[x.t].c+';--ts:'+TIER[x.t].s+'"><div class="tline"><span class="tid">'+tn(x)+'</span><span class="tbon">+'+x.v+'% '+BON[x.cat][0]+'</span>'+(x.l?'<span class="lvl">Nível '+x.l+'</span>':'')+'<span class="pill '+cls+' sp">'+lab+(z.status==='parcial'?' '+z.nd+'/'+z.n:'')+'</span></div><div class="ttx">'+esc(x.x)+'</div><div class="parts">'+parts+act+'</div></article>';
+}
+function renderTal(R){
+  const T=ui.ttab,L=TAL.filter(x=>x.t===T),st=R.tstat[T],unl=T===1||S.unlocked.includes(T);
+  let h='<div class="ph"><h2>Talentos</h2><span class="cnt">toque em cada item do talento para marcar a entrega</span><span class="seg sp" role="group" aria-label="Filtro de talentos"><button type="button" data-act="tfil" data-v="todos" aria-pressed="'+(ui.tfil==='todos')+'">Todos</button><button type="button" data-act="tfil" data-v="pend" aria-pressed="'+(ui.tfil==='pend')+'">Pendentes</button></span></div>';
+  h+='<div class="ttabs" role="tablist">'+[1,2,3,4].map(k=>{const z=R.tstat[k];return '<button type="button" role="tab" class="ttab" data-act="ttab" data-t="'+k+'" aria-selected="'+(k===T)+'" style="--tc:'+TIER[k].c+'"><span class="dot"></span>Tier '+k+'<span class="tcnt">'+z.done+'/'+z.n+'</span></button>';}).join('')+'</div>';
+  h+='<div class="tierhd" style="--tc:'+TIER[T].c+';--ts:'+TIER[T].s+'"><div class="tr1"><b>Tier '+T+'</b><span>'+st.done+' de '+st.n+' concluídos'+(st.ready?' · '+st.ready+' pronto'+(st.ready>1?'s':'')+' para concluir':'')+(S.tiers.includes(T)?'':' · fora do total')+'</span></div><div class="tbar"><i style="width:'+(st.done/st.n*100)+'%"></i></div><div class="tr2">'+(T===1?'Sempre liberado. Bônus ativos em todos os tiers.':'Liberar: '+TIER[T].unlock+' · ao liberar: +1% de dano e +1% de defesa Fantasma.')+'</div><div class="tr3">';
+  if(T>1)h+='<button type="button" class="btn sm '+(unl?'on':'')+'" data-act="unl" data-t="'+T+'" data-k="unl-'+T+'" aria-pressed="'+unl+'"'+(ro()?' disabled':'')+'>'+(unl?'✓ Tier liberado':'Marcar tier como liberado')+'</button>';
+  if(st.done<st.n)h+='<button type="button" class="btn sm ghost" data-act="tierall" data-t="'+T+'" data-k="tierall-'+T+'"'+(ro()?' disabled':'')+'>'+(ui.confirmTier===T?'Confirmar: concluir os '+(st.n-st.done):'Concluir todos do tier')+'</button>';
+  h+='</div></div><div class="tcards">';
+  const vis=L.filter(x=>ui.tfil==='todos'||!R.tal[x.id].complete);
+  h+=vis.map(x=>talCard(x,R.tal[x.id])).join('');
+  if(!vis.length)h+='<div class="card pk">Todos os talentos deste tier estão concluídos.</div>';
+  h+='</div>';
+  $('talentos').innerHTML=h;
+}
+function renderBonus(R){
+  const unl=new Set([1,...S.unlocked]);
+  let h='<div class="ph"><h2>Bônus liberados</h2></div><div class="card"><div class="lbl">TIERS LIBERADOS</div><div class="unl">'+[1,2,3,4].map(k=>{const on=unl.has(k);return '<button type="button" class="ub '+(on?'on':'')+'" style="--tc:'+TIER[k].c+';--ts:'+TIER[k].s+'" data-act="unl" data-t="'+k+'" data-k="ub-'+k+'" aria-pressed="'+on+'"'+(k===1||ro()?' disabled':'')+'><b>T'+k+'</b><span>'+(k===1?'sempre':on?'liberado':'bloqueado')+'</span></button>';}).join('')+'</div>';
+  const act=Object.keys(BON).filter(k=>R.bon[k].on>0);
+  h+='<div class="lbl">ATIVOS AGORA</div><div class="bsum">'+(act.length?act.map(k=>'<span class="bchip">+'+R.bon[k].on+'% '+BON[k][0]+'</span>').join(''):'<span class="pk">Nenhum bônus ativo ainda.</span>')+'</div>';
+  for(const g of GROUPS){
+    h+='<div class="bg"><div class="bgh">'+g+'</div>';
+    for(const k of Object.keys(BON).filter(q=>BON[q][1]===g)){const b=R.bon[k];
+      h+='<div class="brow"><span class="bl">'+BON[k][0]+'</span><span class="bv"><b class="'+(b.on?'':'z')+'">+'+b.on+'%</b> <small>de +'+b.max+'%</small></span><span class="bbar"><i style="width:'+(b.on/b.max*100)+'%;background:var(--ok)"></i><i style="width:'+(b.pend/b.max*100)+'%;background:#F2C14E"></i></span>'+(b.pend?'<span class="pend">+'+b.pend+'% já concluído, aguardando liberar o Tier '+[...b.pendT].join(' e ')+'</span>':'')+'</div>';}
+    h+='</div>';
+  }
+  $('bonus').innerHTML=h+'</div>';
+}
+const closeBtn='<button type="button" class="x" data-act="close" aria-label="Fechar">×</button>';
+function sheetStats(id,R){
+  const r=R.byId[id],P=R.per[id];
+  let h='<div class="sstat"><div><div class="lbl">FALTA (TIERS DO TOTAL)</div><div class="nbig">'+(r?nf(r.miss):'0')+'</div></div><div><div class="lbl">CONCLUÍDO</div><div class="nbig okt">'+(r?pc(r):100)+'%</div></div></div>';
+  h+=[1,2,3,4].filter(k=>P[k]&&P[k].tot).map(k=>{const x=P[k],c=TIER[k].c;return '<div class="strow"><span class="tt" style="color:'+c+'">Tier '+k+(S.tiers.includes(k)?'':' (fora)')+'</span><span class="stg"><span class="s"><i style="width:'+(x.done/x.tot*100)+'%;background:'+c+'"></i><i style="left:'+(x.done/x.tot*100)+'%;width:'+(x.alloc/x.tot*100)+'%;background:'+c+';opacity:.4"></i></span></span><span>'+(x.miss?'falta <b>'+nf(x.miss)+'</b>':'<b class="okt">completo</b>')+' <span class="pk">de '+nf(x.tot)+'</span></span></div>';}).join('');
+  if(r&&r.next)h+='<div class="fhint">Próximo talento: <b>'+tn(r.next.t)+'</b> precisa de '+nf(r.next.q)+'; faltam <b>'+nf(r.next.m)+'</b>.</div>';
+  return h;
+}
+function sheetParts(id,R){
+  const L=TAL.filter(t=>t.c[id]);
+  return '<div class="lbl">TALENTOS QUE USAM ESTE ITEM ('+L.length+') · toque para marcar a entrega</div><div class="splist">'+L.map(t=>{const p=R.tal[t.id].parts.find(q=>q.id===id),st=p.done?'done':p.miss?'miss':'cov';
+    return '<button type="button" class="sprow '+st+'" data-act="part" data-tid="'+t.id+'" data-item="'+id+'" data-k="sp-'+t.id+'" aria-pressed="'+p.done+'"'+(ro()?' disabled':'')+'><span class="bx">'+(p.done?'✓':'')+'</span><span class="tid" style="--tc:'+TIER[t.t].c+'">'+tn(t)+'</span><span>+'+t.v+'% '+BON[t.cat][0]+'</span><span class="spq">'+nf(p.q)+'</span><span class="spt">'+(p.done?'entregue':p.miss?(p.alloc?'tem '+nf(p.alloc)+' · falta '+nf(p.miss):'falta '+nf(p.miss)):'coberto pelo Balance')+'</span></button>';}).join('')+'</div>';
+}
+function itemSheet(R){
+  const id=ui.sheet.id,it=ITEMS[IX[id]],r=R.byId[id],o=ordOf(id);
+  const maxq=Math.max(...TAL.filter(t=>t.c[id]).map(t=>t.c[id]));
+  const steps=maxq>=1000?[100,500,1000,5000]:maxq>=100?[10,50,100,500]:[1,2,3,5];
+  return '<div class="shh"><div><b id="shT">'+esc(nm(id))+'</b><div class="pk">'+esc(pokeTxt(id))+(o==='P'?' · Passivo':'')+'</div></div><span class="sh-st">'+(r?stHtml(r):'')+'</span>'+closeBtn+'</div>'
+  +'<div><div class="lbl">BALANCE (QUANTO VOCÊ TEM AGORA)</div><div class="bigin"><input id="sh-bal" type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" data-k="s-bal-'+id+'" data-bal="'+id+'" value="'+nf(S.balance[id]||0)+'" aria-label="Balance de '+esc(nm(id))+'"'+(ro()?' disabled':'')+'></div></div>'
+  +'<div class="steps">'+steps.map(v=>'<button type="button" class="btn" data-act="add" data-item="'+id+'" data-v="'+v+'" data-k="add-'+v+'"'+(ro()?' disabled':'')+'>+'+nf(v)+'</button>').join('')+steps.slice(1,3).map(v=>'<button type="button" class="btn ghost" data-act="add" data-item="'+id+'" data-v="-'+v+'" data-k="sub-'+v+'"'+(ro()?' disabled':'')+'>−'+nf(v)+'</button>').join('')+'</div>'
+  +'<div class="addrow"><input id="sh-add" type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" placeholder="Somar loot da hunt, ex.: 878" data-k="s-add" aria-label="Quantidade para somar"'+(ro()?' disabled':'')+'><button type="button" class="btn pri" data-act="addv" data-item="'+id+'"'+(ro()?' disabled':'')+'>Somar</button></div>'
+  +'<div class="sh-stats">'+sheetStats(id,R)+'</div><div class="sh-parts">'+sheetParts(id,R)+'</div>'
+  +'<div class="shset"><label>Ordem de farm<input type="text" class="tin" data-k="s-ord-'+id+'" data-ord="'+id+'" value="'+(o==='P'?'Passivo':esc(o))+'"'+(ro()?' disabled':'')+'></label><label>Nome do item'+(it.ask&&!(S.items[id]&&S.items[id].name)?' <span class="ask">confirmar nome</span>':'')+'<input type="text" class="tin" data-k="s-nm-'+id+'" data-nm="'+id+'" value="'+esc(nm(id))+'"'+(ro()?' disabled':'')+'></label></div>'
+  +'<p class="hint">Ordem: 1, 2, 3… ou Passivo (vai para o fim da fila). No Balance vale 2622, 2.622, +500, -200 ou 10k.</p>';
+}
+function helpHtml(){return '<div class="shh"><div><b id="shT">Como funciona</b></div>'+closeBtn+'</div><ul class="help"><li><b>Balance</b>: quanto você tem agora de cada item. Aceita 2622, +500 (soma), -200 (tira) e 10k.</li><li>Cada talento custa vários itens. Toque em cada item do talento para marcar a entrega (dá para entregar 1 de 3, por exemplo). Quando todos estão entregues, o talento fica concluído.</li><li><b>Falta</b> de um item = partes ainda não entregues, nos tiers do total, menos o Balance. O Balance cobre na ordem do jogo: T1 a T4, de cima para baixo.</li><li><b>Foco agora</b> = primeiro item da ordem de farm com falta; <b>Próximo</b> = o seguinte. Itens Passivo ficam no fim da fila.</li><li><b>Bônus</b>: soma dos talentos concluídos em tiers liberados, mais +1% de dano e +1% de defesa por tier liberado (T2 a T4).</li><li>Marcar uma entrega não mexe no Balance. Se os itens já saíram do jogo, use “Descontar do Balance” no aviso.</li><li>No Claude os dados sincronizam sozinhos entre PC e celular. Na página do GitHub ficam salvos no navegador: use “Copiar link com meus dados” para levar a outro aparelho.</li></ul>';}
+function renderSheet(R,keep){
+  const el=$('sheet');
+  if(!ui.sheet){el.hidden=true;el.innerHTML='';document.body.classList.remove('lock');return;}
+  if(keep&&ui.sheet.type!=='item'&&el.dataset.type===ui.sheet.type&&!el.hidden)return;
+  let h='<div class="sh" role="dialog" aria-modal="true" aria-labelledby="shT">';
+  if(ui.sheet.type==='item')h+=itemSheet(R);
+  else if(ui.sheet.type==='text')h+='<div class="shh"><div><b id="shT">'+esc(ui.sheet.title)+'</b><div class="pk">Selecione tudo e copie.</div></div>'+closeBtn+'</div><textarea class="ta" readonly aria-label="Texto para copiar">'+esc(ui.sheet.txt)+'</textarea>';
+  else if(ui.sheet.type==='restore')h+='<div class="shh"><div><b id="shT">Restaurar backup</b><div class="pk">Cole o texto copiado em “Copiar backup”.</div></div>'+closeBtn+'</div><textarea class="ta" id="rsTa" aria-label="Backup"></textarea><div class="fact"><button type="button" class="btn pri" data-act="rsgo">Restaurar</button></div>';
+  else if(ui.sheet.type==='help')h+=helpHtml();
+  el.innerHTML=h+'</div>';el.dataset.type=ui.sheet.type;el.hidden=false;document.body.classList.add('lock');
+}
+function patchSheet(R){
+  const id=ui.sheet.id,r=R.byId[id];
+  const a=document.querySelector('#sheet .sh-stats'),b=document.querySelector('#sheet .sh-parts'),c=document.querySelector('#sheet .sh-st');
+  if(a)a.innerHTML=sheetStats(id,R);if(b)b.innerHTML=sheetParts(id,R);if(c)c.innerHTML=r?stHtml(r):'';
+}
+function renderTabbar(R){
+  const ready=R.ready.length,pend=R.rows.filter(r=>r.miss>0).length;
+  $('tabbar').innerHTML=[['resumo','Resumo'],['itens','Itens'],['talentos','Talentos'],['bonus','Bônus']].map(([k,l])=>'<button type="button" data-act="tab" data-v="'+k+'"'+(ui.tab===k?' aria-current="page"':'')+'>'+ICON[k]+'<span>'+l+'</span>'+(k==='talentos'&&ready?'<i class="badge">'+ready+'</i>':k==='itens'&&pend?'<i class="badge" style="background:#6B7280">'+pend+'</i>':'')+'</button>').join('');
+  for(const k of ['resumo','itens','talentos','bonus'])$(k).classList.toggle('on',ui.tab===k);
+}
+
+function parseQty(raw,cur){
+  const s=String(raw).trim().toLowerCase().replace(/\s+/g,'');
+  if(s==='')return 0;
+  const m=s.match(/^([+-]?)(\d[\d.,]*)(k|mil)?$/);if(!m)return null;
+  let v;
+  if(m[3]){const t=m[2].replace(/,/g,'.');v=(t.split('.').length===2?parseFloat(t):parseFloat(t.replace(/\./g,'')))*1000;}
+  else v=parseFloat(m[2].replace(/[.,]/g,''));
+  if(!Number.isFinite(v))return null;v=Math.round(v);
+  return m[1]==='+'?cur+v:m[1]==='-'?Math.max(0,cur-v):v;
+}
+function setBal(id,v){v=Math.max(0,Math.round(v));if(v>0)S.balance[id]=v;else delete S.balance[id];}
+
+let toastT=null;
+function toast(msg,acts){
+  const el=$('toast');el.textContent='';
+  const p=document.createElement('span');p.textContent=msg;el.appendChild(p);
+  (acts||[]).forEach(a=>{const b=document.createElement('button');b.type='button';b.textContent=a.label;b.addEventListener('click',()=>{el.hidden=true;a.fn();});el.appendChild(b);});
+  const x=document.createElement('button');x.type='button';x.className='tx';x.setAttribute('aria-label','Fechar aviso');x.textContent='×';x.addEventListener('click',()=>{el.hidden=true;});el.appendChild(x);
+  el.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{el.hidden=true;},acts&&acts.length?12000:4500);
+}
+function status(msg,kind){const el=$('sync');el.textContent=msg;el.title=msg;el.className='sync '+(kind||'');}
+
+let saving=false,dirty=false,saveT=null,retried=false;
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}
+  if(mode!=='db'){if(mode==='local')status('Salvo neste aparelho','w');return;}
+  dirty=true;clearTimeout(saveT);saveT=setTimeout(flush,700);status('Salvando…','w');
+}
+async function flush(){
+  if(saving||!dirty||!ref)return;
+  saving=true;dirty=false;
+  try{await ref.set(JSON.parse(JSON.stringify(Object.assign({},S,{updatedAt:new Date().toISOString()}))));retried=false;status('Salvo na nuvem','ok');}
+  catch(e){const c=e&&e.code;
+    if(c==='invalid_argument'||c==='not_granted'||c==='revoked'){canWrite=false;status('Somente leitura','bad');schedule();}
+    else if(c==='unavailable'&&!retried){retried=true;dirty=true;setTimeout(()=>{flush();},800+Math.random()*900);}
+    else{dirty=true;status('Não salvou'+(c?' ('+c+')':''),'bad');}}
+  finally{saving=false;if(dirty&&!retried)flush();}
+}
+function commit(){save();schedule();}
+
+function discount(map,what){
+  const prev={};for(const [k,q] of Object.entries(map)){prev[k]=S.balance[k]||0;setBal(k,prev[k]-q);}
+  commit();toast('Descontado do Balance: '+what+'.',[{label:'Desfazer',fn:()=>{for(const k in prev)setBal(k,prev[k]);commit();toast('Desconto desfeito.');}}]);
+}
+function giveBack(map,what){for(const [k,q] of Object.entries(map))setBal(k,(S.balance[k]||0)+q);commit();toast('Devolvido ao Balance: '+what+'.');}
+const listOf=map=>Object.entries(map).map(([k,q])=>nf(q)+' '+shortNm(k)).join(' + ');
+function setPart(tid,item,on){const p=S.parts[tid]||(S.parts[tid]={});if(on)p[item]=true;else delete p[item];if(!Object.keys(p).length)delete S.parts[tid];}
+function togglePart(tid,item){
+  const t=TX[tid];if(!t||!t.c[item]||ro())return;
+  const on=!(S.parts[tid]&&S.parts[tid][item]),map={[item]:t.c[item]};
+  setPart(tid,item,on);commit();
+  const full=Object.keys(t.c).every(k=>S.parts[tid]&&S.parts[tid][k]);
+  if(on)toast(tn(t)+': '+listOf(map)+' entregue.'+(full?' Talento concluído.':''),[{label:'Descontar do Balance',fn:()=>discount(map,listOf(map))}]);
+  else toast(tn(t)+': entrega de '+shortNm(item)+' desmarcada.',[{label:'Devolver ao Balance',fn:()=>giveBack(map,listOf(map))}]);
+}
+function completeTalent(tid){
+  const t=TX[tid];if(!t||ro())return;const map={};
+  for(const [k,q] of Object.entries(t.c))if(!(S.parts[tid]&&S.parts[tid][k])){map[k]=q;setPart(tid,k,true);}
+  commit();
+  if(Object.keys(map).length)toast(tn(t)+' concluído (+'+t.v+'% '+BON[t.cat][0]+').',[{label:'Descontar do Balance',fn:()=>discount(map,listOf(map))}]);
+}
+function undoTalent(tid){
+  const t=TX[tid];if(!t||ro())return;const map={};
+  for(const [k,q] of Object.entries(t.c))if(S.parts[tid]&&S.parts[tid][k])map[k]=q;
+  delete S.parts[tid];commit();
+  toast(tn(t)+' desmarcado.',[{label:'Devolver ao Balance',fn:()=>giveBack(map,listOf(map))}]);
+}
+let confirmT=null;
+function tierAll(T){
+  if(ro())return;
+  if(ui.confirmTier!==T){ui.confirmTier=T;render();clearTimeout(confirmT);confirmT=setTimeout(()=>{ui.confirmTier=0;render();},5000);return;}
+  ui.confirmTier=0;clearTimeout(confirmT);let n=0;
+  for(const t of TAL.filter(x=>x.t===T)){for(const k of Object.keys(t.c)){if(!(S.parts[t.id]&&S.parts[t.id][k])){setPart(t.id,k,true);}}n++;}
+  commit();toast('Tier '+T+': todos os '+n+' talentos marcados como concluídos.');
+}
+function toggleUnl(T){if(T===1||ro())return;S.unlocked=S.unlocked.includes(T)?S.unlocked.filter(x=>x!==T):[...S.unlocked,T].sort();commit();}
+function setTab(k){if(!['resumo','itens','talentos','bonus'].includes(k))k='resumo';ui.tab=k;try{history.replaceState(null,'','#'+k);}catch(e){}render();if(!isDesk())window.scrollTo(0,0);}
+function openItem(id){if(!ITEMS[IX[id]])return;ui.sheet={type:'item',id};$('menu').hidden=true;render();if(isDesk()){const el=$('sh-bal');if(el){el.focus();try{el.select();}catch(e){}}}}
+function closeSheet(){ui.sheet=null;edit=null;render();}
+function sheetAdd(){const el=$('sh-add');if(!el||!ui.sheet||ui.sheet.type!=='item')return;const v=parseQty(el.value.replace(/^\+/,''),0);
+  if(!v){el.classList.add('bad');return;}const id=ui.sheet.id;setBal(id,(S.balance[id]||0)+v);commit();toast('Somado: +'+nf(v)+' '+shortNm(id)+'.');}
+
+const enc=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const dec=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))));};
+function linkWithData(){const here=location.href.split('#')[0];const base=mode==='local'&&/^https?:/.test(here)?here:PAGES;return base+'#importar='+enc(S);}
+function aiText(){
+  const R=compute(),L=[],unl=[1,...S.unlocked];
+  L.push('TALENTOS FANTASMA - ACOMPANHAMENTO DE MATERIAIS');
+  L.push('Estado em '+new Date().toLocaleString('pt-BR')+'. Responda sempre em português do Brasil.');
+  L.push('');
+  L.push('COMO FUNCIONA');
+  L.push('- 4 tiers (T1 10, T2 12, T3 17, T4 10 talentos). Cada talento custa vários itens e cada item pode ser entregue separadamente; o talento fica concluído quando todos os itens foram entregues.');
+  L.push('- Balance = quanto o usuário tem de cada item agora.');
+  L.push('- Falta por item = partes não entregues, nos tiers do total, menos o Balance. O Balance cobre as partes na ordem do jogo (T1 a T4, de cima para baixo).');
+  L.push('- Foco agora = primeiro item da ordem de farm com falta (Passivo por último); Próximo = o seguinte.');
+  L.push('- Bônus ativo = talento concluído em tier liberado. Cada tier liberado (T2 a T4) dá +1% de dano e +1% de defesa Fantasma.');
+  L.push('');
+  L.push('TIERS NO TOTAL: '+S.tiers.map(t=>'T'+t).join(', ')+' | TIERS LIBERADOS: '+unl.map(t=>'T'+t).join(', '));
+  if(R.focus)L.push('Foco agora: '+label(R.focus)+' - falta '+nf(R.byId[R.focus].miss));
+  if(R.next)L.push('Próximo: '+label(R.next)+' - falta '+nf(R.byId[R.next].miss));
+  L.push('Progresso do farm: '+Math.round(R.overall*100)+'% | '+R.complete+' de '+R.rows.length+' itens completos | '+TAL.filter(t=>R.tal[t.id].complete).length+' de '+TAL.length+' talentos concluídos');
+  L.push('');
+  L.push('ITENS (ordem | item | Pokémon | Balance | falta total = por tier | % | status)');
+  for(const r of R.rows){const o=ordOf(r.id);L.push((o==='P'?'Passivo':o)+' | '+nm(r.id)+' | '+(ITEMS[IX[r.id]].poke||'-')+' | '+nf(S.balance[r.id]||0)+' | '+nf(r.miss)+' = '+S.tiers.filter(k=>r.tiers[k]).map(k=>'T'+k+' '+nf(r.tiers[k].miss)).join(' + ')+' | '+pc(r)+'% | '+r.status);}
+  L.push('');
+  L.push('BÔNUS (ativo / máximo)');
+  for(const k of Object.keys(BON)){const b=R.bon[k];L.push('- '+BON[k][0]+': +'+b.on+'% de +'+b.max+'%'+(b.pend?' (+'+b.pend+'% concluído aguardando liberar tier)':''));}
+  L.push('');
+  L.push('TALENTOS');
+  for(const T of [1,2,3,4]){const z=R.tstat[T];L.push('Tier '+T+': '+z.done+' de '+z.n+' concluídos'+(unl.includes(T)?' (liberado)':' (bloqueado)')+(S.tiers.includes(T)?'':' (fora do total)'));
+    for(const t of TAL.filter(x=>x.t===T)){const s=R.tal[t.id];L.push('  '+tn(t)+' ['+STL[s.status][0]+'] +'+t.v+'% '+BON[t.cat][0]+(t.l?' (nível '+t.l+')':'')+' | '+s.parts.map(p=>nf(p.q)+' '+nm(p.id)+(p.done?' (entregue)':p.miss?' (falta '+nf(p.miss)+')':' (coberto pelo Balance)')).join(' + '));}}
+  return L.join('\n');
+}
+async function copyText(txt,what){
+  try{await navigator.clipboard.writeText(txt);toast(what+' copiado.');}
+  catch(e){ui.sheet={type:'text',title:what,txt};$('sheet').dataset.type='';render();}
+}
+
+document.addEventListener('click',e=>{
+  const menu=$('menu');
+  if(!menu.hidden&&!e.target.closest('#menu')&&!e.target.closest('[data-act=menu]'))menu.hidden=true;
+  if(e.target===$('sheet')){closeSheet();return;}
+  if(e.target.closest('input,textarea'))return;
+  const el=e.target.closest('[data-act]');if(!el)return;
+  const a=el.dataset.act;
+  if(a==='menu'){menu.hidden=!menu.hidden;return;}
+  if(['ia','bk','rs','link','help'].includes(a))menu.hidden=true;
+  switch(a){
+    case 'tier':{if(ro())return;const t=+el.dataset.t;if(S.tiers.includes(t)){if(S.tiers.length===1){toast('Deixe pelo menos um tier no total.');return;}S.tiers=S.tiers.filter(x=>x!==t);}else S.tiers=[...S.tiers,t].sort();commit();break;}
+    case 'tab':setTab(el.dataset.v);break;
+    case 'ttab':ui.ttab=+el.dataset.t;ui.confirmTier=0;render();break;
+    case 'ifil':ui.ifil=el.dataset.v;render();break;
+    case 'tfil':ui.tfil=el.dataset.v;render();break;
+    case 'out':ui.showOut=!ui.showOut;render();break;
+    case 'open':openItem(el.dataset.item);break;
+    case 'close':closeSheet();break;
+    case 'part':togglePart(el.dataset.tid,el.dataset.item);break;
+    case 'tcomp':completeTalent(el.dataset.tid);break;
+    case 'tundo':undoTalent(el.dataset.tid);break;
+    case 'tierall':tierAll(+el.dataset.t);break;
+    case 'unl':toggleUnl(+el.dataset.t);break;
+    case 'add':if(!ro()){const id=el.dataset.item;setBal(id,(S.balance[id]||0)+Number(el.dataset.v));commit();}break;
+    case 'addv':sheetAdd();break;
+    case 'ia':copyText(aiText(),'Texto para IA');break;
+    case 'bk':copyText(JSON.stringify({app:'talentos-fantasma',v:2,salvoEm:new Date().toISOString(),estado:S}),'Backup');break;
+    case 'link':copyText(linkWithData(),'Link com seus dados');break;
+    case 'rs':if(ro()){toast('Somente leitura: não dá para restaurar aqui.');return;}ui.sheet={type:'restore'};$('sheet').dataset.type='';render();setTimeout(()=>{const t=$('rsTa');if(t)t.focus();},0);break;
+    case 'rsgo':{let x;try{x=JSON.parse(($('rsTa')||{}).value||'');}catch(err){toast('Esse texto não é um backup válido.');return;}
+      const src=x&&x.estado?x.estado:x;if(!src||typeof src!=='object'||!src.balance){toast('Esse texto não é um backup válido.');return;}
+      S=norm(src);ui.sheet=null;commit();toast('Backup restaurado.');break;}
+    case 'help':ui.sheet={type:'help'};$('sheet').dataset.type='';render();break;
+    case 'imp':if(ui.importData){S=ui.importData;ui.importData=null;try{history.replaceState(null,'','#resumo');}catch(err){}commit();toast('Dados importados.');}break;
+    case 'impno':ui.importData=null;try{history.replaceState(null,'','#resumo');}catch(err){}render();break;
+  }
+});
+document.addEventListener('focusin',e=>{const el=e.target;if(!el.matches)return;
+  if(el.matches('input[data-bal]')){edit={k:el.dataset.k,base:S.balance[el.dataset.bal]||0};setTimeout(()=>{try{el.select();}catch(err){}},0);}
+  else if(el.matches('input.tin,#sh-add'))setTimeout(()=>{try{el.select();}catch(err){}},0);
+});
+document.addEventListener('input',e=>{const el=e.target;
+  if(el.id==='sh-add'){el.classList.remove('bad');return;}
+  if(!el.matches||!el.matches('input[data-bal]')||ro())return;
+  const id=el.dataset.bal,base=edit&&edit.k===el.dataset.k?edit.base:(S.balance[id]||0),v=parseQty(el.value,base);
+  el.classList.toggle('bad',v===null);if(v===null)return;
+  if((S.balance[id]||0)!==v){setBal(id,v);save();scheduleLive();}
+});
+document.addEventListener('change',e=>{const el=e.target;if(!(el instanceof HTMLInputElement)||ro())return;
+  if(el.dataset.bal){const id=el.dataset.bal,base=edit&&edit.k===el.dataset.k?edit.base:(S.balance[id]||0),v=parseQty(el.value,base);edit=null;
+    if(v===null){toast('Valor inválido. Use 2622, +500, -200 ou 10k.');render();return;}
+    setBal(id,v);commit();}
+  else if(el.dataset.ord){const id=el.dataset.ord,s=el.value.trim().toLowerCase();S.items[id]=Object.assign({},S.items[id]);
+    if(s==='p'||s==='passivo')S.items[id].order='P';else if(/^\d{1,3}$/.test(s)&&+s>=1)S.items[id].order=+s;else if(s==='')delete S.items[id].order;
+    else{toast('Use um número (1, 2, 3…) ou a palavra Passivo.');render();return;}
+    if(!Object.keys(S.items[id]).length)delete S.items[id];commit();}
+  else if(el.dataset.nm){const id=el.dataset.nm,s=el.value.trim().slice(0,60);S.items[id]=Object.assign({},S.items[id]);
+    if(s&&s!==ITEMS[IX[id]].name)S.items[id].name=s;else delete S.items[id].name;
+    if(!Object.keys(S.items[id]).length)delete S.items[id];commit();}
+});
+document.addEventListener('focusout',()=>{setTimeout(()=>{if(pendingRender&&!typing()){pendingRender=false;render();}},0);});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){$('menu').hidden=true;if(ui.sheet)closeSheet();return;}
+  if(e.key==='Enter'&&e.target.matches&&e.target.matches('input')){if(e.target.id==='sh-add'){e.preventDefault();sheetAdd();}else e.target.blur();}
+});
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(['resumo','itens','talentos','bonus'].includes(h)&&h!==ui.tab){ui.tab=h;render();}});
+
+function goLocal(msg){
+  mode='local';let x=null;
+  try{x=JSON.parse(localStorage.getItem(KEY)||'null')||JSON.parse(localStorage.getItem(OLDKEY)||'null');}catch(e){}
+  S=norm(x);
+  if(location.hash.startsWith('#importar=')){try{ui.importData=norm(dec(location.hash.slice(10)));}catch(e){toast('O link de dados está incompleto ou corrompido.');}}
+  render();status(msg||'Salvo neste aparelho','w');
+}
+async function init(){
+  const h=location.hash.slice(1);if(['resumo','itens','talentos','bonus'].includes(h))ui.tab=h;
+  render();status('Carregando…','w');
+  let api=null;try{if(window.claude&&typeof window.claude.use==='function')api=window.claude;}catch(e){}
+  if(!api){goLocal();return;}
+  const timer=setTimeout(()=>{if(mode==='loading')status('Ainda carregando…','w');},10000);
+  let dbx=null;try{dbx=await api.use('db');}catch(e){dbx=null;}
+  if(!dbx){clearTimeout(timer);goLocal('Salvo neste aparelho');return;}
+  try{const u=await api.use('user');if(u&&typeof u.can==='function'){const w=await u.can('data.write');if(w===false)canWrite=false;}}catch(e){}
+  try{ref=dbx.doc('tracker/estado');}catch(e){clearTimeout(timer);goLocal();return;}
+  ref.onSnapshot(snap=>{
+    clearTimeout(timer);
+    if(snap.metadata&&snap.metadata.hasPendingWrites)return;
+    const first=mode==='loading';mode='db';
+    if(snap.exists){const n=norm(snap.data());if(first||JSON.stringify(n)!==JSON.stringify(S)){S=n;renderSafe();}}
+    else if(first){S=blank();renderSafe();toast('Ainda não há dados salvos. Comece pelo Balance de cada item.');}
+    if(!canWrite)status('Somente leitura','w');
+    else if(snap.metadata&&snap.metadata.fromCache)status('Sincronizando…','w');
+    else if(!dirty&&!saving)status('Salvo na nuvem','ok');
+  },err=>{clearTimeout(timer);if(mode==='loading')goLocal('Sem nuvem: salvo neste aparelho');else status('Conexão caiu: recarregue','bad');});
+}
+init();
+}
+</script>
+</body>
+</html>
