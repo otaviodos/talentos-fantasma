@@ -756,7 +756,7 @@ function renderTal(R){
   if(T===1)h+='<div class="tr2">Sempre liberado.</div>';
   else if(unl)h+='<div class="tr2">Liberado · +1% de dano e +1% de defesa Fantasma.</div>';
   else if(T===R.nextLock)h+='<div class="tr2">Travado. Os itens deste tier ficam guardados no Balance até liberar.</div><div>'+libHtml(R,'t')+'</div>';
-  else h+='<div class="tr2">Travado. Antes, libere o T'+(T-1)+'. Custo: '+nf(UNL[T].m)+(UNL[T].l?' e nível '+UNL[T].l:'')+'. Os itens ficam guardados no Balance até lá.</div>';
+  else h+='<div class="tr2">Travado. Antes, libere o T'+(T-1)+'. Custo: '+nf(UNL[T].m)+(UNL[T].l?' e nível '+UNL[T].l:'')+'. Os itens ficam guardados no Balance até lá.</div><div class="libt" style="'+tv(T)+'"><b>Ao liberar o Tier '+T+'</b> · ganha +1% de dano e +1% de defesa Fantasma</div>';
   h+='<div class="tr3">';
   if(T>1&&unl&&S.unlocked.includes(T)&&!TAL.some(t=>t.t>=T&&S.parts[t.id])&&!S.unlocked.some(x=>x>T))h+='<button type="button" class="lnk" data-act="unl" data-t="'+T+'" data-k="unl-'+T+'"'+(ro()?' disabled':'')+'>Desfazer liberação</button>';
   if(unl&&st.done<st.n)h+='<button type="button" class="btn sm ghost" data-act="tierall" data-t="'+T+'" data-k="tierall-'+T+'"'+(ro()?' disabled':'')+'>'+(ui.confirmTier===T?'Confirmar: marcar os '+(st.n-st.done)+' sem descontar':'Marcar todos como concluídos')+'</button>';
