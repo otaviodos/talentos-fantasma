@@ -247,6 +247,22 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 .dc{text-align:right}.dc small{display:block;color:var(--mut);font-size:11px;font-weight:400}.dc.ok{color:var(--ok);font-weight:600}.dc.na{color:var(--mut)}
 .dsb{text-align:right;color:var(--mut)}.dsb.pos{color:var(--ok);font-weight:700}
 @media(max-width:640px){.dhd{display:none}.drow{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 8px;padding:10px 12px;align-items:start}.drow .dn{grid-column:1/4}.drow .dq{grid-column:4}.dc,.dsb{text-align:left}.dc::before,.dsb::before{content:attr(data-l);display:block;font-size:11px;color:var(--mut);font-weight:600}}
+.side{display:none;position:fixed;left:0;top:var(--toph,57px);bottom:0;width:236px;flex-direction:column;gap:2px;padding:14px 12px 18px;background:var(--card);border-right:1px solid var(--line);overflow-y:auto;z-index:15;scrollbar-width:thin}
+.side .sn{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border:0;border-radius:10px;background:none;color:var(--ink2);font:inherit;font-size:15px;font-weight:500;text-align:left;cursor:pointer;transition:background-color .15s ease,color .15s ease}
+.side .sn svg{width:20px;height:20px;flex:none}
+.side .sn:hover{background:var(--hover)}
+.side .sn[aria-current=page]{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);font-weight:700;box-shadow:inset 3px 0 0 var(--accent)}
+.side .sb{margin-left:auto;background:var(--orange);color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:1px 7px;font-style:normal}
+.side .sb.m{background:var(--mut)}
+.side .sep{height:1px;background:var(--line);margin:12px 4px}
+.side .slbl{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--mut);padding:2px 12px 6px}
+.side .tsel.light{margin:0;padding:0 8px}
+.side .tsel.light>span{display:none}
+.side .tsel.light{gap:5px;flex-wrap:nowrap}.side .tsel.light .chipT{min-height:40px;padding:4px 0;flex:1 1 0;justify-content:center;min-width:0}
+.side .sact{display:grid;gap:6px;padding:0 4px}
+.side .sact .btn{width:100%;justify-content:flex-start}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:-1px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .rl .rpk{font-size:12px;font-weight:400;color:var(--mut)}
 .pact{border:1.5px dashed var(--line3);background:var(--card);color:var(--accent);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;min-height:34px}
 .unl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:12px}
@@ -309,10 +325,9 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 @media(min-width:700px){.scrim{align-items:center;padding:24px}.sh{border-radius:18px;padding:20px}}
 @media(min-width:1000px){
  .tabbar,.mobonly{display:none!important}
- .panel{display:block}
- .main{grid-template-columns:minmax(0,2fr) minmax(0,1fr);grid-template-areas:"res res" "itn bon" "dep bon" "tal bon";padding-top:18px}
- #bonus{position:sticky;top:72px;max-height:calc(100vh - 88px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
- #resumo{grid-area:res}#itens{grid-area:itn}#bonus{grid-area:bon}#talentos{grid-area:tal}#deposito{grid-area:dep}
+ .side{display:flex}
+ .main{margin:0 0 0 236px;max-width:1500px;padding:20px 28px 36px}
+ #tselD{display:none!important}
  .rgrid{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.25fr)}
 }
 @media(max-width:999.98px){
@@ -349,6 +364,7 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 <button type="button" data-act="help">Como funciona</button>
 <div class="mtema"><span>Tema</span><span class="seg" role="group" aria-label="Tema"><button type="button" data-act="tema-set" data-v="auto">Auto</button><button type="button" data-act="tema-set" data-v="claro">Claro</button><button type="button" data-act="tema-set" data-v="escuro">Escuro</button></span></div>
 </div>
+<nav class="side" id="side" aria-label="Seções"></nav>
 <main class="main">
 <section id="resumo" class="panel on" aria-label="Resumo"></section>
 <section id="itens" class="panel" aria-label="Banco de itens"></section>
@@ -420,7 +436,7 @@ function paintTema(){const d=isDark(),m=document.querySelector('meta[name=theme-
 function applyTema(p){const r=document.documentElement;if(p==='claro'||p==='escuro')r.setAttribute('data-tema',p);else r.removeAttribute('data-tema');try{if(p==='claro'||p==='escuro')localStorage.setItem(TKEY,p);else localStorage.removeItem(TKEY);}catch(e){}paintTema();}
 const blank=()=>({v:2,balance:{},parts:{},tiers:[2,3],unlocked:[],items:{},money:0,level:0,hist:{},upd:{}});
 let S=blank(),mode='loading',ref=null,canWrite=true,edit=null,last=null,liveT=null,renderT=null,pendingRender=false;
-const ui={tab:'resumo',ttab:2,ifil:'pend',tfil:'pend',namesAll:false,lootMode:'drop',lootAll:false,sheet:null,confirmTier:0,showOut:false,importData:null};
+const ui={scroll:{},tab:'resumo',ttab:2,ifil:'pend',tfil:'pend',namesAll:false,lootMode:'drop',lootAll:false,sheet:null,confirmTier:0,showOut:false,importData:null};
 const $=id=>document.getElementById(id);
 const nf=n=>Math.round(n).toLocaleString('pt-BR');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -562,7 +578,7 @@ function scheduleLive(){clearTimeout(liveT);liveT=setTimeout(liveRender,120);}
 function typing(){const a=document.activeElement;return !!(a&&a.matches&&a.matches('input[type=text],textarea'));}
 function renderSafe(){if(typing()){pendingRender=true;liveRender();}else render();}
 
-function renderTop(){$('tselD').innerHTML='<span>Estocando até</span>'+tierChips('d');}
+function renderTop(){$('tselD').innerHTML='';}
 function focusHint(f,R){
   const r=R.byId[f];let nx=r&&r.next;
   if(!nx){const t=TAL.filter(x=>R.tal[x.id].parts.some(p=>p.id===f&&p.miss>0)).sort((a,b)=>R.tal[a.id].rank-R.tal[b.id].rank)[0];if(!t)return '';const p=R.tal[t.id].parts.find(q=>q.id===f);nx={t,q:p.q,a:p.alloc,m:p.miss};}
@@ -581,7 +597,7 @@ function libHtml(R,loc){
 }
 function renderResumo(R){
   const f=R.focus,rf=f&&R.byId[f],ob=R.obj;
-  let h='<div class="tsel light mobonly"><span>Estocando até</span>'+tierChips('m')+'</div>';
+  let h='<h2 class="sr">Resumo</h2><div class="tsel light mobonly"><span>Estocando até</span>'+tierChips('m')+'</div>';
   if(ui.importData){const d=ui.importData,nt=TAL.filter(t=>{const p=d.parts[t.id];return p&&Object.keys(t.c).every(k=>p[k]);}).length;
     h+='<div class="imp"><p><b>Este link traz dados de outro aparelho:</b> '+nt+' talentos concluídos e Balance de '+Object.keys(d.balance).length+' itens. Importar substitui os dados deste aparelho.</p><button type="button" class="btn pri" data-act="imp">Importar</button><button type="button" class="btn ghost" data-act="impno">Ignorar</button></div>';}
   h+='<div class="rgrid"><section class="focus"><div class="hd"><span class="mk" style="color:var(--orange)">▶</span> FOCO AGORA</div><div class="bd">';
@@ -615,7 +631,7 @@ function renderDep(R){
   const mx=Math.max(...S.tiers),ids=ITEMS.filter(it=>(S.balance[it.id]||0)>0||(R.byId[it.id]&&R.byId[it.id].miss>0)).map(it=>it.id).sort((a,b)=>okey(a)-okey(b));
   const sob=ids.filter(id=>R.left[id]>0).length;
   let h='<div class="ph"><h2>Depósito</h2><span class="cnt">o que você tem guardado e para qual tier vai</span><span class="phb"><button type="button" class="btn sm pri" data-act="loot" data-k="d-loot"'+(ro()?' disabled':'')+'>Registrar loot</button></span></div>';
-  h+='<div class="tsel light"><span>Estocando até</span>'+tierChips('p')+'</div>';
+  h+='<div class="tsel light mobonly"><span>Estocando até</span>'+tierChips('p')+'</div>';
   h+='<div class="dsum">'+ids.filter(id=>(S.balance[id]||0)>0).length+' itens no depósito'+(sob?' · '+sob+' com sobra':'')+'. O depósito reserva primeiro para os tiers até o T'+mx+', do menor para o maior; o resto vai para os outros tiers e o que não serve para nada é sobra.</div>';
   h+='<div class="dcovs">'+[2,3,4].map(T=>{let n=0,c=0;for(const t of TAL.filter(x=>x.t===T))for(const p of R.tal[t.id].parts)if(!p.done){n++;if(!p.miss)c++;}
     if(!n)return '<div class="dcov" style="'+tv(T)+'"><b>T'+T+'</b>tudo entregue</div>';
@@ -820,10 +836,18 @@ function patchSheet(R){
   const a=document.querySelector('#sheet .sh-stats'),b=document.querySelector('#sheet .sh-parts'),c=document.querySelector('#sheet .sh-st');
   if(a)a.innerHTML=sheetStats(id,R);if(b)b.innerHTML=sheetParts(id,R);if(c)c.innerHTML=r?stHtml(r):'';
 }
+const TABS=[['resumo','Resumo'],['itens','Itens'],['deposito','Depósito'],['talentos','Talentos'],['bonus','Bônus']],TABK=TABS.map(x=>x[0]);
+function renderSide(R,ready,pend){
+  let h=TABS.map(([k,l])=>'<button type="button" class="sn" data-act="tab" data-v="'+k+'" data-k="sn-'+k+'"'+(ui.tab===k?' aria-current="page"':'')+'>'+ICON[k]+'<span>'+l+'</span>'+(k==='talentos'&&ready?'<i class="sb" aria-label="'+ready+' prontos">'+ready+'</i>':k==='itens'&&pend?'<i class="sb m" aria-label="'+pend+' com falta">'+pend+'</i>':'')+'</button>').join('');
+  h+='<div class="sep"></div><div class="slbl">ESTOCANDO ATÉ</div><div class="tsel light"><span>Estocando até</span>'+tierChips('s')+'</div>';
+  h+='<div class="sep"></div><div class="sact"><button type="button" class="btn sm pri" data-act="loot" data-k="s-loot"'+(ro()?' disabled':'')+'>Registrar loot</button><button type="button" class="btn sm ghost" data-act="ordem" data-k="s-ordem">Ordem de farm</button><button type="button" class="btn sm ghost" data-act="names" data-k="s-names">Nomes dos itens</button></div>';
+  $('side').innerHTML=h;
+  const t=document.querySelector('.top');if(t)document.documentElement.style.setProperty('--toph',t.offsetHeight+'px');
+}
 function renderTabbar(R){
-  const ready=R.ready.length,pend=R.rows.filter(r=>r.miss>0).length;
-  $('tabbar').innerHTML=[['resumo','Resumo'],['itens','Itens'],['deposito','Depósito'],['talentos','Talentos'],['bonus','Bônus']].map(([k,l])=>'<button type="button" data-act="tab" data-v="'+k+'"'+(ui.tab===k?' aria-current="page"':'')+'>'+ICON[k]+'<span>'+l+'</span>'+(k==='talentos'&&ready?'<i class="badge">'+ready+'</i>':k==='itens'&&pend?'<i class="badge" style="background:var(--mut)">'+pend+'</i>':'')+'</button>').join('');
-  for(const k of ['resumo','itens','deposito','talentos','bonus'])$(k).classList.toggle('on',ui.tab===k);
+  const ready=R.ready.length,pend=R.rows.filter(r=>r.miss>0).length;renderSide(R,ready,pend);
+  $('tabbar').innerHTML=TABS.map(([k,l])=>'<button type="button" data-act="tab" data-v="'+k+'"'+(ui.tab===k?' aria-current="page"':'')+'>'+ICON[k]+'<span>'+l+'</span>'+(k==='talentos'&&ready?'<i class="badge">'+ready+'</i>':k==='itens'&&pend?'<i class="badge" style="background:var(--mut)">'+pend+'</i>':'')+'</button>').join('');
+  for(const k of TABK)$(k).classList.toggle('on',ui.tab===k);
 }
 
 function parseQty(raw,cur){
@@ -933,7 +957,9 @@ function toggleUnl(T){
   if((S.money||0)>=u.m){S.money-=u.m;commit();toast('T'+T+' liberado. '+nf(u.m)+' descontados do dinheiro.',[{label:'Não descontar',fn:()=>{S.money=(S.money||0)+u.m;commit();}}]);}
   else{commit();toast('T'+T+' liberado.');}
 }
-function setTab(k){if(!['resumo','itens','deposito','talentos','bonus'].includes(k))k='resumo';ui.tab=k;try{history.replaceState(null,'','#'+k);}catch(e){}render();if(!isDesk())window.scrollTo(0,0);}
+function setTab(k,fromPop){if(!TABK.includes(k))k='resumo';const ch=k!==ui.tab;if(ch)ui.scroll[ui.tab]=window.scrollY;ui.tab=k;
+  if(!fromPop&&ch){try{history.pushState(null,'','#'+k);}catch(e){}}
+  render();if(ch){window.scrollTo(0,ui.scroll[k]||0);const h=$(k).querySelector('h2');if(h){h.tabIndex=-1;h.focus({preventScroll:true});}}}
 function openItem(id){if(!ITEMS[IX[id]])return;ui.sheet={type:'item',id};$('menu').hidden=true;render();if(isDesk()){const el=$('sh-bal');if(el){el.focus();try{el.select();}catch(e){}}}}
 function closeSheet(){ui.sheet=null;edit=null;render();}
 function goTal(tid){const t=TX[tid];if(!t)return;ui.ttab=t.t;if(compute().tal[tid].complete)ui.tfil='todos';setTab('talentos');setTimeout(()=>{const el=$('tc-'+tid);if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1600);}},30);}
@@ -1067,7 +1093,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){$('menu').hidden=true;if(ui.sheet)closeSheet();return;}
   if(e.key==='Enter'&&e.target.matches&&e.target.matches('input')){if(e.target.id==='sh-add'){e.preventDefault();sheetAdd();}else e.target.blur();}
 });
-window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(['resumo','itens','talentos','bonus'].includes(h)&&h!==ui.tab){ui.tab=h;render();}});
+const onNav=()=>{const h=location.hash.slice(1)||'resumo';if(TABK.includes(h)&&h!==ui.tab)setTab(h,true);};window.addEventListener('hashchange',onNav);window.addEventListener('popstate',onNav);window.addEventListener('resize',()=>{const t=document.querySelector('.top');if(t)document.documentElement.style.setProperty('--toph',t.offsetHeight+'px');});
 
 function goLocal(msg){
   mode='local';let x=null;
@@ -1077,7 +1103,7 @@ function goLocal(msg){
   render();status(msg||'Salvo neste aparelho','w');
 }
 async function init(){
-  const h=location.hash.slice(1);if(['resumo','itens','talentos','bonus'].includes(h))ui.tab=h;
+  const h=location.hash.slice(1);if(TABK.includes(h))ui.tab=h;
   render();status('Carregando…','w');
   let api=null;try{if(window.claude&&typeof window.claude.use==='function')api=window.claude;}catch(e){}
   if(!api){goLocal();return;}
