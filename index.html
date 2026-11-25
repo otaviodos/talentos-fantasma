@@ -503,11 +503,11 @@ function compute(){
   if(cur){const items=ITEMS.filter(it=>per[it.id][cur]&&per[it.id][cur].miss>0).map(it=>({id:it.id,miss:per[it.id][cur].miss,eta:etaOf(RI,it.id,per[it.id][cur].miss)})).sort((a,b)=>okey(a.id)-okey(b.id));
     obj={t:cur,items,eta:maxEta(items.map(x=>x.eta))};}
   const near=TAL.filter(t=>unl.has(t.t)&&!tal[t.id].complete&&!tal[t.id].ready).map(t=>{const ms=tal[t.id].parts.filter(p=>!p.done&&p.miss>0);return {t,miss:ms,fr:ms.reduce((x,p)=>x+p.miss/p.q,0),eta:maxEta(ms.map(p=>etaOf(RI,p.id,p.cum)))};}).sort((a,b)=>a.fr-b.fr||tal[a.t.id].rank-tal[b.t.id].rank);
-  const oid=obj?obj.items.map(x=>x.id):[],fl=[...oid,...pend.map(r=>r.id).filter(id=>!oid.includes(id))];
+  const fl=pend.map(r=>r.id);
   return {rows,byId,per,tal,tstat,bon,ready,unl,cur,nextLock,obj,near,RI,etaAll:maxEta(pend.map(r=>r.eta)),focus:fl[0]||null,next:fl[1]||null,overall:T?C/T:1,complete:rows.filter(r=>r.miss===0).length};
 }
 
-const tierChips=loc=>[1,2,3,4].map(k=>'<button type="button" class="chipT" data-act="tier" data-t="'+k+'" data-k="tier-'+loc+'-'+k+'" title="Guardar itens para o Tier '+k+'" aria-pressed="'+S.tiers.includes(k)+'"'+(ro()?' disabled':'')+'>T'+k+'</button>').join('');
+const tierChips=loc=>[1,2,3,4].map(k=>'<button type="button" class="chipT" data-act="tier" data-t="'+k+'" data-k="tier-'+loc+'-'+k+'" title="Estocar itens até o Tier '+k+'" aria-pressed="'+(k<=Math.max(...S.tiers))+'"'+(ro()?' disabled':'')+'>T'+k+'</button>').join('');
 const stHtml=r=>{const c=r.status==='Completo'?'p-ok':r.status==='Em andamento'?'p-mid':'p-bad';return '<span class="pill '+c+'">'+r.status+'</span>';};
 function stgHtml(r,withCap){
   const Ts=S.tiers.filter(k=>r.tiers[k]);
@@ -540,7 +540,7 @@ function scheduleLive(){clearTimeout(liveT);liveT=setTimeout(liveRender,120);}
 function typing(){const a=document.activeElement;return !!(a&&a.matches&&a.matches('input[type=text],textarea'));}
 function renderSafe(){if(typing()){pendingRender=true;liveRender();}else render();}
 
-function renderTop(){$('tselD').innerHTML='<span>Guardando para</span>'+tierChips('d');}
+function renderTop(){$('tselD').innerHTML='<span>Estocando até</span>'+tierChips('d');}
 function focusHint(f,R){
   const r=R.byId[f];let nx=r&&r.next;
   if(!nx){const t=TAL.filter(x=>R.tal[x.id].parts.some(p=>p.id===f&&p.miss>0)).sort((a,b)=>R.tal[a.id].rank-R.tal[b.id].rank)[0];if(!t)return '';const p=R.tal[t.id].parts.find(q=>q.id===f);nx={t,q:p.q,a:p.alloc,m:p.miss};}
@@ -559,16 +559,16 @@ function libHtml(R,loc){
 }
 function renderResumo(R){
   const f=R.focus,rf=f&&R.byId[f],ob=R.obj;
-  let h='<div class="tsel light mobonly"><span>Guardando para</span>'+tierChips('m')+'</div>';
+  let h='<div class="tsel light mobonly"><span>Estocando até</span>'+tierChips('m')+'</div>';
   if(ui.importData){const d=ui.importData,nt=TAL.filter(t=>{const p=d.parts[t.id];return p&&Object.keys(t.c).every(k=>p[k]);}).length;
     h+='<div class="imp"><p><b>Este link traz dados de outro aparelho:</b> '+nt+' talentos concluídos e Balance de '+Object.keys(d.balance).length+' itens. Importar substitui os dados deste aparelho.</p><button type="button" class="btn pri" data-act="imp">Importar</button><button type="button" class="btn ghost" data-act="impno">Ignorar</button></div>';}
-  h+='<div class="rgrid"><section class="focus"><div class="hd"><span class="mk" style="color:var(--orange)">▶</span> FOCO AGORA'+(ob&&ob.items.length?' · FECHAR O T'+ob.t:'')+'</div><div class="bd">';
+  h+='<div class="rgrid"><section class="focus"><div class="hd"><span class="mk" style="color:var(--orange)">▶</span> FOCO AGORA</div><div class="bd">';
   if(mode==='loading')h+='<div class="fname">Carregando…</div>';
-  else if(!f)h+='<div class="fname">'+(R.rows.length?'Nada falta nos tiers marcados em Guardando para':'Nenhum item com demanda em Guardando para')+'</div>';
+  else if(!f)h+='<div class="fname">'+(R.rows.length?'Nada falta no estoque até o T'+Math.max(...S.tiers):'Nenhum item com demanda até o T'+Math.max(...S.tiers))+'</div>';
   else{
-    const oi=ob&&ob.items.find(x=>x.id===f),miss=oi?oi.miss:(rf?rf.miss:0),eta=oi?oi.eta:(rf?rf.eta:undefined);
+    const miss=rf?rf.miss:0,eta=rf?rf.eta:undefined,mx=Math.max(...S.tiers);
     h+='<div class="fhead">'+ico(f,44)+'<div><div class="fname">'+esc(nm(f))+'</div><div class="fpoke">Dropa de: '+esc(pokeTxt(f))+'</div></div></div>';
-    h+='<div class="fbig">'+nf(miss)+' <small>'+(oi?'para fechar o T'+ob.t:'itens')+'</small></div>';
+    h+='<div class="fbig">'+nf(miss)+' <small>itens até o T'+mx+'</small></div>';
     h+='<div class="fetaline">'+(eta===undefined?'Registre o loot para ver a previsão.':eta===null?'Sem previsão: ainda não há loot registrado deste item.':'Previsão: '+etaTxt(eta)+' no seu ritmo.')+'</div>';
     if(rf)h+=stgHtml(rf);
     h+=focusHint(f,R);
@@ -589,13 +589,13 @@ function renderResumo(R){
 }
 function renderItens(R){
   const rows=R.rows.filter(r=>ui.ifil==='all'||r.miss>0),pend=R.rows.filter(r=>r.miss>0).length;
-  let h='<div class="ph"><h2>Banco de itens</h2><span class="cnt">'+pend+' com falta · '+R.rows.length+' em Guardando para</span><span class="phb"><button type="button" class="btn sm pri" data-act="loot" data-k="i-loot"'+(ro()?' disabled':'')+'>Registrar loot</button><button type="button" class="btn sm ghost" data-act="ordem" data-k="i-ordem">Ordem de farm</button></span><span class="seg sp" role="group" aria-label="Filtro de itens"><button type="button" data-act="ifil" data-v="pend" aria-pressed="'+(ui.ifil==='pend')+'">Com falta</button><button type="button" data-act="ifil" data-v="all" aria-pressed="'+(ui.ifil==='all')+'">Todos</button></span></div>';
+  let h='<div class="ph"><h2>Banco de itens</h2><span class="cnt">'+pend+' com falta · '+R.rows.length+' no estoque</span><span class="phb"><button type="button" class="btn sm pri" data-act="loot" data-k="i-loot"'+(ro()?' disabled':'')+'>Registrar loot</button><button type="button" class="btn sm ghost" data-act="ordem" data-k="i-ordem">Ordem de farm</button></span><span class="seg sp" role="group" aria-label="Filtro de itens"><button type="button" data-act="ifil" data-v="pend" aria-pressed="'+(ui.ifil==='pend')+'">Com falta</button><button type="button" data-act="ifil" data-v="all" aria-pressed="'+(ui.ifil==='all')+'">Todos</button></span></div>';
   h+='<div class="ilist"><div class="irow ihead"><span></span><span>Item</span><span class="r">Balance</span><span class="r">Falta</span><span>Etapas (T2, T3…) e %</span><span class="c">Status</span></div>';
   h+=rows.map(r=>itemRow(r,R)).join('');
-  if(!rows.length)h+='<div class="empty">'+(R.rows.length?'Nenhum item com falta em Guardando para.':'Nenhum item com demanda em Guardando para.')+'</div>';
+  if(!rows.length)h+='<div class="empty">'+(R.rows.length?'Nenhum item com falta no estoque.':'Nenhum item com demanda no estoque.')+'</div>';
   h+='</div>';
   const out=ITEMS.filter(it=>!R.byId[it.id]);
-  if(out.length)h+='<div class="outb"><button type="button" class="lnk" data-act="out">'+(ui.showOut?'Esconder':'Mostrar')+' itens fora de Guardando para ('+out.length+')</button>'+(ui.showOut?'<div class="olist">'+out.map(it=>'<button type="button" class="ochip" data-act="open" data-item="'+it.id+'">'+esc(nm(it.id))+' · '+nf(S.balance[it.id]||0)+'</button>').join('')+'</div>':'')+'</div>';
+  if(out.length)h+='<div class="outb"><button type="button" class="lnk" data-act="out">'+(ui.showOut?'Esconder':'Mostrar')+' itens fora do estoque ('+out.length+')</button>'+(ui.showOut?'<div class="olist">'+out.map(it=>'<button type="button" class="ochip" data-act="open" data-item="'+it.id+'">'+esc(nm(it.id))+' · '+nf(S.balance[it.id]||0)+'</button>').join('')+'</div>':'')+'</div>';
   $('itens').innerHTML=h;
 }
 function patchItens(R){
@@ -620,7 +620,7 @@ function renderTal(R){
   const T=ui.ttab,L=TAL.filter(x=>x.t===T),st=R.tstat[T],unl=R.unl.has(T);
   let h='<div class="ph"><h2>Talentos</h2><span class="cnt">toque no item para entregar: desconta do Balance</span><span class="seg sp" role="group" aria-label="Filtro de talentos"><button type="button" data-act="tfil" data-v="todos" aria-pressed="'+(ui.tfil==='todos')+'">Todos</button><button type="button" data-act="tfil" data-v="pend" aria-pressed="'+(ui.tfil==='pend')+'">Pendentes</button></span></div>';
   h+='<div class="ttabs" role="tablist">'+[1,2,3,4].map(k=>{const z=R.tstat[k];return '<button type="button" role="tab" class="ttab" data-act="ttab" data-t="'+k+'" aria-selected="'+(k===T)+'" style="--tc:'+TIER[k].c+'"><span class="dot"></span>Tier '+k+'<span class="tcnt">'+z.done+'/'+z.n+'</span>'+(R.unl.has(k)?'':'<span class="lk">travado</span>')+'</button>';}).join('')+'</div>';
-  h+='<div class="tierhd" style="'+tv(T)+'"><div class="tr1"><b>Tier '+T+'</b><span>'+st.done+' de '+st.n+' concluídos'+(st.ready?' · '+st.ready+' pronto'+(st.ready>1?'s':'')+' para concluir':'')+(S.tiers.includes(T)?'':' · fora de Guardando para')+'</span></div><div class="tbar"><i style="width:'+(st.done/st.n*100)+'%"></i></div>';
+  h+='<div class="tierhd" style="'+tv(T)+'"><div class="tr1"><b>Tier '+T+'</b><span>'+st.done+' de '+st.n+' concluídos'+(st.ready?' · '+st.ready+' pronto'+(st.ready>1?'s':'')+' para concluir':'')+(S.tiers.includes(T)?'':' · fora do estoque')+'</span></div><div class="tbar"><i style="width:'+(st.done/st.n*100)+'%"></i></div>';
   if(T===1)h+='<div class="tr2">Sempre liberado.</div>';
   else if(unl)h+='<div class="tr2">Liberado · +1% de dano e +1% de defesa Fantasma.</div>';
   else if(T===R.nextLock)h+='<div class="tr2">Travado. Os itens deste tier ficam guardados no Balance até liberar.</div><div>'+libHtml(R,'t')+'</div>';
@@ -651,7 +651,7 @@ function renderBonus(R){
 const closeBtn='<button type="button" class="x" data-act="close" aria-label="Fechar">×</button>';
 function sheetStats(id,R){
   const r=R.byId[id],P=R.per[id];
-  let h='<div class="sstat"><div><div class="lbl">FALTA (GUARDANDO PARA)</div><div class="nbig">'+(r?nf(r.miss):'0')+'</div></div><div><div class="lbl">CONCLUÍDO</div><div class="nbig okt">'+(r?pc(r):100)+'%</div></div></div>';
+  let h='<div class="sstat"><div><div class="lbl">FALTA (ESTOQUE)</div><div class="nbig">'+(r?nf(r.miss):'0')+'</div></div><div><div class="lbl">CONCLUÍDO</div><div class="nbig okt">'+(r?pc(r):100)+'%</div></div></div>';
   h+=[1,2,3,4].filter(k=>P[k]&&P[k].tot).map(k=>{const x=P[k],c=TIER[k].c;return '<div class="strow"><span class="tt" style="color:'+TIER[k].t+'">Tier '+k+(S.tiers.includes(k)?'':' (fora)')+(R.unl.has(k)?'':' · travado')+'</span><span class="stg"><span class="s"><i style="width:'+(x.done/x.tot*100)+'%;background:'+c+'"></i><i style="left:'+(x.done/x.tot*100)+'%;width:'+(x.alloc/x.tot*100)+'%;background:'+c+';opacity:.4"></i></span></span><span>'+(x.miss?'falta <b>'+nf(x.miss)+'</b>':'<b class="okt">completo</b>')+' <span class="pk">de '+nf(x.tot)+'</span></span></div>';}).join('');
   if(r&&r.next)h+='<div class="fhint">Próximo talento: <b>'+tn(r.next.t)+'</b> precisa de '+nf(r.next.q)+'; faltam <b>'+nf(r.next.m)+'</b>.</div>';
   const RI=R.RI,rt=RI&&RI.rate[id];
@@ -682,7 +682,7 @@ function lootSheet(R){
   return '<div class="shh"><div><b id="shT">Registrar loot</b><div class="pk">Preencha só os itens que mudaram. Vai para o Balance e para o histórico da previsão.</div></div>'+closeBtn+'</div>'
   +'<div class="ph" style="margin:0"><span class="seg" role="group" aria-label="Como lançar"><button type="button" data-act="lootmode" data-v="drop" aria-pressed="'+drop+'">Dropei (soma)</button><button type="button" data-act="lootmode" data-v="total" aria-pressed="'+!drop+'">Tenho (total)</button></span></div>'
   +'<div class="lootlist">'+ids.map(id=>{const b=S.balance[id]||0;return '<label class="lrow">'+ico(id,32)+'<span class="lnm"><b>'+esc(shortNm(id))+'</b><small>'+(dropShort(id)?esc(dropShort(id))+' · ':'')+'tem '+nf(b)+'</small></span><input type="text" inputmode="numeric" enterkeyhint="next" autocomplete="off" data-loot="'+id+'" data-k="loot-'+id+'" data-bal0="'+b+'" placeholder="'+(drop?'+0':nf(b))+'" aria-label="'+esc(nm(id))+'"></label>';}).join('')+'</div>'
-  +'<div class="fact"><button type="button" class="btn pri" data-act="lootgo"'+(ro()?' disabled':'')+'>Lançar</button><button type="button" class="lnk" data-act="lootall">'+(ui.lootAll?'Mostrar só Guardando para':'Mostrar todos os itens')+'</button></div>'
+  +'<div class="fact"><button type="button" class="btn pri" data-act="lootgo"'+(ro()?' disabled':'')+'>Lançar</button><button type="button" class="lnk" data-act="lootall">'+(ui.lootAll?'Mostrar só o estoque':'Mostrar todos os itens')+'</button></div>'
   +'<p class="hint">Aceita 1590, 1.590, 1,5k e 2kk. Em “Tenho (total)” o número substitui o Balance; a diferença conta como drop de hoje.</p>';
 }
 function lootVals(){const o={};document.querySelectorAll('#sheet [data-loot]').forEach(el=>{if(el.value.trim())o[el.dataset.loot]=el.value;});return o;}
@@ -708,10 +708,10 @@ function ordPassive(id){if(ro())return;const L=ordIds().filter(x=>ordOf(x)!=='P'
 function ordemSheet(R){
   const ids=R.rows.map(r=>r.id).sort((a,b)=>okey(a)-okey(b)),act=ids.filter(id=>ordOf(id)!=='P'),pas=ids.filter(id=>ordOf(id)==='P');
   const info=id=>'<span class="onm"><b>'+esc(shortNm(id))+'</b><small>'+(dropShort(id)?esc(dropShort(id))+' · ':'')+(R.byId[id].miss?'falta '+nf(R.byId[id].miss):'completo')+'</small></span>';
-  return '<div class="shh"><div><b id="shT">Ordem de farm</b><div class="pk">O Foco segue esta ordem, começando pelo que falta para fechar o tier atual. Passivos caem junto e ficam no fim da fila.</div></div>'+closeBtn+'</div>'
+  return '<div class="shh"><div><b id="shT">Ordem de farm</b><div class="pk">O Foco segue esta ordem: o primeiro item com falta no estoque até o tier escolhido. Passivos caem junto e ficam no fim da fila.</div></div>'+closeBtn+'</div>'
   +'<div class="ordlist">'+act.map((id,i)=>'<div class="orow"><span class="onum">'+(i+1)+'</span>'+ico(id,30)+info(id)+'<button type="button" class="ob" data-act="ordmv" data-item="'+id+'" data-v="-1" data-k="om-u-'+id+'" aria-label="Subir '+esc(shortNm(id))+'"'+(i===0||ro()?' disabled':'')+'>↑</button><button type="button" class="ob" data-act="ordmv" data-item="'+id+'" data-v="1" data-k="om-d-'+id+'" aria-label="Descer '+esc(shortNm(id))+'"'+(i===act.length-1||ro()?' disabled':'')+'>↓</button><button type="button" class="ob w" data-act="ordp" data-item="'+id+'" data-k="om-p-'+id+'"'+(ro()?' disabled':'')+'>Passivo</button></div>').join('')+'</div>'
   +(pas.length?'<div class="olbl">PASSIVOS</div><div class="ordlist">'+pas.map(id=>'<div class="orow p"><span class="onum">P</span>'+ico(id,30)+info(id)+'<button type="button" class="ob w" data-act="ordp" data-item="'+id+'" data-k="om-p-'+id+'"'+(ro()?' disabled':'')+'>Tirar de passivo</button></div>').join('')+'</div>':'')
-  +'<p class="hint">Mostra os itens dos tiers marcados em Guardando para.</p>';
+  +'<p class="hint">Mostra os itens usados até o tier escolhido em Estocando até.</p>';
 }
 function deliverSheet(){
   const t=TX[ui.sheet.tid],its=ui.sheet.items;
@@ -747,9 +747,9 @@ function helpHtml(){return '<div class="shh"><div><b id="shT">Como funciona</b><
 +'<li><b>Registrar loot</b>: lance o que dropou (soma) ou o total que tem. Cada lançamento vai para o histórico, que calcula o seu ritmo dos últimos 7 dias e a <b>previsão em dias</b>.</li>'
 +'<li><b>Entregar</b>: toque no item do talento. A página marca a entrega e desconta do Balance; no aviso há “Não descontar”. Se o Balance não cobre, ela pergunta quanto você tem no jogo. Tocar de novo desmarca e devolve ao Balance.</li>'
 +'<li><b>Tiers em sequência</b>: um tier só libera com o anterior 100% concluído e o pagamento (T2: 50.000.000; T3: 200.000.000; T4: 400.000.000 e nível 550). Em tier travado não dá para entregar; os itens ficam guardados no Balance.</li>'
-+'<li><b>Guardando para</b>: os tiers para os quais você está juntando itens. A falta e o progresso contam só esses tiers.</li>'
++'<li><b>Estocando até</b>: até qual tier você está guardando itens no stash. A falta, o progresso e o Foco contam todos os tiers até ele.</li>'
 +'<li>Sem ordem dentro do tier: o Balance cobre primeiro os talentos mais perto de fechar.</li>'
-+'<li><b>Foco agora</b>: o primeiro item da <b>Ordem de farm</b> que falta para fechar o tier atual; depois, o que falta nos outros tiers de Guardando para. Passivos ficam no fim.</li>'
++'<li><b>Foco agora</b>: o primeiro item da <b>Ordem de farm</b> que ainda falta no estoque até o tier escolhido. Passivos ficam no fim. Abaixo dele aparece o que falta para fechar o tier atual.</li>'
 +'<li><b>Quase lá</b>: talentos dos tiers liberados com tudo o que ainda falta para fechar.</li>'
 +'<li><b>Bônus</b>: talentos concluídos em tiers liberados, mais +1% de dano e +1% de defesa por tier liberado (T2 a T4).</li>'
 +'<li><b>Desfazer última alteração</b> (menu ⋯) volta um passo de cada vez.</li>'
@@ -906,12 +906,12 @@ function aiText(){
   L.push('- 4 tiers (T1 10, T2 12, T3 17, T4 10 talentos). Cada talento custa vários itens e cada item pode ser entregue separadamente; o talento fica concluído quando todos os itens foram entregues.');
   L.push('- Balance = quanto o usuário tem de cada item agora. Entregar um item desconta do Balance; cada entrega é sempre a quantidade inteira.');
   L.push('- Tiers em sequência: o tier N só libera com o tier N-1 100% concluído e pagamento (T2 50.000.000; T3 200.000.000; T4 400.000.000 e nível 550). Em tier travado não dá para entregar; os itens ficam guardados no Balance.');
-  L.push('- Guardando para = tiers para os quais o usuário junta itens. Falta por item = partes não entregues nesses tiers menos o Balance. Dentro de um tier não há ordem obrigatória: o Balance cobre primeiro os talentos mais perto de fechar.');
-  L.push('- Foco agora = primeiro item da ordem de farm que falta para fechar o tier atual; depois os outros tiers de Guardando para. Passivo por último.');
+  L.push('- Falta por item = partes não entregues nos tiers do estoque menos o Balance. Dentro de um tier não há ordem obrigatória: o Balance cobre primeiro os talentos mais perto de fechar.');
+  L.push('- Estocando até = o usuário guarda no stash itens de todos os tiers até esse. Foco agora = primeiro item da ordem de farm com falta nesse estoque. Passivo por último.');
   L.push('- Previsão = falta dividida pelo ritmo médio de drop dos últimos 7 dias registrados.');
   L.push('- Bônus ativo = talento concluído em tier liberado. Cada tier liberado (T2 a T4) dá +1% de dano e +1% de defesa Fantasma.');
   L.push('');
-  L.push('GUARDANDO PARA: '+S.tiers.map(t=>'T'+t).join(', ')+' | TIERS LIBERADOS: '+unl.map(t=>'T'+t).join(', ')+' | Dinheiro: '+nf(S.money||0)+' | Nível: '+(S.level||'não informado'));
+  L.push('ESTOCANDO ATÉ: T'+Math.max(...S.tiers)+' | TIERS LIBERADOS: '+unl.map(t=>'T'+t).join(', ')+' | Dinheiro: '+nf(S.money||0)+' | Nível: '+(S.level||'não informado'));
   if(R.obj)L.push('Para fechar o T'+R.obj.t+': '+(R.obj.items.length?R.obj.items.map(x=>nf(x.miss)+' '+nm(x.id)+(x.eta>0?' ('+etaTxt(x.eta)+')':'')).join(', '):'tudo no Balance, falta entregar'));
   if(R.RI)L.push('Ritmo (média de '+R.RI.span+' dia(s)): '+Object.entries(R.RI.rate).map(([k,v])=>nm(k)+' ~'+nf(v)+'/dia').join(', '));
   if(R.focus)L.push('Foco agora: '+label(R.focus)+' - falta '+nf(R.byId[R.focus].miss));
@@ -925,7 +925,7 @@ function aiText(){
   for(const k of Object.keys(BON)){const b=R.bon[k];L.push('- '+BON[k][0]+': +'+b.on+'% de +'+b.max+'%'+(b.pend?' (+'+b.pend+'% concluído aguardando liberar tier)':''));}
   L.push('');
   L.push('TALENTOS');
-  for(const T of [1,2,3,4]){const z=R.tstat[T];L.push('Tier '+T+': '+z.done+' de '+z.n+' concluídos'+(unl.includes(T)?' (liberado)':' (travado)')+(S.tiers.includes(T)?'':' (fora de Guardando para)'));
+  for(const T of [1,2,3,4]){const z=R.tstat[T];L.push('Tier '+T+': '+z.done+' de '+z.n+' concluídos'+(unl.includes(T)?' (liberado)':' (travado)')+(S.tiers.includes(T)?'':' (fora do estoque)'));
     for(const t of TAL.filter(x=>x.t===T)){const s=R.tal[t.id];L.push('  '+tn(t)+' ['+STL[s.status][0]+'] +'+t.v+'% '+BON[t.cat][0]+(t.l?' (nível '+t.l+')':'')+' | '+s.parts.map(p=>nf(p.q)+' '+nm(p.id)+(p.done?' (entregue)':p.miss?' (falta '+nf(p.miss)+')':' (coberto pelo Balance)')).join(' + '));}}
   return L.join('\n');
 }
@@ -946,7 +946,7 @@ document.addEventListener('click',e=>{
   if(a==='tema-set'){applyTema(el.dataset.v);return;}
   if(['ia','bk','rs','link','help','loot','ordem','undo'].includes(a))menu.hidden=true;
   switch(a){
-    case 'tier':{if(ro())return;const t=+el.dataset.t;if(S.tiers.includes(t)){if(S.tiers.length===1){toast('Deixe pelo menos um tier no total.');return;}S.tiers=S.tiers.filter(x=>x!==t);}else S.tiers=[...S.tiers,t].sort();commit();break;}
+    case 'tier':{if(ro())return;const t=+el.dataset.t;S.tiers=[1,2,3,4].filter(x=>x<=t);commit();toast('Estocando itens até o T'+t+'.');break;}
     case 'tab':setTab(el.dataset.v);break;
     case 'ttab':ui.ttab=+el.dataset.t;ui.confirmTier=0;render();break;
     case 'ifil':ui.ifil=el.dataset.v;render();break;
