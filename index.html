@@ -263,6 +263,30 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 .side .sact .btn{width:100%;justify-content:flex-start}
 .sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:-1px}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.seq{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.seqh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-bottom:10px}
+.seqh .lbl{margin:0}.seqh span{font-size:13px;color:var(--mut)}.seqh b{color:var(--ink)}
+.seqg{display:grid;gap:10px 8px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+@media(max-width:400px){.seqg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1000px){.seqg{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.sq{position:relative;display:grid;grid-template-columns:32px minmax(0,1fr);gap:2px 8px;align-items:center;text-align:left;border:1.5px solid var(--line);border-radius:12px;padding:10px 10px 9px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer;transition:border-color .15s ease,background-color .15s ease}
+.sq:hover{border-color:var(--line2)}
+.sq .ico{grid-row:span 2}
+.sq .pn{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sq .it{font-size:12px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sq .sqf{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-size:12px;color:var(--mut);margin-top:6px}
+.sq .sqf b{font-size:15px;color:var(--ink)}
+.sq .sqf>*{white-space:nowrap}.sq .sqf.sm{margin-top:3px}
+.sq .sbar{grid-column:1/-1;height:5px;border-radius:3px;background:var(--track);overflow:hidden}.sq .sbar i{display:block;height:100%;background:var(--accent)}
+.sq .num{position:absolute;top:-8px;left:-6px;min-width:22px;height:22px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:var(--line2);color:var(--ink);padding:0 5px}
+.sq .it{display:flex;justify-content:space-between;gap:6px}.sq .it>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sq .st{flex:none;font-size:10px;font-weight:700;letter-spacing:.04em}
+.sq.done{background:var(--okSoft);border-color:var(--okLine)}.sq.done .num{background:var(--okFill);color:#fff}.sq.done .st{color:var(--ok)}.sq.done .sbar i{background:var(--okFill)}
+.sq.now{background:var(--amb);border-color:var(--orange)}.sq.now .num{background:var(--orange);color:#fff}.sq.now .st{color:var(--brown)}
+.sq.nxt{border-style:dashed;border-color:var(--orange)}.sq.nxt .st{color:var(--brown)}
+.sq.wait .st{color:var(--mut)}
+.seqp{margin-top:10px;font-size:13px;color:var(--ink2);display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center}
+.seqp .ico{border-radius:4px}
 .rl .rpk{font-size:12px;font-weight:400;color:var(--mut)}
 .pact{border:1.5px dashed var(--line3);background:var(--card);color:var(--accent);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;min-height:34px}
 .unl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:12px}
@@ -625,7 +649,20 @@ function renderResumo(R){
   h+=R.ready.length?R.ready.slice(0,4).map(t=>'<div class="rl"><span class="tid" style="--tc:'+TIER[t.t].c+'">'+tn(t)+'</span><span class="rtx">+'+t.v+'% '+BON[t.cat][0]+'</span><button type="button" class="btn sm" data-act="tcomp" data-tid="'+t.id+'" data-k="rc-'+t.id+'"'+(ro()?' disabled':'')+'>Concluir</button></div>').join('')+(R.ready.length>4?'<div class="pk">e mais '+(R.ready.length-4)+' na aba Talentos.</div>':''):'<div class="pk">Nenhum talento fecha só com o Balance de agora.</div>';
   const near=R.near.slice(0,4);
   h+='<div class="lbl" style="margin-top:12px">QUASE LÁ</div>'+(near.length?near.map(z=>'<button type="button" class="rl" data-act="tgo" data-tid="'+z.t.id+'" data-k="near-'+z.t.id+'"><span class="tid" style="--tc:'+TIER[z.t.t].c+'">'+tn(z.t)+'</span><span class="rtx">faltam '+z.miss.map(p=>'<b>'+nf(p.miss)+'</b> '+esc(shortNm(p.id))).join(' + ')+'</span>'+(z.eta===undefined?'':'<span class="eta">'+etaTxt(z.eta)+'</span>')+'</button>').join(''):'<div class="pk">Nada pendente nos tiers liberados.</div>')+'</section></div>';
+  h+=seqHtml(R);
   $('resumo').innerHTML=h;
+}
+function seqHtml(R){
+  const mx=Math.max(...S.tiers),L=R.rows.filter(r=>actv(r)&&ordOf(r.id)!=='P'),pv=R.rows.filter(r=>ordOf(r.id)==='P');
+  if(!L.length)return '';
+  const dn=L.filter(r=>!r.miss).length,falta=L.reduce((x,r)=>x+r.miss,0),etas=L.filter(r=>r.miss).map(r=>r.eta);
+  const et=!R.RI?undefined:etas.some(e=>e===null)?null:Math.max(0,...etas);
+  let h='<section class="seq" aria-label="Sequência de Pokémon"><div class="seqh"><div class="lbl">SEQUÊNCIA DE POKÉMON · ATÉ O T'+mx+'</div><span><b>'+dn+'</b> de '+L.length+' concluídos</span><span>faltam <b>'+nf(falta)+'</b> itens primais</span>'+(et===undefined?'':'<span>'+(et===null?'previsão incompleta':'tudo em '+etaTxt(et))+'</span>')+'</div><div class="seqg">';
+  h+=L.map((r,i)=>{const id=r.id,c=!r.miss?'done':id===R.focus?'now':id===R.next?'nxt':'wait',st={done:'FEITO',now:'AGORA',nxt:'PRÓXIMO',wait:'NA FILA'}[c];
+    return '<button type="button" class="sq '+c+'" data-act="open" data-item="'+id+'" data-k="sq-'+id+'" aria-label="'+(i+1)+'º: '+esc(pokeOf(id)||'?')+', '+esc(shortNm(id))+', '+st.toLowerCase()+'"><span class="num">'+(i+1)+'</span>'+ico(id,32)+'<span class="pn">'+esc(pokeOf(id)==='ALL'?'Todos Fantasma':pokeOf(id)||'?')+'</span><span class="it"><span>'+esc(shortNm(id))+'</span></span><span class="sqf"><span class="st">'+st+'</span>'+(r.miss?'<span>falta <b>'+nf(r.miss)+'</b></span>':'<b>✓ completo</b>')+'</span><span class="sbar"><i style="width:'+Math.round(r.pct*100)+'%"></i></span><span class="sqf sm"><span>tem '+nf(S.balance[id]||0)+'</span><span>'+(r.miss&&r.eta>0?etaTxt(r.eta):'')+'</span></span>'+'</button>';}).join('');
+  h+='</div>';
+  if(pv.length)h+='<div class="seqp"><b>Passivos (todos Fantasma):</b>'+pv.map(r=>'<span>'+ico(r.id,18)+' '+esc(shortNm(r.id))+': tem '+nf(S.balance[r.id]||0)+(r.miss?', falta '+nf(r.miss):', completo')+'</span>').join('')+'</div>';
+  return h+'</section>';
 }
 function renderDep(R){
   const mx=Math.max(...S.tiers),ids=ITEMS.filter(it=>(S.balance[it.id]||0)>0||(R.byId[it.id]&&R.byId[it.id].miss>0)).map(it=>it.id).sort((a,b)=>okey(a)-okey(b));
