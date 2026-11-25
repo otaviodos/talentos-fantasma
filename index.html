@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<script>try{var t=localStorage.getItem("fantasma-tema");if(t==="claro"||t==="escuro")document.documentElement.setAttribute("data-tema",t);}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1F3A5F">
 <meta name="mobile-web-app-capable" content="yes">
@@ -19,9 +20,12 @@
 /* VOICE: painel de farm de um jogador experiente: direto, denso, sem enfeite
    IDEA: a planilha "Resumo por Item" do Otavio virou um app de bolso com tela cheia no desktop
    PICTURE: cartão FOCO AGORA em âmbar + banco de itens com barras de etapa nas cores dos tiers
-   COLOUR and TYPE: navy 1F3A5F, âmbar FFE9A8, verde 1E7B4B, tiers T1 0E7490 / T2 2F6DB5 / T3 6B4FB0 / T4 A21CAF; Rubik
+   COLOUR and TYPE: navy 1F3A5F, âmbar, verde; tiers T1 ciano, T2 azul, T3 roxo, T4 magenta; Rubik; tema claro e escuro
    LAYOUT: celular = abas embaixo (Resumo, Itens, Talentos, Bônus); desktop = resumo no topo, itens + bônus, talentos em grade */
-:root{color-scheme:light;--bg:#F4F6FA;--card:#fff;--line:#E3E8EF;--line2:#D3DAE5;--navy:#1F3A5F;--ink:#1F2937;--ink2:#4B5563;--mut:#6B7280;--amb:#FFE9A8;--amb2:#FFF6D6;--ambInk:#4A3000;--brown:#8A5A00;--orange:#C2410C;--ok:#1E7B4B;--okBg:#CDEFDB;--okSoft:#E6F6EC;--bad:#B42318;--badBg:#FAD4D0;--badSoft:#FDECEA;--mid:#FFF3CC;--par:#E7F0FB;--parInk:#2F6DB5;--r:14px}
+:root{color-scheme:light dark;--bg:#F4F6FA;--card:#fff;--line:#E3E8EF;--line2:#D3DAE5;--line3:#9FB0C8;--ink:#1F2937;--ink2:#4B5563;--mut:#6B7280;--top:#1F3A5F;--accent:#1F3A5F;--accentBg:#1F3A5F;--accentBg2:#2B4C78;--hover:#F2F6FB;--head:#F8FAFC;--seg:#E9EDF3;--amb:#FFE9A8;--amb2:#FFF6D6;--ambInk:#4A3000;--brown:#8A5A00;--ambLine:#EFD48A;--ambHover:#FFF1C4;--inLine:#E8D59A;--nextBg:#FFFAF4;--orange:#C2410C;--ok:#1E7B4B;--okFill:#1E7B4B;--okBg:#CDEFDB;--okSoft:#E6F6EC;--okLine:#A7D8B8;--bad:#B42318;--badBg:#FAD4D0;--badSoft:#FDECEA;--badLine:#F2B8B1;--mid:#FFF3CC;--par:#E7F0FB;--parInk:#2F6DB5;--info:#E7F0FB;--infoLine:#BCD3F0;--doneBg:#F7FBF8;--doneLine:#CFE8D8;--track:#E6EAF0;--trackSoft:rgba(255,255,255,.85);--pendFill:#F2C14E;--tabbar:rgba(255,255,255,.97);--toast:#16263D;--scrim:rgba(15,23,42,.48);--shadow:rgba(15,23,42,.18);--t1c:#0E7490;--t1s:#E0F2F7;--t1t:#0E7490;--t2c:#2F6DB5;--t2s:#E7F0FB;--t2t:#2F6DB5;--t3c:#6B4FB0;--t3s:#F0EBFA;--t3t:#6B4FB0;--t4c:#A21CAF;--t4s:#F8E8FA;--t4t:#A21CAF;--r:14px}
+@supports (color:light-dark(#000,#fff)){:root{--bg:light-dark(#F4F6FA,#0D1520);--card:light-dark(#fff,#151F2E);--line:light-dark(#E3E8EF,#233145);--line2:light-dark(#D3DAE5,#2E3E55);--line3:light-dark(#9FB0C8,#4D6282);--ink:light-dark(#1F2937,#E5ECF6);--ink2:light-dark(#4B5563,#B6C2D3);--mut:light-dark(#6B7280,#8D9BB0);--top:light-dark(#1F3A5F,#0A111C);--accent:light-dark(#1F3A5F,#A9C8F7);--accentBg:light-dark(#1F3A5F,#335E9C);--accentBg2:light-dark(#2B4C78,#3D6DB2);--hover:light-dark(#F2F6FB,#1B283B);--head:light-dark(#F8FAFC,#121B28);--seg:light-dark(#E9EDF3,#0F1824);--amb:light-dark(#FFE9A8,#4A3A12);--amb2:light-dark(#FFF6D6,#262012);--ambInk:light-dark(#4A3000,#FFE6A6);--brown:light-dark(#8A5A00,#E5C06B);--ambLine:light-dark(#EFD48A,#5B4919);--ambHover:light-dark(#FFF1C4,#30281A);--inLine:light-dark(#E8D59A,#6B5826);--nextBg:light-dark(#FFFAF4,#1A2130);--orange:light-dark(#C2410C,#F2884B);--ok:light-dark(#1E7B4B,#7DD8A3);--okFill:light-dark(#1E7B4B,#2C8C58);--okBg:light-dark(#CDEFDB,#173B29);--okSoft:light-dark(#E6F6EC,#12291C);--okLine:light-dark(#A7D8B8,#2C6444);--bad:light-dark(#B42318,#FF9C91);--badBg:light-dark(#FAD4D0,#4A1E1E);--badSoft:light-dark(#FDECEA,#2E1517);--badLine:light-dark(#F2B8B1,#6A2B2B);--mid:light-dark(#FFF3CC,#3B3016);--par:light-dark(#E7F0FB,#172A45);--parInk:light-dark(#2F6DB5,#98BFF4);--info:light-dark(#E7F0FB,#152740);--infoLine:light-dark(#BCD3F0,#2B4A74);--doneBg:light-dark(#F7FBF8,#122218);--doneLine:light-dark(#CFE8D8,#234A34);--track:light-dark(#E6EAF0,#25334A);--trackSoft:light-dark(rgba(255,255,255,.85),rgba(255,255,255,.1));--pendFill:light-dark(#F2C14E,#D7A73C);--tabbar:light-dark(rgba(255,255,255,.97),rgba(16,25,38,.97));--toast:light-dark(#16263D,#2A3C57);--scrim:light-dark(rgba(15,23,42,.48),rgba(0,0,0,.62));--shadow:light-dark(rgba(15,23,42,.18),rgba(0,0,0,.5));--t1c:light-dark(#0E7490,#1593AE);--t1s:light-dark(#E0F2F7,#0D2930);--t1t:light-dark(#0E7490,#6DCFE3);--t2c:light-dark(#2F6DB5,#3B7CD6);--t2s:light-dark(#E7F0FB,#13233A);--t2t:light-dark(#2F6DB5,#8EB9F3);--t3c:light-dark(#6B4FB0,#7F64D4);--t3s:light-dark(#F0EBFA,#211B37);--t3t:light-dark(#6B4FB0,#BCA7F5);--t4c:light-dark(#A21CAF,#BB3BC9);--t4s:light-dark(#F8E8FA,#2B1530);--t4t:light-dark(#A21CAF,#EB99F4)}}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+:root[data-tema=claro]{color-scheme:light}:root[data-tema=escuro]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 html{background:var(--bg);-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Rubik,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-variant-numeric:tabular-nums;overflow-x:clip;-webkit-tap-highlight-color:transparent}
@@ -31,42 +35,44 @@ button{cursor:pointer}
 button:disabled{cursor:default;opacity:.55}
 :focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 [hidden]{display:none!important}
-.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;background:var(--navy);color:#fff;padding:calc(8px + env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 8px max(14px,env(safe-area-inset-left))}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;background:var(--top);color:#fff;padding:calc(8px + env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 8px max(14px,env(safe-area-inset-left))}
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 .brand svg{width:34px;height:34px;flex:none}
 .brand b{display:block;font-size:17px;font-weight:600;line-height:1.15}
 .brand small{display:block;font-size:12px;opacity:.78}
 .tsel{display:flex;align-items:center;gap:6px;font-size:13px}
 .chipT{border:1.5px solid rgba(255,255,255,.45);background:transparent;color:#fff;border-radius:999px;padding:3px 11px;font-size:13px;font-weight:600;min-height:32px}
-.chipT[aria-pressed=true]{background:#fff;color:var(--navy);border-color:#fff}
+.chipT[aria-pressed=true]{background:#fff;color:#1F3A5F;border-color:#fff}
 .tsel.light{margin:0 0 12px;color:var(--mut);flex-wrap:wrap}
-.tsel.light .chipT{border-color:var(--line2);color:var(--navy);background:#fff;min-height:36px;padding:4px 14px}
-.tsel.light .chipT[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tsel.light .chipT{border-color:var(--line2);color:var(--accent);background:var(--card);min-height:36px;padding:4px 14px}
+.tsel.light .chipT[aria-pressed=true]{background:var(--accentBg);color:#fff;border-color:var(--accentBg)}
 .sync{font-size:12px;white-space:nowrap;opacity:.92}
 .sync::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#9CA3AF;margin-right:6px;vertical-align:1px}
 .sync.ok::before{background:#7BC796}.sync.w::before{background:#F5C451}.sync.bad::before{background:#F28B82}
-.icb{width:40px;height:40px;border-radius:10px;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:22px;line-height:1;flex:none}
-.menu{position:fixed;z-index:35;top:calc(60px + env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(15,23,42,.18);padding:6px;display:grid;min-width:250px}
-.menu button{border:0;background:none;text-align:left;padding:11px 12px;border-radius:8px;font-size:15px}
-.menu button:hover{background:#F1F5F9}
+.icb{width:40px;height:40px;border-radius:10px;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:22px;line-height:1;flex:none;display:inline-flex;align-items:center;justify-content:center}
+.icb svg{width:20px;height:20px}
+.menu{position:fixed;z-index:35;top:calc(60px + env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px var(--shadow);padding:6px;display:grid;min-width:260px}
+.menu>button{border:0;background:none;text-align:left;padding:11px 12px;border-radius:8px;font-size:15px}
+.menu>button:hover{background:var(--hover)}
+.mtema{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 6px 6px 12px;margin-top:4px;border-top:1px solid var(--line);font-size:15px}
 .main{max-width:1680px;margin:0 auto;padding:14px max(14px,env(safe-area-inset-right)) 28px max(14px,env(safe-area-inset-left));display:grid;gap:16px;align-items:start}
 .panel{display:none}
 .panel.on{display:block}
 .ph{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:2px 0 10px}
-.ph h2{margin:0;font-size:19px;font-weight:600;color:var(--navy)}
+.ph h2{margin:0;font-size:19px;font-weight:600;color:var(--accent)}
 .cnt{font-size:13px;color:var(--mut)}
 .sp{margin-left:auto}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
 .lbl{font-size:12px;font-weight:600;color:var(--mut);letter-spacing:.02em;margin-bottom:6px}
 .pk{font-size:13px;color:var(--mut)}
-.seg{display:inline-flex;background:#E9EDF3;border-radius:10px;padding:3px}
+.seg{display:inline-flex;background:var(--seg);border-radius:10px;padding:3px}
 .seg button{border:0;background:transparent;border-radius:8px;padding:5px 12px;font-size:13px;font-weight:600;color:var(--ink2);min-height:32px}
-.seg button[aria-pressed=true]{background:#fff;color:var(--navy);box-shadow:0 1px 2px rgba(15,23,42,.12)}
-.btn{border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:10px;padding:7px 14px;font-weight:600;font-size:14px;min-height:40px}
-.btn:hover{background:#F2F7FD}
-.btn.pri{background:var(--navy);color:#fff}
-.btn.pri:hover{background:#2B4C78}
-.btn.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.seg button[aria-pressed=true]{background:var(--card);color:var(--accent);box-shadow:0 1px 2px var(--shadow)}
+.btn{border:1.5px solid var(--accent);background:var(--card);color:var(--accent);border-radius:10px;padding:7px 14px;font-weight:600;font-size:14px;min-height:40px}
+.btn:hover{background:var(--hover)}
+.btn.pri{background:var(--accentBg);border-color:var(--accentBg);color:#fff}
+.btn.pri:hover{background:var(--accentBg2)}
+.btn.on{background:var(--okFill);border-color:var(--okFill);color:#fff}
 .btn.ghost{border-color:var(--line2);color:var(--ink2)}
 .btn.sm{min-height:34px;padding:4px 12px;font-size:13px}
 .lnk{border:0;background:none;color:var(--mut);text-decoration:underline;font-size:13px;padding:6px 4px}
@@ -74,7 +80,7 @@ button:disabled{cursor:default;opacity:.55}
 .p-ok{background:var(--okBg);color:var(--ok)}.p-mid{background:var(--mid);color:var(--brown)}.p-bad{background:var(--badBg);color:var(--bad)}.p-par{background:var(--par);color:var(--parInk)}
 .mk{font-weight:700;font-style:normal}.mk.f{color:var(--orange)}.mk.n{color:#93A1C3}
 .rgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))}
-.focus{background:var(--amb2);border:1px solid #EFD48A;border-radius:var(--r);overflow:hidden}
+.focus{background:var(--amb2);border:1px solid var(--ambLine);border-radius:var(--r);overflow:hidden}
 .focus .hd{background:var(--amb);color:var(--ambInk);font-size:12px;font-weight:700;letter-spacing:.06em;padding:7px 14px}
 .focus .bd{padding:12px 14px 14px}
 .fname{font-size:20px;font-weight:600;color:var(--ambInk);line-height:1.2}
@@ -83,7 +89,7 @@ button:disabled{cursor:default;opacity:.55}
 .fbig small,.nbig small{font-size:14px;font-weight:500;color:var(--brown)}
 .fhint{font-size:13px;color:var(--brown);margin-top:8px}
 .fact{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
-.nname{font-size:17px;font-weight:600;color:var(--navy);line-height:1.25}
+.nname{font-size:17px;font-weight:600;color:var(--accent);line-height:1.25}
 .nbig{font-size:28px;font-weight:700;line-height:1.1;margin:6px 0 8px}
 .nbig small{color:var(--mut)}
 .pgrid{display:flex;gap:14px;align-items:center}
@@ -91,39 +97,39 @@ button:disabled{cursor:default;opacity:.55}
 .pline{font-size:14px;color:var(--ink2);line-height:1.6}.pline b{font-size:18px;color:var(--ink)}
 .tbars{display:grid;gap:6px;margin-top:12px}
 .tb{display:grid;grid-template-columns:26px minmax(0,1fr) 46px;gap:8px;align-items:center;font-size:12px;font-weight:600}
-.tbb{height:8px;background:#E9EDF3;border-radius:4px;overflow:hidden}
+.tbb{height:8px;background:var(--track);border-radius:4px;overflow:hidden}
 .tbb i{display:block;height:100%}
 .tb span:last-child{text-align:right;color:var(--mut)}
-.rl{display:flex;align-items:center;gap:8px;padding:7px 0;border:0;border-top:1px solid var(--line);font-size:13px;background:none;width:100%;text-align:left}
+.rl{display:flex;align-items:center;gap:8px;padding:7px 0;border:0;border-top:1px solid var(--line);font-size:13px;background:none;width:100%;text-align:left;color:var(--ink)}
 .rl:first-child{border-top:0}
 .rl .rtx{flex:1;color:var(--ink2)}
 .rl .rnm{font-weight:600;color:var(--ink)}
 .tid{display:inline-block;font-size:12px;font-weight:700;color:#fff;border-radius:6px;padding:2px 7px;white-space:nowrap;background:var(--tc,#1F3A5F)}
-.imp{background:#E7F0FB;border:1px solid #BCD3F0;border-radius:var(--r);padding:12px 14px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.imp{background:var(--info);border:1px solid var(--infoLine);border-radius:var(--r);padding:12px 14px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .imp p{margin:0;flex:1 1 260px}
 .stg{display:flex;gap:3px;height:10px;width:100%}
-.stg .s{position:relative;flex:1 1 0;background:#E3E8EF;border-radius:3px;overflow:hidden}
+.stg .s{position:relative;flex:1 1 0;background:var(--track);border-radius:3px;overflow:hidden}
 .stg .s i{position:absolute;top:0;bottom:0;left:0}
 .cap{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--mut);margin-top:4px}
 .cap b{color:var(--ink)}
 .ilist{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .irow{display:grid;grid-template-columns:16px minmax(0,1.35fr) 140px 96px minmax(0,1.5fr) 118px;gap:10px;align-items:center;padding:9px 14px;border-top:1px solid var(--line);cursor:pointer}
-.irow:hover{background:#FAFBFD}
+.irow:hover{background:var(--hover)}
 .ilist>.irow:first-child{border-top:0}
-.ihead{cursor:default;background:#F8FAFC;font-size:12px;font-weight:600;color:var(--mut);padding:8px 14px}
-.ihead:hover{background:#F8FAFC}
-.irow.f{background:var(--amb2)}.irow.f:hover{background:#FFF1C4}
-.irow.n{background:#FFFAF4}
+.ihead{cursor:default;background:var(--head);font-size:12px;font-weight:600;color:var(--mut);padding:8px 14px}
+.ihead:hover{background:var(--head)}
+.irow.f{background:var(--amb2)}.irow.f:hover{background:var(--ambHover)}
+.irow.n{background:var(--nextBg)}
 .irow.done .nm,.irow.done .c-fal b{color:var(--mut)}
 .nm{display:block;font-weight:600;line-height:1.25}
 .c-nm .pk{display:block}
 .mbal{display:none}
 .r{text-align:right}.c{text-align:center}
 .bal{display:flex;gap:4px;align-items:center}
-.bal input,.bigin input{width:100%;text-align:right;background:var(--amb2);border:1.5px solid #E8D59A;border-radius:9px;padding:6px 9px;font-weight:600;font-size:16px;min-height:38px}
-.bal input:focus,.bigin input:focus,.tin:focus,.addrow input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(31,58,95,.15)}
+.bal input,.bigin input{width:100%;text-align:right;background:var(--amb2);color:var(--ink);border:1.5px solid var(--inLine);border-radius:9px;padding:6px 9px;font-weight:600;font-size:16px;min-height:38px}
+.bal input:focus,.bigin input:focus,.tin:focus,.addrow input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--shadow)}
 input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
-.plus{flex:none;width:36px;height:38px;border-radius:9px;border:1.5px solid var(--line2);background:#fff;color:var(--navy);font-size:18px;font-weight:700}
+.plus{flex:none;width:36px;height:38px;border-radius:9px;border:1.5px solid var(--line2);background:var(--card);color:var(--accent);font-size:18px;font-weight:700}
 .c-fal{text-align:right}
 .c-fal b{display:block;font-size:17px;font-weight:700}
 .c-fal small{display:block;font-size:11px;color:var(--mut)}
@@ -131,98 +137,115 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 .empty{padding:18px;text-align:center;color:var(--mut)}
 .outb{margin-top:10px}
 .olist{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.ochip{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;min-height:34px}
+.ochip{border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:13px;min-height:34px}
 .ttabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:10px;padding:1px}
-.ttab{flex:none;display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--line2);background:#fff;border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px;min-height:40px;color:var(--ink2)}
+.ttab{flex:none;display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--line2);background:var(--card);border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px;min-height:40px;color:var(--ink2)}
 .ttab .dot{width:9px;height:9px;border-radius:50%;background:var(--tc)}
 .ttab .tcnt{font-size:12px;color:var(--mut);font-weight:500}
 .ttab[aria-selected=true]{background:var(--tc);border-color:var(--tc);color:#fff}
 .ttab[aria-selected=true] .dot{background:#fff}.ttab[aria-selected=true] .tcnt{color:rgba(255,255,255,.86)}
 .tierhd{background:var(--ts);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-bottom:12px;display:grid;gap:8px}
 .tr1{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
-.tr1 b{font-size:17px;color:var(--tc)}
+.tr1 b{font-size:17px;color:var(--tt)}
 .tr1 span{font-size:13px;color:var(--ink2)}
-.tbar{height:8px;background:rgba(255,255,255,.85);border-radius:4px;overflow:hidden}
+.tbar{height:8px;background:var(--trackSoft);border-radius:4px;overflow:hidden}
 .tbar i{display:block;height:100%;background:var(--tc)}
 .tr2{font-size:13px;color:var(--ink2)}
 .tr3{display:flex;flex-wrap:wrap;gap:8px}
 .tcards{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr))}
-.tcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:11px 12px;display:grid;gap:7px;align-content:start}
-.tcard.feito{background:#F7FBF8;border-color:#CFE8D8}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:11px 12px;display:grid;gap:7px;align-content:start}
+.tcard.feito{background:var(--doneBg);border-color:var(--doneLine)}
 .tline{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.tbon{font-size:12px;font-weight:600;color:var(--tc);background:var(--ts);border-radius:6px;padding:2px 7px}
+.tbon{font-size:12px;font-weight:600;color:var(--tt);background:var(--ts);border-radius:6px;padding:2px 7px}
 .lvl{font-size:11px;font-weight:700;color:var(--brown);background:var(--mid);border-radius:6px;padding:2px 6px}
 .ttx{font-size:14px;color:var(--ink2);line-height:1.35}
 .parts{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.part{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line2);background:#fff;border-radius:999px;padding:4px 10px 4px 5px;font-size:13px;min-height:34px;text-align:left}
+.part{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:4px 10px 4px 5px;font-size:13px;min-height:34px;text-align:left}
 .part .bx{width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:none}
 .part .q{font-weight:700}
 .part .tg{font-size:11px;opacity:.92}
-.part.done{background:var(--ok);border-color:var(--ok);color:#fff}
-.part.done .bx{background:#fff;color:var(--ok);border-color:#fff}
-.part.cov{background:var(--okSoft);border-color:#A7D8B8;color:var(--ok)}
-.part.miss{background:var(--badSoft);border-color:#F2B8B1;color:var(--bad)}
+.part.done{background:var(--okFill);border-color:var(--okFill);color:#fff}
+.part.done .bx{background:#fff;color:var(--okFill);border-color:#fff}
+.part.cov{background:var(--okSoft);border-color:var(--okLine);color:var(--ok)}
+.part.miss{background:var(--badSoft);border-color:var(--badLine);color:var(--bad)}
 .tcard.feito{gap:5px;padding:9px 12px}
 .tcard.feito .ttx{font-size:13px}
 .tcard.feito .part{min-height:28px;padding:2px 9px 2px 4px;font-size:12px}
 .tcard.feito .part .bx{width:17px;height:17px;font-size:11px}
-.part.done .tg{display:none}
-.pact{border:1.5px dashed #9FB0C8;background:#fff;color:var(--navy);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;min-height:34px}
+.part.done .tg,.part.done .pkm{display:none}
+.part .pkm{font-size:11px;font-weight:500;opacity:.85}
+.ico{border-radius:6px;flex:none;object-fit:cover;background:#0F1A2B;vertical-align:middle}
+.c-nm{display:flex;align-items:center;gap:10px}.c-nm>span{min-width:0}
+.part .ico{border-radius:5px}
+.fhead{display:flex;align-items:center;gap:12px}
+.nmgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr))}
+.nmcard{display:grid;grid-template-columns:64px minmax(0,1fr);gap:6px 12px;align-items:start;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--card)}
+.nmcard .ico{grid-row:span 3}
+.nmcard .use{font-size:12px;color:var(--mut);display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.nmcard .ask{white-space:nowrap}
+.okt{font-size:11px;font-weight:700;color:var(--ok);white-space:nowrap}
+.nmcard .tin::placeholder{color:var(--mut);font-style:italic;opacity:.75}
+.nmcard label{display:grid;gap:3px;font-size:11px;font-weight:600;color:var(--mut)}
+.nmcard .tin{min-height:38px;padding:6px 9px;font-size:15px}
+.asktag{border:0;cursor:pointer;font-family:inherit}
+.rl .rpk{font-size:12px;font-weight:400;color:var(--mut)}
+.pact{border:1.5px dashed var(--line3);background:var(--card);color:var(--accent);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;min-height:34px}
 .unl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:12px}
-.ub{border:1.5px solid var(--line2);background:#fff;border-radius:12px;padding:7px 4px;display:grid;gap:1px;justify-items:center;min-height:52px}
-.ub b{font-size:15px;color:var(--tc)}
+.ub{border:1.5px solid var(--line2);background:var(--card);border-radius:12px;padding:7px 4px;display:grid;gap:1px;justify-items:center;min-height:52px}
+.ub b{font-size:15px;color:var(--tt)}
 .ub span{font-size:11px;color:var(--mut)}
 .ub.on{background:var(--ts);border-color:var(--tc)}
-.ub.on span{color:var(--tc);font-weight:600}
+.ub.on span{color:var(--tt);font-weight:600}
 .ub:disabled{opacity:1}
 .bsum{display:flex;flex-wrap:wrap;gap:6px}
 .bchip{background:var(--okSoft);color:var(--ok);border-radius:999px;padding:4px 10px;font-size:13px;font-weight:600}
 .bg{margin-top:14px}
-.bgh{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.bgh{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px;padding-bottom:4px;border-bottom:1px solid var(--line)}
 .brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;align-items:center;padding:5px 0}
 .bl{font-size:14px}
 .bv b{font-size:15px;color:var(--ok)}.bv b.z{color:var(--mut);font-weight:500}
 .bv small{font-size:12px;color:var(--mut)}
-.bbar{grid-column:1/-1;display:flex;height:6px;background:#E9EDF3;border-radius:3px;overflow:hidden}
+.bbar{grid-column:1/-1;display:flex;height:6px;background:var(--track);border-radius:3px;overflow:hidden}
 .bbar i{display:block;height:100%}
 .pend{grid-column:1/-1;font-size:12px;color:var(--brown)}
-.scrim{position:fixed;inset:0;z-index:50;background:rgba(15,23,42,.48);display:flex;align-items:flex-end;justify-content:center}
-.sh{background:#fff;width:100%;max-width:620px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom));display:grid;gap:12px;align-content:start;overscroll-behavior:contain}
+.scrim{position:fixed;inset:0;z-index:50;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center}
+.sh{background:var(--card);color:var(--ink);width:100%;max-width:620px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom));display:grid;gap:12px;align-content:start;overscroll-behavior:contain}
 .shh{display:flex;align-items:flex-start;gap:10px}
 .shh>div:first-child{margin-right:auto}
-.shh b{font-size:19px;color:var(--navy)}
-.x{width:40px;height:40px;border-radius:10px;border:1px solid var(--line2);background:#fff;font-size:20px;flex:none;line-height:1}
+.shh b{font-size:19px;color:var(--accent)}
+.x{width:40px;height:40px;border-radius:10px;border:1px solid var(--line2);background:var(--card);color:var(--ink);font-size:20px;flex:none;line-height:1}
 .bigin input{font-size:30px;font-weight:700;text-align:center;min-height:60px}
 .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .addrow{display:flex;gap:6px}
-.addrow input{flex:1;border:1.5px solid var(--line2);border-radius:9px;padding:8px 10px;font-size:16px;min-height:42px}
+.addrow input{flex:1;border:1.5px solid var(--line2);background:var(--card);color:var(--ink);border-radius:9px;padding:8px 10px;font-size:16px;min-height:42px}
 .sstat{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .okt{color:var(--ok)}
 .strow{display:grid;grid-template-columns:118px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:13px;padding:3px 0}
 .strow .tt{font-weight:600}
 .splist{display:grid;gap:6px}
-.sprow{display:grid;grid-template-columns:22px auto minmax(0,1fr) auto;gap:3px 8px;align-items:center;border:1.5px solid var(--line2);border-radius:10px;background:#fff;padding:7px 10px;text-align:left;font-size:13px}
+.sprow{display:grid;grid-template-columns:22px auto minmax(0,1fr) auto;gap:3px 8px;align-items:center;border:1.5px solid var(--line2);border-radius:10px;background:var(--card);color:var(--ink);padding:7px 10px;text-align:left;font-size:13px}
 .sprow .spq{font-weight:700;text-align:right}
 .sprow .spt{grid-column:3/-1;font-size:12px}
 .sprow .bx{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line2);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
-.sprow.done{border-color:#A7D8B8;background:var(--okSoft)}
-.sprow.done .bx{background:var(--ok);color:#fff;border-color:var(--ok)}
+.sprow.done{border-color:var(--okLine);background:var(--okSoft)}
+.sprow.done .bx{background:var(--okFill);color:#fff;border-color:var(--okFill)}
 .sprow.miss .spt{color:var(--bad)}.sprow.cov .spt,.sprow.done .spt{color:var(--ok)}
 .shset{display:grid;grid-template-columns:130px minmax(0,1fr);gap:10px}
-.shset label{display:grid;gap:4px;font-size:12px;font-weight:600;color:var(--mut)}
-.tin{border:1.5px solid #E8D59A;background:var(--amb2);border-radius:9px;padding:8px 10px;font-size:16px;min-height:42px;font-weight:500;width:100%}
+.shset label,.shset1{display:grid;gap:4px;font-size:12px;font-weight:600;color:var(--mut)}
+.shset1 .lbl{margin:0}
+.tin{border:1.5px solid var(--inLine);background:var(--amb2);color:var(--ink);border-radius:9px;padding:8px 10px;font-size:16px;min-height:42px;font-weight:500;width:100%}
 .hint{font-size:12px;color:var(--mut);margin:0}
-.ta{width:100%;min-height:240px;font:13px/1.45 ui-monospace,Consolas,monospace;border:1.5px solid var(--line2);border-radius:10px;padding:10px}
+.ta{width:100%;min-height:240px;font:13px/1.45 ui-monospace,Consolas,monospace;background:var(--card);color:var(--ink);border:1.5px solid var(--line2);border-radius:10px;padding:10px}
 .ask{font-size:11px;font-weight:700;color:var(--brown);background:var(--mid);padding:1px 6px;border-radius:6px}
 .help{margin:0;padding-left:18px;display:grid;gap:8px;font-size:14px;color:var(--ink2)}
-.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);background:var(--tabbar);border-top:1px solid var(--line);padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 .tabbar button{position:relative;border:0;background:none;display:grid;justify-items:center;gap:2px;padding:8px 2px 7px;font-size:12px;font-weight:500;color:var(--mut);min-height:58px}
 .tabbar svg{width:23px;height:23px}
-.tabbar button[aria-current=page]{color:var(--navy);font-weight:700}
+.tabbar button[aria-current=page]{color:var(--accent);font-weight:700}
 .badge{position:absolute;top:4px;left:calc(50% + 7px);background:var(--orange);color:#fff;font-size:11px;font-style:normal;font-weight:700;border-radius:999px;padding:1px 6px;min-width:18px;line-height:1.4}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;width:min(640px,calc(100% - 24px));display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:#16263D;color:#fff;border-radius:12px;padding:10px 12px;font-size:14px;box-shadow:0 10px 30px rgba(15,23,42,.25)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;width:min(640px,calc(100% - 24px));display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--toast);color:#fff;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 12px;font-size:14px;box-shadow:0 10px 30px var(--shadow)}
 .toast span{flex:1 1 220px}
-.toast button{border:0;background:#fff;color:var(--navy);border-radius:8px;padding:6px 12px;font-weight:600;font-size:13px;min-height:34px}
+.toast button{border:0;background:#fff;color:#1F3A5F;border-radius:8px;padding:6px 12px;font-weight:600;font-size:13px;min-height:34px}
 .toast .tx{background:transparent;color:#fff;font-size:18px;padding:0 6px}
 @media(min-width:700px){.scrim{align-items:center;padding:24px}.sh{border-radius:18px;padding:20px}}
 @media(min-width:1000px){
@@ -243,8 +266,8 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
  .c-bal,.c-st{display:none}
  .mbal{display:inline}
 }
-@media(max-width:520px){.part{font-size:12.5px;padding:3px 9px 3px 4px;min-height:32px}.ttx{font-size:13px}.tcard{padding:10px}.irow{padding:8px 12px}.tierhd{padding:10px 12px}.tr3 .btn{min-height:34px}.brand small{display:none}.sync{font-size:0}.sync::before{margin:0}.top{gap:10px}.ph h2{font-size:18px}}
-@media(prefers-reduced-motion:no-preference){.stg .s i,.tbb i,.bbar i,.tbar i{transition:width .3s ease}}
+@media(max-width:520px){.part{font-size:12.5px;padding:3px 9px 3px 4px;min-height:32px}.ttx{font-size:13px}.tcard{padding:10px}.irow{padding:8px 12px}.tierhd{padding:10px 12px}.tr3 .btn{min-height:34px}.brand small{display:none}.sync{font-size:0}.sync::before{margin:0}.top{gap:8px}.ph h2{font-size:18px}}
+@media(prefers-reduced-motion:no-preference){.stg .s i,.tbb i,.bbar i,.tbar i{transition:width .3s ease}body,.card,.ilist,.tcard,.top{transition:background-color .2s ease}}
 </style>
 </head>
 <body>
@@ -252,6 +275,7 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M12 28a20 20 0 0 1 40 0v30l-6.7-6-6.6 6-6.7-6-6.7 6-6.6-6-6.7 6z" fill="#fff"/><ellipse cx="25" cy="30" rx="3.6" ry="5" fill="#1F3A5F"/><ellipse cx="39" cy="30" rx="3.6" ry="5" fill="#1F3A5F"/></svg><div><b>Talentos Fantasma</b><small>Acompanhamento de materiais</small></div></div>
 <div class="tsel deskonly" id="tselD"></div>
 <span id="sync" class="sync w">Carregando…</span>
+<button type="button" class="icb" id="temaBtn" data-act="tema" aria-label="Alternar tema"></button>
 <button type="button" class="icb" data-act="menu" aria-label="Mais opções" aria-haspopup="true">⋯</button>
 </header>
 <div id="menu" class="menu" hidden>
@@ -259,7 +283,9 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 <button type="button" data-act="bk">Copiar backup</button>
 <button type="button" data-act="rs">Restaurar backup</button>
 <button type="button" data-act="link">Copiar link com meus dados</button>
+<button type="button" data-act="names">Nomes dos itens</button>
 <button type="button" data-act="help">Como funciona</button>
+<div class="mtema"><span>Tema</span><span class="seg" role="group" aria-label="Tema"><button type="button" data-act="tema-set" data-v="auto">Auto</button><button type="button" data-act="tema-set" data-v="claro">Claro</button><button type="button" data-act="tema-set" data-v="escuro">Escuro</button></span></div>
 </div>
 <main class="main">
 <section id="resumo" class="panel on" aria-label="Resumo"></section>
@@ -283,11 +309,11 @@ const ITEMS=[
 {id:'hat',name:'Primal Witch Hat',poke:'Mismagius',order:8},
 {id:'ge',name:'Ghost Essence',poke:'ALL',order:'P'},
 {id:'orb',name:'Mythic Ghost Orb',poke:'ALL',order:'P'},
-{id:'t1a',name:'Pena rosa',poke:'',order:11,ask:1},
+{id:'t1a',name:'Frasco rosa',poke:'',order:11,ask:1},
 {id:'t1b',name:'Gema roxa',poke:'',order:12,ask:1},
-{id:'t1c',name:'Pena verde',poke:'',order:13,ask:1},
-{id:'t1e',name:'Fragmento cinza',poke:'',order:14,ask:1},
-{id:'t1f',name:'Fragmento roxo',poke:'',order:15,ask:1},
+{id:'t1c',name:'Frasco verde',poke:'',order:13,ask:1},
+{id:'t1e',name:'Pedra cinza',poke:'',order:14,ask:1},
+{id:'t1f',name:'Pedra roxa',poke:'',order:15,ask:1},
 {id:'t1g',name:'Item azul',poke:'',order:16,ask:1},
 {id:'t1h',name:'Cristal roxo',poke:'',order:17,ask:1},
 {id:'t4p',name:'Item roxo do Tier 4',poke:'',order:21,ask:1},
@@ -295,7 +321,8 @@ const ITEMS=[
 {id:'ms2',name:'Mega stone amarela',poke:'',order:23,ask:1},
 {id:'ms3',name:'Mega stone azul',poke:'',order:24,ask:1}];
 const IX={};ITEMS.forEach((it,i)=>{IX[it.id]=i;});
-const TIER={1:{c:'#0E7490',s:'#E0F2F7',unlock:''},2:{c:'#2F6DB5',s:'#E7F0FB',unlock:'50.000.000'},3:{c:'#6B4FB0',s:'#F0EBFA',unlock:'200.000.000'},4:{c:'#A21CAF',s:'#F8E8FA',unlock:'400.000.000'}};
+const TIER={1:{c:'var(--t1c)',s:'var(--t1s)',t:'var(--t1t)',unlock:''},2:{c:'var(--t2c)',s:'var(--t2s)',t:'var(--t2t)',unlock:'50.000.000'},3:{c:'var(--t3c)',s:'var(--t3s)',t:'var(--t3t)',unlock:'200.000.000'},4:{c:'var(--t4c)',s:'var(--t4s)',t:'var(--t4t)',unlock:'400.000.000'}};
+const tv=k=>'--tc:'+TIER[k].c+';--ts:'+TIER[k].s+';--tt:'+TIER[k].t;
 const BON={dano:['Dano Fantasma','Base'],defesa:['Defesa Fantasma','Base'],cap:['Chance de captura','Captura'],moon:['Moon Balls','Captura'],crit:['Captura crítica','Captura'],shiny:['Respawn shiny','Captura'],cc:['Chance crítica','Combate'],cd:['Dano crítico','Combate'],prec:['Precisão contra evasão','Combate'],eva:['Evasão','Combate'],resc:['Resistência crítica','Combate'],mer:['Bolas no Sistema de Mérito','Bolas e drops'],pre:['Premier Balls','Bolas e drops'],ali:['Alliance Balls','Bolas e drops'],mm:['Mega stones míticas seladas','Bolas e drops'],ml:['Mega stones lendárias seladas','Bolas e drops']};
 const GROUPS=['Base','Captura','Combate','Bolas e drops'];
 const DN3='Golpes do tipo Fantasma causam 3% mais dano.',DN5='Golpes do tipo Fantasma causam 5% mais dano.',DF3='Aumenta a defesa dos Pokémon do tipo Fantasma em 3%.',DF5='Aumenta a defesa dos Pokémon do tipo Fantasma em 5%.';
@@ -317,9 +344,18 @@ resumo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=
 itens:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>',
 talentos:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>',
 bonus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8C10 4 6 4 6 6.5S10 8 12 8c2 0 6 .5 6-1.5S14 4 12 8z"/></svg>'};
+const TKEY='fantasma-tema';
+const IC_SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const IC_MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+const temaPref=()=>{try{return localStorage.getItem(TKEY)||'auto';}catch(e){return 'auto';}};
+function isDark(){const r=document.documentElement,p=r.getAttribute('data-tema'),h=r.getAttribute('data-theme');if(p==='escuro')return true;if(p==='claro')return false;if(h==='dark')return true;if(h==='light')return false;return !!(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);}
+function paintTema(){const d=isDark(),m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',d?'#0A111C':'#1F3A5F');
+  const b=document.getElementById('temaBtn');if(b){b.innerHTML=d?IC_SUN:IC_MOON;const l=d?'Mudar para o tema claro':'Mudar para o tema escuro';b.setAttribute('aria-label',l);b.title=l;}
+  const p=temaPref();document.querySelectorAll('[data-act="tema-set"]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===p)));}
+function applyTema(p){const r=document.documentElement;if(p==='claro'||p==='escuro')r.setAttribute('data-tema',p);else r.removeAttribute('data-tema');try{if(p==='claro'||p==='escuro')localStorage.setItem(TKEY,p);else localStorage.removeItem(TKEY);}catch(e){}paintTema();}
 const blank=()=>({v:2,balance:{},parts:{},tiers:[2,3],unlocked:[],items:{}});
 let S=blank(),mode='loading',ref=null,canWrite=true,edit=null,last=null,liveT=null,renderT=null,pendingRender=false;
-const ui={tab:'resumo',ttab:2,ifil:'pend',tfil:'pend',sheet:null,confirmTier:0,showOut:false,importData:null};
+const ui={tab:'resumo',ttab:2,ifil:'pend',tfil:'pend',namesAll:false,sheet:null,confirmTier:0,showOut:false,importData:null};
 const $=id=>document.getElementById(id);
 const nf=n=>Math.round(n).toLocaleString('pt-BR');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -331,8 +367,14 @@ const nm=id=>(S.items[id]&&S.items[id].name)||ITEMS[IX[id]].name;
 const shortNm=id=>nm(id).replace(/^Primal\s+/i,'');
 const ordOf=id=>{const o=S.items[id]&&S.items[id].order;return o!==undefined?o:ITEMS[IX[id]].order;};
 const okey=id=>{const o=ordOf(id);return (o==='P'?100:(o||50))+IX[id]/1000;};
-const pokeTxt=id=>{const p=ITEMS[IX[id]].poke;return p==='ALL'?'Qualquer Pokémon':p||'Sem Pokémon';};
-const label=id=>{const p=ITEMS[IX[id]].poke;return p?nm(id)+' ('+(p==='ALL'?'qualquer Pokémon':p)+')':nm(id);};
+const pokeOf=id=>{const o=S.items[id]&&S.items[id].poke;return o!==undefined?o:ITEMS[IX[id]].poke;};
+const pokeTxt=id=>{const p=pokeOf(id);return p==='ALL'?'Todos os Pokémon Fantasma':p||'Pokémon a definir';};
+const dropShort=id=>{const p=pokeOf(id);return p==='ALL'?'todos Fantasma':p;};
+const ico=(id,sz)=>'<img class="ico" src="itens/'+id+'.png" width="'+sz+'" height="'+sz+'" alt="" loading="lazy" decoding="async">';
+const noName=id=>!!ITEMS[IX[id]].ask&&!(S.items[id]&&S.items[id].name);
+const needs=id=>noName(id)||!pokeOf(id);
+const needTxt=id=>{const a=noName(id),b=!pokeOf(id);return a&&b?'falta nome e Pokémon':a?'falta nome':b?'falta Pokémon':'';};
+const label=id=>{const p=pokeOf(id);return p?nm(id)+' ('+(p==='ALL'?'qualquer Pokémon Fantasma':p)+')':nm(id);};
 
 function norm(x){
   const s=blank();if(!x||typeof x!=='object')return s;
@@ -344,6 +386,7 @@ function norm(x){
   if(x.items&&typeof x.items==='object')for(const it of ITEMS){const o=x.items[it.id];if(!o||typeof o!=='object')continue;const e={};
     if(o.order==='P')e.order='P';else if(Number.isFinite(Number(o.order))&&Number(o.order)>=1)e.order=Math.min(Math.floor(Number(o.order)),999);
     if(typeof o.name==='string'&&o.name.trim())e.name=o.name.trim().slice(0,60);
+    if(typeof o.poke==='string')e.poke=o.poke.trim().slice(0,40);
     if(Object.keys(e).length)s.items[it.id]=e;}
   return s;
 }
@@ -391,15 +434,15 @@ function stgHtml(r,withCap){
   const Ts=S.tiers.filter(k=>r.tiers[k]);
   const segs=Ts.map(k=>{const x=r.tiers[k],c=TIER[k].c;return '<span class="s" style="flex:'+x.tot+'" title="Tier '+k+': entregue '+nf(x.done)+', no Balance '+nf(x.alloc)+', falta '+nf(x.miss)+'"><i style="width:'+(x.done/x.tot*100)+'%;background:'+c+'"></i><i style="left:'+(x.done/x.tot*100)+'%;width:'+(x.alloc/x.tot*100)+'%;background:'+c+';opacity:.4"></i></span>';}).join('');
   let h='<span class="stg">'+segs+'</span>';
-  if(withCap!==false)h+='<span class="cap"><span>'+Ts.map(k=>{const x=r.tiers[k];return '<b style="color:'+TIER[k].c+'">T'+k+'</b> '+(x.miss?nf(x.miss):'✓');}).join(' · ')+'</span><b>'+pc(r)+'%</b></span>';
+  if(withCap!==false)h+='<span class="cap"><span>'+Ts.map(k=>{const x=r.tiers[k];return '<b style="color:'+TIER[k].t+'">T'+k+'</b> '+(x.miss?nf(x.miss):'✓');}).join(' · ')+'</span><b>'+pc(r)+'%</b></span>';
   return h;
 }
 const mkHtml=(r,R)=>r.id===R.focus?'<i class="mk f" title="Foco agora">▶</i>':r.id===R.next?'<i class="mk n" title="Próximo">▷</i>':'';
 const rowCls=(r,R)=>r.id===R.focus?'f':r.id===R.next?'n':r.miss===0?'done':'';
 const falHtml=r=>'<b>'+nf(r.miss)+'</b><small'+(r.next?' title="Faltam '+nf(r.next.m)+' para cobrir o '+tn(r.next.t)+'"':'')+'>'+(r.next?'próx. '+nf(r.next.m):'completo')+'</small>';
 const balField=(loc,id)=>'<span class="bal"><input type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" data-k="'+loc+'-bal-'+id+'" data-bal="'+id+'" value="'+nf(S.balance[id]||0)+'" aria-label="Balance de '+esc(nm(id))+'"'+(ro()?' disabled':'')+'><button type="button" class="plus" data-act="open" data-item="'+id+'" data-k="'+loc+'-open-'+id+'" aria-label="Somar loot em '+esc(nm(id))+'">+</button></span>';
-const itemRow=(r,R)=>'<div class="irow '+rowCls(r,R)+'" data-item="'+r.id+'" data-act="open"><span class="c-mk">'+mkHtml(r,R)+'</span><span class="c-nm"><span class="nm">'+esc(nm(r.id))+'</span><span class="pk">'+esc(pokeTxt(r.id))+(ordOf(r.id)==='P'?' · Passivo':'')+'<span class="mbal"> · Balance '+nf(S.balance[r.id]||0)+'</span></span></span><span class="c-bal">'+balField('l',r.id)+'</span><span class="c-fal">'+falHtml(r)+'</span><span class="c-stg">'+stgHtml(r)+'</span><span class="c-st">'+stHtml(r)+'</span></div>';
-function ring(p){const R0=31,C=2*Math.PI*R0,v=Math.round(p*100);return '<svg class="ring" width="84" height="84" viewBox="0 0 84 84" role="img" aria-label="'+v+'% do farm"><circle cx="42" cy="42" r="'+R0+'" fill="none" stroke="#E9EDF3" stroke-width="10"/><circle cx="42" cy="42" r="'+R0+'" fill="none" stroke="#1E7B4B" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-p)).toFixed(1)+'" transform="rotate(-90 42 42)"/><text x="42" y="41" text-anchor="middle" font-size="18" font-weight="700" fill="#1F2937">'+v+'%</text><text x="42" y="56" text-anchor="middle" font-size="10" fill="#6B7280">do farm</text></svg>';}
+const itemRow=(r,R)=>'<div class="irow '+rowCls(r,R)+'" data-item="'+r.id+'" data-act="open"><span class="c-mk">'+mkHtml(r,R)+'</span><span class="c-nm">'+ico(r.id,30)+'<span><span class="nm">'+esc(nm(r.id))+'</span><span class="pk">'+esc(pokeTxt(r.id))+(ordOf(r.id)==='P'?' · Passivo':'')+'<span class="mbal"> · Balance '+nf(S.balance[r.id]||0)+'</span></span></span></span><span class="c-bal">'+balField('l',r.id)+'</span><span class="c-fal">'+falHtml(r)+'</span><span class="c-stg">'+stgHtml(r)+'</span><span class="c-st">'+stHtml(r)+'</span></div>';
+function ring(p){const R0=31,C=2*Math.PI*R0,v=Math.round(p*100);return '<svg class="ring" width="84" height="84" viewBox="0 0 84 84" role="img" aria-label="'+v+'% do farm"><circle cx="42" cy="42" r="'+R0+'" fill="none" style="stroke:var(--track)" stroke-width="10"/><circle cx="42" cy="42" r="'+R0+'" fill="none" style="stroke:var(--okFill)" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-p)).toFixed(1)+'" transform="rotate(-90 42 42)"/><text x="42" y="41" text-anchor="middle" font-size="18" font-weight="700" style="fill:var(--ink)">'+v+'%</text><text x="42" y="56" text-anchor="middle" font-size="10" style="fill:var(--mut)">do farm</text></svg>';}
 
 function render(){
   const a=document.activeElement,k=a&&a.dataset?a.dataset.k:null;
@@ -428,15 +471,15 @@ function renderResumo(R){
   if(mode==='loading')h+='<div class="fname">Carregando…</div>';
   else if(!R.rows.length)h+='<div class="fname">Nenhum item com demanda nos tiers do total</div>';
   else if(!f)h+='<div class="fname">Tudo concluído nos tiers do total</div>';
-  else h+='<div class="fname">'+esc(nm(f))+'</div><div class="fpoke">'+esc(pokeTxt(f))+'</div><div class="fbig">'+nf(rf.miss)+' <small>itens</small></div>'+stgHtml(rf)+(rf.next?'<div class="fhint">Próximo talento: <b>'+tn(rf.next.t)+'</b> precisa de '+nf(rf.next.q)+'; o Balance cobre '+nf(rf.next.a)+', faltam <b>'+nf(rf.next.m)+'</b>.</div>':'')+'<div class="fact"><button type="button" class="btn pri" data-act="open" data-item="'+f+'" data-k="f-open">Somar loot</button></div>';
+  else h+='<div class="fhead">'+ico(f,44)+'<div><div class="fname">'+esc(nm(f))+'</div><div class="fpoke">Dropa de: '+esc(pokeTxt(f))+'</div></div></div><div class="fbig">'+nf(rf.miss)+' <small>itens</small></div>'+stgHtml(rf)+(rf.next?'<div class="fhint">Próximo talento: <b>'+tn(rf.next.t)+'</b> precisa de '+nf(rf.next.q)+'; o Balance cobre '+nf(rf.next.a)+', faltam <b>'+nf(rf.next.m)+'</b>.</div>':'')+'<div class="fact"><button type="button" class="btn pri" data-act="open" data-item="'+f+'" data-k="f-open">Somar loot</button></div>';
   h+='</div></section><section class="card"><div class="lbl"><span class="mk n">▷</span> PRÓXIMO</div>';
-  h+=rn?'<div class="nname">'+esc(nm(n))+'</div><div class="pk">'+esc(pokeTxt(n))+'</div><div class="nbig">'+nf(rn.miss)+' <small>itens</small></div>'+stgHtml(rn):'<div class="pk">'+(f?'Nenhum: o foco é o último item com falta.':'—')+'</div>';
+  h+=rn?'<div class="nname">'+esc(nm(n))+'</div><div class="pk">Dropa de: '+esc(pokeTxt(n))+'</div><div class="nbig">'+nf(rn.miss)+' <small>itens</small></div>'+stgHtml(rn):'<div class="pk">'+(f?'Nenhum: o foco é o último item com falta.':'—')+'</div>';
   const doneT=TAL.filter(t=>R.tal[t.id].complete).length;
-  h+='</section><section class="card"><div class="lbl">PROGRESSO</div><div class="pgrid">'+ring(R.overall)+'<div><div class="pline"><b>'+R.complete+'</b>/'+R.rows.length+' itens completos</div><div class="pline"><b>'+doneT+'</b>/'+TAL.length+' talentos concluídos</div></div></div><div class="tbars">'+[1,2,3,4].map(k=>{const z=R.tstat[k];return '<div class="tb"><span style="color:'+TIER[k].c+'">T'+k+'</span><span class="tbb"><i style="width:'+(z.done/z.n*100)+'%;background:'+TIER[k].c+'"></i></span><span>'+z.done+'/'+z.n+'</span></div>';}).join('')+'</div></section>';
+  h+='</section><section class="card"><div class="lbl">PROGRESSO</div><div class="pgrid">'+ring(R.overall)+'<div><div class="pline"><b>'+R.complete+'</b>/'+R.rows.length+' itens completos</div><div class="pline"><b>'+doneT+'</b>/'+TAL.length+' talentos concluídos</div></div></div><div class="tbars">'+[1,2,3,4].map(k=>{const z=R.tstat[k];return '<div class="tb"><span style="color:'+TIER[k].t+'">T'+k+'</span><span class="tbb"><i style="width:'+(z.done/z.n*100)+'%;background:'+TIER[k].c+'"></i></span><span>'+z.done+'/'+z.n+'</span></div>';}).join('')+'</div></section>';
   h+='<section class="card"><div class="lbl">DÁ PARA CONCLUIR AGORA</div>';
   h+=R.ready.length?R.ready.slice(0,4).map(t=>'<div class="rl"><span class="tid" style="--tc:'+TIER[t.t].c+'">'+tn(t)+'</span><span class="rtx">+'+t.v+'% '+BON[t.cat][0]+'</span><button type="button" class="btn sm" data-act="tcomp" data-tid="'+t.id+'" data-k="rc-'+t.id+'"'+(ro()?' disabled':'')+'>Concluir</button></div>').join('')+(R.ready.length>4?'<div class="pk">e mais '+(R.ready.length-4)+' na aba Talentos.</div>':''):'<div class="pk">Nenhum talento fecha só com o Balance de agora.</div>';
   const near=R.rows.filter(r=>r.next).sort((a,b)=>a.next.m-b.next.m).slice(0,4);
-  h+='<div class="lbl" style="margin-top:12px">QUASE LÁ</div>'+(near.length?near.map(r=>'<button type="button" class="rl" data-act="open" data-item="'+r.id+'" data-k="near-'+r.id+'"><span class="rnm">'+esc(shortNm(r.id))+'</span><span class="rtx">faltam <b>'+nf(r.next.m)+'</b> p/ '+tn(r.next.t)+'</span></button>').join(''):'<div class="pk">Nada pendente.</div>')+'</section></div>';
+  h+='<div class="lbl" style="margin-top:12px">QUASE LÁ</div>'+(near.length?near.map(r=>'<button type="button" class="rl" data-act="open" data-item="'+r.id+'" data-k="near-'+r.id+'">'+ico(r.id,22)+'<span class="rnm">'+esc(shortNm(r.id))+(dropShort(r.id)?' <span class="rpk">'+esc(dropShort(r.id))+'</span>':'')+'</span><span class="rtx">faltam <b>'+nf(r.next.m)+'</b> p/ '+tn(r.next.t)+'</span></button>').join(''):'<div class="pk">Nada pendente.</div>')+'</section></div>';
   $('resumo').innerHTML=h;
 }
 function renderItens(R){
@@ -464,15 +507,15 @@ const STL={feito:['Concluído','p-ok'],pronto:['Pronto para concluir','p-mid'],p
 function talCard(x,z){
   const [lab,cls]=STL[z.status];
   const parts=z.parts.map(p=>{const st=p.done?'done':p.miss?'miss':'cov',tg=p.done?'entregue':p.miss?(p.alloc?'tem '+nf(p.alloc)+' · falta '+nf(p.miss):'falta '+nf(p.miss)):'no Balance';
-    return '<button type="button" class="part '+st+'" data-act="part" data-tid="'+x.id+'" data-item="'+p.id+'" data-k="part-'+x.id+'-'+p.id+'" aria-pressed="'+p.done+'" title="'+(p.done?'Desmarcar entrega':'Marcar como entregue')+'"'+(ro()?' disabled':'')+'><span class="bx">'+(p.done?'✓':'')+'</span><span class="q">'+nf(p.q)+'</span><span>'+esc(shortNm(p.id))+'</span><span class="tg">· '+tg+'</span></button>';}).join('');
+    return '<button type="button" class="part '+st+'" data-act="part" data-tid="'+x.id+'" data-item="'+p.id+'" data-k="part-'+x.id+'-'+p.id+'" aria-pressed="'+p.done+'" title="'+(p.done?'Desmarcar entrega':'Marcar como entregue')+'"'+(ro()?' disabled':'')+'><span class="bx">'+(p.done?'✓':'')+'</span>'+ico(p.id,20)+'<span class="q">'+nf(p.q)+'</span><span>'+esc(shortNm(p.id))+'</span>'+(dropShort(p.id)?'<span class="pkm">· '+esc(dropShort(p.id))+'</span>':'')+'<span class="tg">· '+tg+'</span></button>';}).join('');
   const act=z.complete?'<button type="button" class="lnk" data-act="tundo" data-tid="'+x.id+'" data-k="tundo-'+x.id+'"'+(ro()?' disabled':'')+'>Desmarcar</button>':'<button type="button" class="pact" data-act="tcomp" data-tid="'+x.id+'" data-k="tcomp-'+x.id+'"'+(ro()?' disabled':'')+'>✓ Concluir talento</button>';
-  return '<article class="tcard '+z.status+'" style="--tc:'+TIER[x.t].c+';--ts:'+TIER[x.t].s+'"><div class="tline"><span class="tid">'+tn(x)+'</span><span class="tbon">+'+x.v+'% '+BON[x.cat][0]+'</span>'+(x.l?'<span class="lvl">Nível '+x.l+'</span>':'')+'<span class="pill '+cls+' sp">'+lab+(z.status==='parcial'?' '+z.nd+'/'+z.n:'')+'</span></div><div class="ttx">'+esc(x.x)+'</div><div class="parts">'+parts+act+'</div></article>';
+  return '<article class="tcard '+z.status+'" style="'+tv(x.t)+'"><div class="tline"><span class="tid">'+tn(x)+'</span><span class="tbon">+'+x.v+'% '+BON[x.cat][0]+'</span>'+(x.l?'<span class="lvl">Nível '+x.l+'</span>':'')+'<span class="pill '+cls+' sp">'+lab+(z.status==='parcial'?' '+z.nd+'/'+z.n:'')+'</span></div><div class="ttx">'+esc(x.x)+'</div><div class="parts">'+parts+act+'</div></article>';
 }
 function renderTal(R){
   const T=ui.ttab,L=TAL.filter(x=>x.t===T),st=R.tstat[T],unl=T===1||S.unlocked.includes(T);
   let h='<div class="ph"><h2>Talentos</h2><span class="cnt">toque em cada item do talento para marcar a entrega</span><span class="seg sp" role="group" aria-label="Filtro de talentos"><button type="button" data-act="tfil" data-v="todos" aria-pressed="'+(ui.tfil==='todos')+'">Todos</button><button type="button" data-act="tfil" data-v="pend" aria-pressed="'+(ui.tfil==='pend')+'">Pendentes</button></span></div>';
   h+='<div class="ttabs" role="tablist">'+[1,2,3,4].map(k=>{const z=R.tstat[k];return '<button type="button" role="tab" class="ttab" data-act="ttab" data-t="'+k+'" aria-selected="'+(k===T)+'" style="--tc:'+TIER[k].c+'"><span class="dot"></span>Tier '+k+'<span class="tcnt">'+z.done+'/'+z.n+'</span></button>';}).join('')+'</div>';
-  h+='<div class="tierhd" style="--tc:'+TIER[T].c+';--ts:'+TIER[T].s+'"><div class="tr1"><b>Tier '+T+'</b><span>'+st.done+' de '+st.n+' concluídos'+(st.ready?' · '+st.ready+' pronto'+(st.ready>1?'s':'')+' para concluir':'')+(S.tiers.includes(T)?'':' · fora do total')+'</span></div><div class="tbar"><i style="width:'+(st.done/st.n*100)+'%"></i></div><div class="tr2">'+(T===1?'Sempre liberado. Bônus ativos em todos os tiers.':'Liberar: '+TIER[T].unlock+' · ao liberar: +1% de dano e +1% de defesa Fantasma.')+'</div><div class="tr3">';
+  h+='<div class="tierhd" style="'+tv(T)+'"><div class="tr1"><b>Tier '+T+'</b><span>'+st.done+' de '+st.n+' concluídos'+(st.ready?' · '+st.ready+' pronto'+(st.ready>1?'s':'')+' para concluir':'')+(S.tiers.includes(T)?'':' · fora do total')+'</span></div><div class="tbar"><i style="width:'+(st.done/st.n*100)+'%"></i></div><div class="tr2">'+(T===1?'Sempre liberado. Bônus ativos em todos os tiers.':'Liberar: '+TIER[T].unlock+' · ao liberar: +1% de dano e +1% de defesa Fantasma.')+'</div><div class="tr3">';
   if(T>1)h+='<button type="button" class="btn sm '+(unl?'on':'')+'" data-act="unl" data-t="'+T+'" data-k="unl-'+T+'" aria-pressed="'+unl+'"'+(ro()?' disabled':'')+'>'+(unl?'✓ Tier liberado':'Marcar tier como liberado')+'</button>';
   if(st.done<st.n)h+='<button type="button" class="btn sm ghost" data-act="tierall" data-t="'+T+'" data-k="tierall-'+T+'"'+(ro()?' disabled':'')+'>'+(ui.confirmTier===T?'Confirmar: concluir os '+(st.n-st.done):'Concluir todos do tier')+'</button>';
   h+='</div></div><div class="tcards">';
@@ -484,13 +527,13 @@ function renderTal(R){
 }
 function renderBonus(R){
   const unl=new Set([1,...S.unlocked]);
-  let h='<div class="ph"><h2>Bônus liberados</h2></div><div class="card"><div class="lbl">TIERS LIBERADOS</div><div class="unl">'+[1,2,3,4].map(k=>{const on=unl.has(k);return '<button type="button" class="ub '+(on?'on':'')+'" style="--tc:'+TIER[k].c+';--ts:'+TIER[k].s+'" data-act="unl" data-t="'+k+'" data-k="ub-'+k+'" aria-pressed="'+on+'"'+(k===1||ro()?' disabled':'')+'><b>T'+k+'</b><span>'+(k===1?'sempre':on?'liberado':'bloqueado')+'</span></button>';}).join('')+'</div>';
+  let h='<div class="ph"><h2>Bônus liberados</h2></div><div class="card"><div class="lbl">TIERS LIBERADOS</div><div class="unl">'+[1,2,3,4].map(k=>{const on=unl.has(k);return '<button type="button" class="ub '+(on?'on':'')+'" style="'+tv(k)+'" data-act="unl" data-t="'+k+'" data-k="ub-'+k+'" aria-pressed="'+on+'"'+(k===1||ro()?' disabled':'')+'><b>T'+k+'</b><span>'+(k===1?'sempre':on?'liberado':'bloqueado')+'</span></button>';}).join('')+'</div>';
   const act=Object.keys(BON).filter(k=>R.bon[k].on>0);
   h+='<div class="lbl">ATIVOS AGORA</div><div class="bsum">'+(act.length?act.map(k=>'<span class="bchip">+'+R.bon[k].on+'% '+BON[k][0]+'</span>').join(''):'<span class="pk">Nenhum bônus ativo ainda.</span>')+'</div>';
   for(const g of GROUPS){
     h+='<div class="bg"><div class="bgh">'+g+'</div>';
     for(const k of Object.keys(BON).filter(q=>BON[q][1]===g)){const b=R.bon[k];
-      h+='<div class="brow"><span class="bl">'+BON[k][0]+'</span><span class="bv"><b class="'+(b.on?'':'z')+'">+'+b.on+'%</b> <small>de +'+b.max+'%</small></span><span class="bbar"><i style="width:'+(b.on/b.max*100)+'%;background:var(--ok)"></i><i style="width:'+(b.pend/b.max*100)+'%;background:#F2C14E"></i></span>'+(b.pend?'<span class="pend">+'+b.pend+'% já concluído, aguardando liberar o Tier '+[...b.pendT].join(' e ')+'</span>':'')+'</div>';}
+      h+='<div class="brow"><span class="bl">'+BON[k][0]+'</span><span class="bv"><b class="'+(b.on?'':'z')+'">+'+b.on+'%</b> <small>de +'+b.max+'%</small></span><span class="bbar"><i style="width:'+(b.on/b.max*100)+'%;background:var(--okFill)"></i><i style="width:'+(b.pend/b.max*100)+'%;background:var(--pendFill)"></i></span>'+(b.pend?'<span class="pend">+'+b.pend+'% já concluído, aguardando liberar o Tier '+[...b.pendT].join(' e ')+'</span>':'')+'</div>';}
     h+='</div>';
   }
   $('bonus').innerHTML=h+'</div>';
@@ -499,7 +542,7 @@ const closeBtn='<button type="button" class="x" data-act="close" aria-label="Fec
 function sheetStats(id,R){
   const r=R.byId[id],P=R.per[id];
   let h='<div class="sstat"><div><div class="lbl">FALTA (TIERS DO TOTAL)</div><div class="nbig">'+(r?nf(r.miss):'0')+'</div></div><div><div class="lbl">CONCLUÍDO</div><div class="nbig okt">'+(r?pc(r):100)+'%</div></div></div>';
-  h+=[1,2,3,4].filter(k=>P[k]&&P[k].tot).map(k=>{const x=P[k],c=TIER[k].c;return '<div class="strow"><span class="tt" style="color:'+c+'">Tier '+k+(S.tiers.includes(k)?'':' (fora)')+'</span><span class="stg"><span class="s"><i style="width:'+(x.done/x.tot*100)+'%;background:'+c+'"></i><i style="left:'+(x.done/x.tot*100)+'%;width:'+(x.alloc/x.tot*100)+'%;background:'+c+';opacity:.4"></i></span></span><span>'+(x.miss?'falta <b>'+nf(x.miss)+'</b>':'<b class="okt">completo</b>')+' <span class="pk">de '+nf(x.tot)+'</span></span></div>';}).join('');
+  h+=[1,2,3,4].filter(k=>P[k]&&P[k].tot).map(k=>{const x=P[k],c=TIER[k].c;return '<div class="strow"><span class="tt" style="color:'+TIER[k].t+'">Tier '+k+(S.tiers.includes(k)?'':' (fora)')+'</span><span class="stg"><span class="s"><i style="width:'+(x.done/x.tot*100)+'%;background:'+c+'"></i><i style="left:'+(x.done/x.tot*100)+'%;width:'+(x.alloc/x.tot*100)+'%;background:'+c+';opacity:.4"></i></span></span><span>'+(x.miss?'falta <b>'+nf(x.miss)+'</b>':'<b class="okt">completo</b>')+' <span class="pk">de '+nf(x.tot)+'</span></span></div>';}).join('');
   if(r&&r.next)h+='<div class="fhint">Próximo talento: <b>'+tn(r.next.t)+'</b> precisa de '+nf(r.next.q)+'; faltam <b>'+nf(r.next.m)+'</b>.</div>';
   return h;
 }
@@ -512,15 +555,28 @@ function itemSheet(R){
   const id=ui.sheet.id,it=ITEMS[IX[id]],r=R.byId[id],o=ordOf(id);
   const maxq=Math.max(...TAL.filter(t=>t.c[id]).map(t=>t.c[id]));
   const steps=maxq>=1000?[100,500,1000,5000]:maxq>=100?[10,50,100,500]:[1,2,3,5];
-  return '<div class="shh"><div><b id="shT">'+esc(nm(id))+'</b><div class="pk">'+esc(pokeTxt(id))+(o==='P'?' · Passivo':'')+'</div></div><span class="sh-st">'+(r?stHtml(r):'')+'</span>'+closeBtn+'</div>'
+  return '<div class="shh">'+ico(id,52)+'<div><b id="shT">'+esc(nm(id))+'</b><div class="pk">Dropa de: '+esc(pokeTxt(id))+(o==='P'?' · Passivo':'')+'</div></div><span class="sh-st">'+(r?stHtml(r):'')+'</span>'+closeBtn+'</div>'
   +'<div><div class="lbl">BALANCE (QUANTO VOCÊ TEM AGORA)</div><div class="bigin"><input id="sh-bal" type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" data-k="s-bal-'+id+'" data-bal="'+id+'" value="'+nf(S.balance[id]||0)+'" aria-label="Balance de '+esc(nm(id))+'"'+(ro()?' disabled':'')+'></div></div>'
   +'<div class="steps">'+steps.map(v=>'<button type="button" class="btn" data-act="add" data-item="'+id+'" data-v="'+v+'" data-k="add-'+v+'"'+(ro()?' disabled':'')+'>+'+nf(v)+'</button>').join('')+steps.slice(1,3).map(v=>'<button type="button" class="btn ghost" data-act="add" data-item="'+id+'" data-v="-'+v+'" data-k="sub-'+v+'"'+(ro()?' disabled':'')+'>−'+nf(v)+'</button>').join('')+'</div>'
   +'<div class="addrow"><input id="sh-add" type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" placeholder="Somar loot da hunt, ex.: 878" data-k="s-add" aria-label="Quantidade para somar"'+(ro()?' disabled':'')+'><button type="button" class="btn pri" data-act="addv" data-item="'+id+'"'+(ro()?' disabled':'')+'>Somar</button></div>'
   +'<div class="sh-stats">'+sheetStats(id,R)+'</div><div class="sh-parts">'+sheetParts(id,R)+'</div>'
-  +'<div class="shset"><label>Ordem de farm<input type="text" class="tin" data-k="s-ord-'+id+'" data-ord="'+id+'" value="'+(o==='P'?'Passivo':esc(o))+'"'+(ro()?' disabled':'')+'></label><label>Nome do item'+(it.ask&&!(S.items[id]&&S.items[id].name)?' <span class="ask">confirmar nome</span>':'')+'<input type="text" class="tin" data-k="s-nm-'+id+'" data-nm="'+id+'" value="'+esc(nm(id))+'"'+(ro()?' disabled':'')+'></label></div>'
-  +'<p class="hint">Ordem: 1, 2, 3… ou Passivo (vai para o fim da fila). No Balance vale 2622, 2.622, +500, -200 ou 10k.</p>';
+  +'<div class="shset"><label>Ordem de farm<input type="text" class="tin" data-k="s-ord-'+id+'" data-ord="'+id+'" value="'+(o==='P'?'Passivo':esc(o))+'"'+(ro()?' disabled':'')+'></label><label>Nome do item'+(it.ask&&!(S.items[id]&&S.items[id].name)?' <button type="button" class="ask asktag" data-act="names">confirmar nome</button>':'')+'<input type="text" class="tin" data-k="s-nm-'+id+'" data-nm="'+id+'" value="'+esc(nm(id))+'"'+(ro()?' disabled':'')+'></label></div>'
+  +'<label class="shset1"><span class="lbl">POKÉMON QUE DROPA ESTE ITEM</span><input type="text" class="tin" data-k="s-pk-'+id+'" data-pk="'+id+'" value="'+esc(pokeOf(id)==='ALL'?'Todos os Fantasma':pokeOf(id))+'" placeholder="ex.: Gengar" aria-label="Pokémon que dropa"'+(ro()?' disabled':'')+'></label>'
+  +'<p class="hint">Ordem: 1, 2, 3… ou Passivo (vai para o fim da fila). Pokémon: “Todos os Fantasma” vale para qualquer Fantasma. No Balance vale 2622, 2.622, +500, -200 ou 10k.</p>';
 }
-function helpHtml(){return '<div class="shh"><div><b id="shT">Como funciona</b></div>'+closeBtn+'</div><ul class="help"><li><b>Balance</b>: quanto você tem agora de cada item. Aceita 2622, +500 (soma), -200 (tira) e 10k.</li><li>Cada talento custa vários itens. Toque em cada item do talento para marcar a entrega (dá para entregar 1 de 3, por exemplo). Quando todos estão entregues, o talento fica concluído.</li><li><b>Falta</b> de um item = partes ainda não entregues, nos tiers do total, menos o Balance. O Balance cobre na ordem do jogo: T1 a T4, de cima para baixo.</li><li><b>Foco agora</b> = primeiro item da ordem de farm com falta; <b>Próximo</b> = o seguinte. Itens Passivo ficam no fim da fila.</li><li><b>Bônus</b>: soma dos talentos concluídos em tiers liberados, mais +1% de dano e +1% de defesa por tier liberado (T2 a T4).</li><li>Marcar uma entrega não mexe no Balance. Se os itens já saíram do jogo, use “Descontar do Balance” no aviso.</li><li>No Claude os dados sincronizam sozinhos entre PC e celular. Na página do GitHub ficam salvos no navegador: use “Copiar link com meus dados” para levar a outro aparelho.</li></ul>';}
+function useHtml(id){const n=needTxt(id);return (n?'<span class="ask">'+n+'</span>':'<span class="okt">✓ preenchido</span>')+'<span>Usado em '+esc(useTxt(id))+'</span>';}
+function patchNames(){if(!ui.sheet||ui.sheet.type!=='names')return;const c=document.querySelector('#sheet .nmcnt');if(c)c.textContent=ITEMS.filter(it=>needs(it.id)).length+' a confirmar';for(const el of document.querySelectorAll('#sheet [data-nmc]'))el.innerHTML=useHtml(el.dataset.nmc);}
+function useTxt(id){const L=TAL.filter(t=>t.c[id]);return L.length<=4?L.map(t=>tn(t)+' ×'+nf(t.c[id])).join(', '):L.length+' talentos ('+[...new Set(L.map(t=>'T'+t.t))].join(', ')+')';}
+function namesSheet(){
+  const pend=ITEMS.filter(it=>needs(it.id)),all=ui.namesAll||!pend.length,list=all?[...ITEMS].sort((a,b)=>okey(a.id)-okey(b.id)):pend;
+  return '<div class="shh"><div><b id="shT">Nomes dos itens</b><div class="pk">Olhe o ícone e escreva o nome e o Pokémon que dropa. Salva na hora. Depois me avise no chat que eu passo para o projeto.</div></div>'+closeBtn+'</div>'
+  +'<div class="ph" style="margin:0"><span class="cnt nmcnt">'+pend.length+' a confirmar</span><span class="seg sp" role="group" aria-label="Filtro"><button type="button" data-act="nmfil" data-v="pend" aria-pressed="'+!all+'">A confirmar</button><button type="button" data-act="nmfil" data-v="all" aria-pressed="'+all+'">Todos</button></span></div>'
+  +(pend.length?'':'<div class="pk">Todos os itens já têm nome e Pokémon.</div>')
+  +'<div class="nmgrid">'+list.map(it=>{const id=it.id;return '<div class="nmcard">'+ico(id,64)+'<div class="use" data-nmc="'+id+'">'+useHtml(id)+'</div><label>Nome<input type="text" class="tin" data-k="n-nm-'+id+'" data-nm="'+id+'" value="'+(noName(id)?'':esc(nm(id)))+'" placeholder="'+(noName(id)?'provisório: '+esc(nm(id)):'')+'"'+(ro()?' disabled':'')+'></label><label>Pokémon que dropa<input type="text" class="tin" data-k="n-pk-'+id+'" data-pk="'+id+'" value="'+esc(pokeOf(id)==='ALL'?'Todos os Fantasma':pokeOf(id))+'" placeholder="ex.: Gengar"'+(ro()?' disabled':'')+'></label></div>';}).join('')+'</div>'
+  +'<div class="fact"><button type="button" class="btn pri" data-act="nmcopy">Copiar lista para o Claude</button></div><p class="hint">No app dentro do Claude eu leio os nomes direto daqui; na página do GitHub, use o botão acima e cole o texto no chat.</p>';
+}
+function namesText(){return 'NOMES DOS ITENS - Talentos Fantasma (para atualizar o projeto)\nid | nome | Pokémon que dropa | usado em\n'+ITEMS.map(it=>it.id+' | '+nm(it.id)+(noName(it.id)?' (provisório)':'')+' | '+(pokeOf(it.id)==='ALL'?'Todos os Fantasma':pokeOf(it.id)||'(a definir)')+' | '+useTxt(it.id)).join('\n');}
+function helpHtml(){return '<div class="shh"><div><b id="shT">Como funciona</b></div>'+closeBtn+'</div><ul class="help"><li><b>Balance</b>: quanto você tem agora de cada item. Aceita 2622, +500 (soma), -200 (tira) e 10k.</li><li>Cada talento custa vários itens. Toque em cada item do talento para marcar a entrega (dá para entregar 1 de 3, por exemplo). Quando todos estão entregues, o talento fica concluído.</li><li><b>Falta</b> de um item = partes ainda não entregues, nos tiers do total, menos o Balance. O Balance cobre na ordem do jogo: T1 a T4, de cima para baixo.</li><li><b>Foco agora</b> = primeiro item da ordem de farm com falta; <b>Próximo</b> = o seguinte. Itens Passivo ficam no fim da fila.</li><li><b>Nomes dos itens</b> (menu ⋯): mostra o ícone de cada item para você escrever o nome e o Pokémon que dropa.</li><li><b>De onde vem cada item</b>: em cada talento, ao lado do item aparece o Pokémon que dropa (todos Fantasma = qualquer Pokémon do tipo Fantasma). Itens sem Pokémon definido podem ser editados na ficha do item.</li><li><b>Bônus</b>: soma dos talentos concluídos em tiers liberados, mais +1% de dano e +1% de defesa por tier liberado (T2 a T4).</li><li>Marcar uma entrega não mexe no Balance. Se os itens já saíram do jogo, use “Descontar do Balance” no aviso.</li><li>No Claude os dados sincronizam sozinhos entre PC e celular. Na página do GitHub ficam salvos no navegador: use “Copiar link com meus dados” para levar a outro aparelho.</li></ul>';}
 function renderSheet(R,keep){
   const el=$('sheet');
   if(!ui.sheet){el.hidden=true;el.innerHTML='';document.body.classList.remove('lock');return;}
@@ -530,6 +586,7 @@ function renderSheet(R,keep){
   else if(ui.sheet.type==='text')h+='<div class="shh"><div><b id="shT">'+esc(ui.sheet.title)+'</b><div class="pk">Selecione tudo e copie.</div></div>'+closeBtn+'</div><textarea class="ta" readonly aria-label="Texto para copiar">'+esc(ui.sheet.txt)+'</textarea>';
   else if(ui.sheet.type==='restore')h+='<div class="shh"><div><b id="shT">Restaurar backup</b><div class="pk">Cole o texto copiado em “Copiar backup”.</div></div>'+closeBtn+'</div><textarea class="ta" id="rsTa" aria-label="Backup"></textarea><div class="fact"><button type="button" class="btn pri" data-act="rsgo">Restaurar</button></div>';
   else if(ui.sheet.type==='help')h+=helpHtml();
+  else if(ui.sheet.type==='names')h+=namesSheet();
   el.innerHTML=h+'</div>';el.dataset.type=ui.sheet.type;el.hidden=false;document.body.classList.add('lock');
 }
 function patchSheet(R){
@@ -539,7 +596,7 @@ function patchSheet(R){
 }
 function renderTabbar(R){
   const ready=R.ready.length,pend=R.rows.filter(r=>r.miss>0).length;
-  $('tabbar').innerHTML=[['resumo','Resumo'],['itens','Itens'],['talentos','Talentos'],['bonus','Bônus']].map(([k,l])=>'<button type="button" data-act="tab" data-v="'+k+'"'+(ui.tab===k?' aria-current="page"':'')+'>'+ICON[k]+'<span>'+l+'</span>'+(k==='talentos'&&ready?'<i class="badge">'+ready+'</i>':k==='itens'&&pend?'<i class="badge" style="background:#6B7280">'+pend+'</i>':'')+'</button>').join('');
+  $('tabbar').innerHTML=[['resumo','Resumo'],['itens','Itens'],['talentos','Talentos'],['bonus','Bônus']].map(([k,l])=>'<button type="button" data-act="tab" data-v="'+k+'"'+(ui.tab===k?' aria-current="page"':'')+'>'+ICON[k]+'<span>'+l+'</span>'+(k==='talentos'&&ready?'<i class="badge">'+ready+'</i>':k==='itens'&&pend?'<i class="badge" style="background:var(--mut)">'+pend+'</i>':'')+'</button>').join('');
   for(const k of ['resumo','itens','talentos','bonus'])$(k).classList.toggle('on',ui.tab===k);
 }
 
@@ -645,8 +702,8 @@ function aiText(){
   if(R.next)L.push('Próximo: '+label(R.next)+' - falta '+nf(R.byId[R.next].miss));
   L.push('Progresso do farm: '+Math.round(R.overall*100)+'% | '+R.complete+' de '+R.rows.length+' itens completos | '+TAL.filter(t=>R.tal[t.id].complete).length+' de '+TAL.length+' talentos concluídos');
   L.push('');
-  L.push('ITENS (ordem | item | Pokémon | Balance | falta total = por tier | % | status)');
-  for(const r of R.rows){const o=ordOf(r.id);L.push((o==='P'?'Passivo':o)+' | '+nm(r.id)+' | '+(ITEMS[IX[r.id]].poke||'-')+' | '+nf(S.balance[r.id]||0)+' | '+nf(r.miss)+' = '+S.tiers.filter(k=>r.tiers[k]).map(k=>'T'+k+' '+nf(r.tiers[k].miss)).join(' + ')+' | '+pc(r)+'% | '+r.status);}
+  L.push('ITENS (ordem | item | Pokémon que dropa | Balance | falta total = por tier | % | status)');
+  for(const r of R.rows){const o=ordOf(r.id);L.push((o==='P'?'Passivo':o)+' | '+nm(r.id)+' | '+pokeTxt(r.id)+' | '+nf(S.balance[r.id]||0)+' | '+nf(r.miss)+' = '+S.tiers.filter(k=>r.tiers[k]).map(k=>'T'+k+' '+nf(r.tiers[k].miss)).join(' + ')+' | '+pc(r)+'% | '+r.status);}
   L.push('');
   L.push('BÔNUS (ativo / máximo)');
   for(const k of Object.keys(BON)){const b=R.bon[k];L.push('- '+BON[k][0]+': +'+b.on+'% de +'+b.max+'%'+(b.pend?' (+'+b.pend+'% concluído aguardando liberar tier)':''));}
@@ -669,6 +726,8 @@ document.addEventListener('click',e=>{
   const el=e.target.closest('[data-act]');if(!el)return;
   const a=el.dataset.act;
   if(a==='menu'){menu.hidden=!menu.hidden;return;}
+  if(a==='tema'){applyTema(isDark()?'claro':'escuro');return;}
+  if(a==='tema-set'){applyTema(el.dataset.v);return;}
   if(['ia','bk','rs','link','help'].includes(a))menu.hidden=true;
   switch(a){
     case 'tier':{if(ro())return;const t=+el.dataset.t;if(S.tiers.includes(t)){if(S.tiers.length===1){toast('Deixe pelo menos um tier no total.');return;}S.tiers=S.tiers.filter(x=>x!==t);}else S.tiers=[...S.tiers,t].sort();commit();break;}
@@ -694,6 +753,9 @@ document.addEventListener('click',e=>{
       const src=x&&x.estado?x.estado:x;if(!src||typeof src!=='object'||!src.balance){toast('Esse texto não é um backup válido.');return;}
       S=norm(src);ui.sheet=null;commit();toast('Backup restaurado.');break;}
     case 'help':ui.sheet={type:'help'};$('sheet').dataset.type='';render();break;
+    case 'names':ui.sheet={type:'names'};ui.namesAll=false;$('sheet').dataset.type='';$('menu').hidden=true;render();break;
+    case 'nmfil':ui.namesAll=el.dataset.v==='all';$('sheet').dataset.type='';render();break;
+    case 'nmcopy':copyText(namesText(),'Lista de nomes');break;
     case 'imp':if(ui.importData){S=ui.importData;ui.importData=null;try{history.replaceState(null,'','#resumo');}catch(err){}commit();toast('Dados importados.');}break;
     case 'impno':ui.importData=null;try{history.replaceState(null,'','#resumo');}catch(err){}render();break;
   }
@@ -717,9 +779,13 @@ document.addEventListener('change',e=>{const el=e.target;if(!(el instanceof HTML
     if(s==='p'||s==='passivo')S.items[id].order='P';else if(/^\d{1,3}$/.test(s)&&+s>=1)S.items[id].order=+s;else if(s==='')delete S.items[id].order;
     else{toast('Use um número (1, 2, 3…) ou a palavra Passivo.');render();return;}
     if(!Object.keys(S.items[id]).length)delete S.items[id];commit();}
+  else if(el.dataset.pk){const id=el.dataset.pk,v=el.value.trim().slice(0,40),def=ITEMS[IX[id]].poke;S.items[id]=Object.assign({},S.items[id]);
+    const val=/^(all|todos?( os)?( pok[eé]mon)?( fantasma)?|qualquer.*)$/i.test(v)?'ALL':v;
+    if(val===def)delete S.items[id].poke;else S.items[id].poke=val;
+    if(!Object.keys(S.items[id]).length)delete S.items[id];commit();patchNames();}
   else if(el.dataset.nm){const id=el.dataset.nm,s=el.value.trim().slice(0,60);S.items[id]=Object.assign({},S.items[id]);
-    if(s&&s!==ITEMS[IX[id]].name)S.items[id].name=s;else delete S.items[id].name;
-    if(!Object.keys(S.items[id]).length)delete S.items[id];commit();}
+    if(s&&(s!==ITEMS[IX[id]].name||ITEMS[IX[id]].ask))S.items[id].name=s;else delete S.items[id].name;
+    if(!Object.keys(S.items[id]).length)delete S.items[id];commit();patchNames();}
 });
 document.addEventListener('focusout',()=>{setTimeout(()=>{if(pendingRender&&!typing()){pendingRender=false;render();}},0);});
 document.addEventListener('keydown',e=>{
@@ -756,6 +822,9 @@ async function init(){
     else if(!dirty&&!saving)status('Salvo na nuvem','ok');
   },err=>{clearTimeout(timer);if(mode==='loading')goLocal('Sem nuvem: salvo neste aparelho');else status('Conexão caiu: recarregue','bad');});
 }
+paintTema();
+try{const mq=window.matchMedia('(prefers-color-scheme: dark)');if(mq.addEventListener)mq.addEventListener('change',paintTema);else if(mq.addListener)mq.addListener(paintTema);}catch(e){}
+try{new MutationObserver(paintTema).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});}catch(e){}
 init();
 }
 </script>
