@@ -315,6 +315,9 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 .sqghost{position:fixed;z-index:80;pointer-events:none;margin:0;box-shadow:0 14px 34px rgba(0,0,0,.35);transform:rotate(1.5deg) scale(1.03);opacity:.96}
 body.dragging,body.dragging *{cursor:grabbing!important;user-select:none!important}
 .seqtip{font-size:12px;color:var(--mut);margin:-4px 0 10px}
+@supports (color:light-dark(#000,#fff)){:root{--mmC:light-dark(#8B1A1A,#E57373);--mlC:light-dark(#9A7B0A,#E8C547)}}
+:root[data-tema=escuro]{--mmC:#E57373;--mlC:#E8C547}:root[data-tema=claro]{--mmC:#8B1A1A;--mlC:#9A7B0A}
+.bn-mm{color:var(--mmC,#8B1A1A);font-weight:700}.bn-ml{color:var(--mlC,#9A7B0A);font-weight:700}
 .rl .rpk{font-size:12px;font-weight:400;color:var(--mut)}
 .pact{border:1.5px dashed var(--line3);background:var(--card);color:var(--accent);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;min-height:34px}
 .unl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:12px}
@@ -461,6 +464,7 @@ const GROUPS=['Base','Captura','Combate','Bolas e drops'];
 const DN3='Golpes do tipo Fantasma causam 3% mais dano.',DN5='Golpes do tipo Fantasma causam 5% mais dano.',DF3='Aumenta a defesa dos Pokémon do tipo Fantasma em 3%.',DF5='Aumenta a defesa dos Pokémon do tipo Fantasma em 5%.';
 const CAP='Aumenta a chance de capturar Pokémon do tipo Fantasma em 2%.',MOON='Moon Balls: chance de capturar Pokémon do tipo Fantasma aumentada em 2%.',CRIT='Aumenta a chance de captura crítica de Pokémon do tipo Fantasma em 2%.',SH4='Derrotar Pokémon do tipo Fantasma aumenta em 4% a chance de seu respawn ser shiny.',SH2='Derrotar Pokémon do tipo Fantasma aumenta em 2% a chance de seu respawn ser shiny.';
 const CC=p=>'Contra Pokémon do tipo Fantasma, aumenta a chance crítica em '+p+'%.',CD=p=>'Contra Pokémon do tipo Fantasma, aumenta o dano crítico em '+p+'%.',PR=p=>'Golpes do tipo Fantasma ganham '+p+'% de precisão contra evasão.',EV=p=>'Contra golpes do tipo Fantasma, seus Pokémon ganham '+p+'% de evasão.',RC='Contra golpes do tipo Fantasma, seus Pokémon ganham 5% de resistência crítica.';
+const bonH=k=>k==='mm'||k==='ml'?'<span class="bn-'+k+'">'+BON[k][0]+'</span>':BON[k][0];
 const MER='Tipo Fantasma: bolas contam +5% só no Sistema de Mérito. Não altera mínimo, outros bônus ou gasto. Sem Premier/Alliance.',PRE='Premier Balls: chance de capturar Pokémon do tipo Fantasma aumentada em 5%.',ALI='Alliance Balls: chance de capturar Pokémon do tipo Fantasma aumentada em 5%.',MM='Pokémon do tipo Fantasma soltam mega stones míticas seladas 25% mais vezes.',ML='Pokémon do tipo Fantasma soltam mega stones lendárias seladas 10% mais vezes.';
 const c2=p=>({ge:2000,[p]:5000,orb:3}),c3=p=>({ge:3000,hat:3500,[p]:3500,orb:6}),c4=p=>({ge:5000,t4p:5000,[p]:5000,corb:3});
 const RAW=[
@@ -680,7 +684,7 @@ function renderResumo(R){
   +(R.cur&&R.tstat[R.cur].pend?(()=>{const z=R.tstat[R.cur];return '<div class="pnote">T'+R.cur+': '+z.pend+' pendente'+(z.pend>1?'s':'')+(z.one?' · <b>'+z.one+'</b> falta'+(z.one>1?'m':'')+' só 1 item':'')+(z.started-z.one>0?' · '+(z.started-z.one)+' com mais de 1 item faltando':'')+(z.pend-z.started>0?' · '+(z.pend-z.started)+' sem entrega':'')+'.</div>';})():'');
   h+='<div class="pk" style="margin-top:8px">'+(!R.RI?'Registre o loot para ver previsões em dias.':(ob?'T'+ob.t+': '+(ob.eta===null?'previsão quando todos os itens tiverem loot registrado':ob.eta===0?'tudo no Balance':'fecha em '+etaTxt(ob.eta))+'. ':'')+'Ritmo: média de '+R.RI.span+' dia'+(R.RI.span>1?'s':'')+' de loot registrado.')+'</div></section>';
   h+='<section class="card c-qua"><div class="lbl">DÁ PARA CONCLUIR AGORA</div>';
-  h+=R.ready.length?R.ready.slice(0,4).map(t=>'<div class="rl"><span class="tid" style="--tc:'+TIER[t.t].c+'">'+tn(t)+'</span><span class="rtx">+'+t.v+'% '+BON[t.cat][0]+'</span><button type="button" class="btn sm" data-act="tcomp" data-tid="'+t.id+'" data-k="rc-'+t.id+'"'+(ro()?' disabled':'')+'>Concluir</button></div>').join('')+(R.ready.length>4?'<div class="pk">e mais '+(R.ready.length-4)+' na aba Talentos.</div>':''):'<div class="pk">Nenhum talento fecha só com o Balance de agora.</div>';
+  h+=R.ready.length?R.ready.slice(0,4).map(t=>'<div class="rl"><span class="tid" style="--tc:'+TIER[t.t].c+'">'+tn(t)+'</span><span class="rtx">+'+t.v+'% '+bonH(t.cat)+'</span><button type="button" class="btn sm" data-act="tcomp" data-tid="'+t.id+'" data-k="rc-'+t.id+'"'+(ro()?' disabled':'')+'>Concluir</button></div>').join('')+(R.ready.length>4?'<div class="pk">e mais '+(R.ready.length-4)+' na aba Talentos.</div>':''):'<div class="pk">Nenhum talento fecha só com o Balance de agora.</div>';
   const near=R.near.slice(0,isDesk()?6:4);
   h+='<div class="lbl" style="margin-top:12px">QUASE LÁ</div>'+(near.length?'<div class="nearg">'+near.map(z=>'<button type="button" class="rl" data-act="tgo" data-tid="'+z.t.id+'" data-k="near-'+z.t.id+'"><span class="tid" style="--tc:'+TIER[z.t.t].c+'">'+tn(z.t)+'</span><span class="rtx">faltam '+z.miss.map(p=>'<b>'+nf(p.miss)+'</b> '+esc(shortNm(p.id))).join(' + ')+'</span>'+(z.eta===undefined?'':'<span class="eta">'+etaTxt(z.eta)+'</span>')+'</button>').join('')+'</div>':'<div class="pk">Nada pendente nos tiers liberados.</div>')+'</section></div>';
   h+=seqHtml(R);
@@ -742,7 +746,7 @@ function talCard(x,z){
   const parts=z.parts.map(p=>{const st=p.done?'done':p.miss?'miss':'cov',tg=p.done?'entregue':p.miss?(p.alloc?'tem '+nf(p.alloc)+' · falta '+nf(p.miss):'falta '+nf(p.miss)):'no Balance';
     return '<button type="button" class="part '+st+(z.lock?' lock':'')+'" data-act="part" data-tid="'+x.id+'" data-item="'+p.id+'" data-k="part-'+x.id+'-'+p.id+'" aria-pressed="'+p.done+'" title="'+(z.lock?'Tier travado':p.done?'Desmarcar entrega (devolve ao Balance)':'Entregar e descontar do Balance')+'"'+(ro()?' disabled':'')+'><span class="bx">'+(p.done?'✓':'')+'</span>'+ico(p.id,20)+'<span class="q">'+nf(p.q)+'</span><span>'+esc(shortNm(p.id))+'</span>'+(dropShort(p.id)?'<span class="pkm">· '+esc(dropShort(p.id))+'</span>':'')+'<span class="tg">· '+tg+'</span></button>';}).join('');
   const act=z.complete?'<button type="button" class="lnk" data-act="tundo" data-tid="'+x.id+'" data-k="tundo-'+x.id+'"'+(ro()?' disabled':'')+'>Desmarcar</button>':z.lock?'':'<button type="button" class="pact" data-act="tcomp" data-tid="'+x.id+'" data-k="tcomp-'+x.id+'"'+(ro()?' disabled':'')+'>✓ Concluir talento</button>';
-  return '<article class="tcard '+z.status+'" id="tc-'+x.id+'" style="'+tv(x.t)+'"><div class="tline"><span class="tid">'+tn(x)+'</span><span class="tbon">+'+x.v+'% '+BON[x.cat][0]+'</span>'+(x.l?'<span class="lvl">Nível '+x.l+'</span>':'')+'<span class="pill '+cls+' sp">'+lab+(z.status==='parcial'?' '+z.nd+'/'+z.n:'')+'</span></div><div class="ttx">'+esc(x.x)+'</div><div class="parts">'+parts+act+'</div></article>';
+  return '<article class="tcard '+z.status+'" id="tc-'+x.id+'" style="'+tv(x.t)+'"><div class="tline"><span class="tid">'+tn(x)+'</span><span class="tbon">+'+x.v+'% '+bonH(x.cat)+'</span>'+(x.l?'<span class="lvl">Nível '+x.l+'</span>':'')+'<span class="pill '+cls+' sp">'+lab+(z.status==='parcial'?' '+z.nd+'/'+z.n:'')+'</span></div><div class="ttx">'+esc(x.x)+'</div><div class="parts">'+parts+act+'</div></article>';
 }
 function renderTal(R){
   const T=ui.ttab,L=TAL.filter(x=>x.t===T),st=R.tstat[T],unl=R.unl.has(T);
@@ -767,11 +771,11 @@ function renderBonus(R){
   const unl=R.unl;
   let h='<div class="ph"><h2>Bônus liberados</h2></div><div class="card"><div class="lbl">TIERS LIBERADOS</div><div class="unl">'+[1,2,3,4].map(k=>{const on=unl.has(k);return '<button type="button" class="ub '+(on?'on':'')+'" style="'+tv(k)+'" data-act="unl" data-t="'+k+'" data-k="ub-'+k+'" aria-pressed="'+on+'"'+(k===1||ro()?' disabled':'')+'><b>T'+k+'</b><span>'+(k===1?'sempre':on?'liberado':'travado')+'</span></button>';}).join('')+'</div>';
   const act=Object.keys(BON).filter(k=>R.bon[k].on>0);
-  h+='<div class="lbl">ATIVOS AGORA</div><div class="bsum">'+(act.length?act.map(k=>'<span class="bchip">+'+R.bon[k].on+'% '+BON[k][0]+'</span>').join(''):'<span class="pk">Nenhum bônus ativo ainda.</span>')+'</div>';
+  h+='<div class="lbl">ATIVOS AGORA</div><div class="bsum">'+(act.length?act.map(k=>'<span class="bchip">+'+R.bon[k].on+'% '+bonH(k)+'</span>').join(''):'<span class="pk">Nenhum bônus ativo ainda.</span>')+'</div>';
   for(const g of GROUPS){
     h+='<div class="bg"><div class="bgh">'+g+'</div>';
     for(const k of Object.keys(BON).filter(q=>BON[q][1]===g)){const b=R.bon[k];
-      h+='<div class="brow"><span class="bl">'+BON[k][0]+'</span><span class="bv"><b class="'+(b.on?'':'z')+'">+'+b.on+'%</b> <small>de +'+b.max+'%</small></span><span class="bbar"><i style="width:'+(b.on/b.max*100)+'%;background:var(--okFill)"></i><i style="width:'+(b.pend/b.max*100)+'%;background:var(--pendFill)"></i></span>'+(b.pend?'<span class="pend">+'+b.pend+'% já concluído, aguardando liberar o Tier '+[...b.pendT].join(' e ')+'</span>':'')+'</div>';}
+      h+='<div class="brow"><span class="bl">'+bonH(k)+'</span><span class="bv"><b class="'+(b.on?'':'z')+'">+'+b.on+'%</b> <small>de +'+b.max+'%</small></span><span class="bbar"><i style="width:'+(b.on/b.max*100)+'%;background:var(--okFill)"></i><i style="width:'+(b.pend/b.max*100)+'%;background:var(--pendFill)"></i></span>'+(b.pend?'<span class="pend">+'+b.pend+'% já concluído, aguardando liberar o Tier '+[...b.pendT].join(' e ')+'</span>':'')+'</div>';}
     h+='</div>';
   }
   $('bonus').innerHTML=h+'</div>';
@@ -789,7 +793,7 @@ function sheetStats(id,R){
 function sheetParts(id,R){
   const L=TAL.filter(t=>t.c[id]);
   return '<div class="lbl">TALENTOS QUE USAM ESTE ITEM ('+L.length+') · toque para entregar (desconta do Balance)</div><div class="splist">'+L.map(t=>{const p=R.tal[t.id].parts.find(q=>q.id===id),st=p.done?'done':p.miss?'miss':'cov';
-    return '<button type="button" class="sprow '+st+'" data-act="part" data-tid="'+t.id+'" data-item="'+id+'" data-k="sp-'+t.id+'" aria-pressed="'+p.done+'"'+(ro()?' disabled':'')+'><span class="bx">'+(p.done?'✓':'')+'</span><span class="tid" style="--tc:'+TIER[t.t].c+'">'+tn(t)+'</span><span>+'+t.v+'% '+BON[t.cat][0]+'</span><span class="spq">'+nf(p.q)+'</span><span class="spt">'+(p.done?'entregue':p.miss?(p.alloc?'tem '+nf(p.alloc)+' · falta '+nf(p.miss):'falta '+nf(p.miss)):'coberto pelo Balance')+'</span></button>';}).join('')+'</div>';
+    return '<button type="button" class="sprow '+st+'" data-act="part" data-tid="'+t.id+'" data-item="'+id+'" data-k="sp-'+t.id+'" aria-pressed="'+p.done+'"'+(ro()?' disabled':'')+'><span class="bx">'+(p.done?'✓':'')+'</span><span class="tid" style="--tc:'+TIER[t.t].c+'">'+tn(t)+'</span><span>+'+t.v+'% '+bonH(t.cat)+'</span><span class="spq">'+nf(p.q)+'</span><span class="spt">'+(p.done?'entregue':p.miss?(p.alloc?'tem '+nf(p.alloc)+' · falta '+nf(p.miss):'falta '+nf(p.miss)):'coberto pelo Balance')+'</span></button>';}).join('')+'</div>';
 }
 function itemSheet(R){
   const id=ui.sheet.id,it=ITEMS[IX[id]],r=R.byId[id],o=ordOf(id);
