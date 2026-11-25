@@ -229,6 +229,24 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 .ttab[aria-selected=true] .lk{color:rgba(255,255,255,.86)}
 .rl .rtx b{color:var(--ink)}
 .obrow .rpk{font-size:12px;color:var(--brown);font-weight:400}
+.dsum{font-size:13px;color:var(--mut);margin:-4px 0 10px}
+.dcovs{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:12px}
+.dcov{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--ink2)}
+.dcov b{color:var(--tt);font-size:15px;margin-right:6px}
+.dcov small{display:block;color:var(--mut);font-size:12px;margin-top:2px}
+.dbar{display:block;height:6px;border-radius:3px;background:var(--track);overflow:hidden;margin:6px 0 2px}.dbar i{display:block;height:100%;background:var(--tc)}
+.dlist{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.dhd,.drow{display:grid;grid-template-columns:minmax(0,1.7fr) 92px repeat(3,minmax(0,1fr)) 84px;gap:8px;align-items:center;padding:9px 14px}
+.dhd{font-size:12px;color:var(--mut);font-weight:600;border-bottom:1px solid var(--line)}
+.dhd span:not(:first-child){text-align:right}
+.drow{border:0;border-top:1px solid var(--line);font-size:13px;font-variant-numeric:tabular-nums;background:none;width:100%;text-align:left;color:var(--ink);font-family:inherit;cursor:pointer}
+.dhd+.drow{border-top:0}
+.drow:hover{background:var(--hover,rgba(127,127,127,.06))}
+.drow .dn{display:flex;align-items:center;gap:8px;min-width:0}.drow .dn span{display:grid;min-width:0}.drow .dn b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.drow .dn small{color:var(--mut);font-size:11px}
+.drow .dq{font-weight:700;text-align:right;font-size:15px}
+.dc{text-align:right}.dc small{display:block;color:var(--mut);font-size:11px;font-weight:400}.dc.ok{color:var(--ok);font-weight:600}.dc.na{color:var(--mut)}
+.dsb{text-align:right;color:var(--mut)}.dsb.pos{color:var(--ok);font-weight:700}
+@media(max-width:640px){.dhd{display:none}.drow{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 8px;padding:10px 12px;align-items:start}.drow .dn{grid-column:1/4}.drow .dq{grid-column:4}.dc,.dsb{text-align:left}.dc::before,.dsb::before{content:attr(data-l);display:block;font-size:11px;color:var(--mut);font-weight:600}}
 .rl .rpk{font-size:12px;font-weight:400;color:var(--mut)}
 .pact{border:1.5px dashed var(--line3);background:var(--card);color:var(--accent);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;min-height:34px}
 .unl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:12px}
@@ -279,7 +297,7 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 .ta{width:100%;min-height:240px;font:13px/1.45 ui-monospace,Consolas,monospace;background:var(--card);color:var(--ink);border:1.5px solid var(--line2);border-radius:10px;padding:10px}
 .ask{font-size:11px;font-weight:700;color:var(--brown);background:var(--mid);padding:1px 6px;border-radius:6px}
 .help{margin:0;padding-left:18px;display:grid;gap:8px;font-size:14px;color:var(--ink2)}
-.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);background:var(--tabbar);border-top:1px solid var(--line);padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(5,1fr);background:var(--tabbar);border-top:1px solid var(--line);padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
 .tabbar button{position:relative;border:0;background:none;display:grid;justify-items:center;gap:2px;padding:8px 2px 7px;font-size:12px;font-weight:500;color:var(--mut);min-height:58px}
 .tabbar svg{width:23px;height:23px}
 .tabbar button[aria-current=page]{color:var(--accent);font-weight:700}
@@ -292,9 +310,9 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 @media(min-width:1000px){
  .tabbar,.mobonly{display:none!important}
  .panel{display:block}
- .main{grid-template-columns:minmax(0,2fr) minmax(0,1fr);grid-template-areas:"res res" "itn bon" "tal bon";padding-top:18px}
+ .main{grid-template-columns:minmax(0,2fr) minmax(0,1fr);grid-template-areas:"res res" "itn bon" "dep bon" "tal bon";padding-top:18px}
  #bonus{position:sticky;top:72px;max-height:calc(100vh - 88px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
- #resumo{grid-area:res}#itens{grid-area:itn}#bonus{grid-area:bon}#talentos{grid-area:tal}
+ #resumo{grid-area:res}#itens{grid-area:itn}#bonus{grid-area:bon}#talentos{grid-area:tal}#deposito{grid-area:dep}
  .rgrid{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.25fr)}
 }
 @media(max-width:999.98px){
@@ -334,6 +352,7 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 <main class="main">
 <section id="resumo" class="panel on" aria-label="Resumo"></section>
 <section id="itens" class="panel" aria-label="Banco de itens"></section>
+<section id="deposito" class="panel" aria-label="Depósito"></section>
 <section id="bonus" class="panel" aria-label="Bônus"></section>
 <section id="talentos" class="panel" aria-label="Talentos"></section>
 </main>
@@ -385,6 +404,7 @@ RAW.forEach(([t,x,c,cat,v,l])=>{cnt[t]=(cnt[t]||0)+1;const o={id:'t'+t+'-'+Strin
 const PAGES='https://otaviodos.github.io/talentos-fantasma/';
 const KEY='fantasma-materiais-v2',OLDKEY='fantasma-materiais-v1';
 const ICON={
+deposito:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M10 13h4"/></svg>',
 resumo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>',
 itens:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>',
 talentos:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>',
@@ -506,7 +526,7 @@ function compute(){
     obj={t:cur,items,eta:maxEta(items.map(x=>x.eta))};}
   const near=TAL.filter(t=>unl.has(t.t)&&!tal[t.id].complete&&!tal[t.id].ready).map(t=>{const ms=tal[t.id].parts.filter(p=>!p.done&&p.miss>0);return {t,miss:ms,fr:ms.reduce((x,p)=>x+p.miss/p.q,0),eta:maxEta(ms.map(p=>etaOf(RI,p.id,p.cum)))};}).sort((a,b)=>a.fr-b.fr||tal[a.t.id].rank-tal[b.t.id].rank);
   const fl=pend.map(r=>r.id);
-  return {rows,byId,per,tal,tstat,bon,ready,unl,cur,nextLock,obj,near,RI,etaAll:maxEta(pend.map(r=>r.eta)),focus:fl[0]||null,next:fl[1]||null,overall:T?C/T:1,complete:rows.filter(r=>r.miss===0).length};
+  return {left:avail,rows,byId,per,tal,tstat,bon,ready,unl,cur,nextLock,obj,near,RI,etaAll:maxEta(pend.map(r=>r.eta)),focus:fl[0]||null,next:fl[1]||null,overall:T?C/T:1,complete:rows.filter(r=>r.miss===0).length};
 }
 
 const tierChips=loc=>[1,2,3,4].map(k=>'<button type="button" class="chipT" data-act="tier" data-t="'+k+'" data-k="tier-'+loc+'-'+k+'" title="Estocar itens até o Tier '+k+'" aria-pressed="'+(k<=Math.max(...S.tiers))+'"'+(ro()?' disabled':'')+'>T'+k+'</button>').join('');
@@ -528,12 +548,12 @@ function ring(p){const R0=31,C=2*Math.PI*R0,v=Math.round(p*100);return '<svg cla
 function render(){
   const a=document.activeElement,k=a&&a.dataset?a.dataset.k:null;
   const R=compute();last=R;
-  renderTop();renderResumo(R);renderItens(R);renderTal(R);renderBonus(R);renderSheet(R,true);renderTabbar(R);
+  renderTop();renderResumo(R);renderItens(R);renderDep(R);renderTal(R);renderBonus(R);renderSheet(R,true);renderTabbar(R);
   if(k){const el=document.querySelector('[data-k="'+k+'"]');if(el&&!el.disabled&&el!==document.activeElement){el.focus({preventScroll:true});if(el.matches('input[type=text]'))try{el.select();}catch(e){}}}
 }
 function liveRender(){
   liveT=null;const R=compute();last=R;const a=document.activeElement;
-  renderTop();renderResumo(R);renderTal(R);renderBonus(R);renderTabbar(R);
+  renderTop();renderResumo(R);renderTal(R);renderBonus(R);renderTabbar(R);if(!$('deposito').contains(a))renderDep(R);
   if($('itens').contains(a))patchItens(R);else renderItens(R);
   if(ui.sheet&&ui.sheet.type==='item'){if($('sheet').contains(a))patchSheet(R);else renderSheet(R,true);}
 }
@@ -590,6 +610,23 @@ function renderResumo(R){
   const near=R.near.slice(0,4);
   h+='<div class="lbl" style="margin-top:12px">QUASE LÁ</div>'+(near.length?near.map(z=>'<button type="button" class="rl" data-act="tgo" data-tid="'+z.t.id+'" data-k="near-'+z.t.id+'"><span class="tid" style="--tc:'+TIER[z.t.t].c+'">'+tn(z.t)+'</span><span class="rtx">faltam '+z.miss.map(p=>'<b>'+nf(p.miss)+'</b> '+esc(shortNm(p.id))).join(' + ')+'</span>'+(z.eta===undefined?'':'<span class="eta">'+etaTxt(z.eta)+'</span>')+'</button>').join(''):'<div class="pk">Nada pendente nos tiers liberados.</div>')+'</section></div>';
   $('resumo').innerHTML=h;
+}
+function renderDep(R){
+  const mx=Math.max(...S.tiers),ids=ITEMS.filter(it=>(S.balance[it.id]||0)>0||(R.byId[it.id]&&R.byId[it.id].miss>0)).map(it=>it.id).sort((a,b)=>okey(a)-okey(b));
+  const sob=ids.filter(id=>R.left[id]>0).length;
+  let h='<div class="ph"><h2>Depósito</h2><span class="cnt">o que você tem guardado e para qual tier vai</span><span class="phb"><button type="button" class="btn sm pri" data-act="loot" data-k="d-loot"'+(ro()?' disabled':'')+'>Registrar loot</button></span></div>';
+  h+='<div class="tsel light"><span>Estocando até</span>'+tierChips('p')+'</div>';
+  h+='<div class="dsum">'+ids.filter(id=>(S.balance[id]||0)>0).length+' itens no depósito'+(sob?' · '+sob+' com sobra':'')+'. O depósito reserva primeiro para os tiers até o T'+mx+', do menor para o maior; o resto vai para os outros tiers e o que não serve para nada é sobra.</div>';
+  h+='<div class="dcovs">'+[2,3,4].map(T=>{let n=0,c=0;for(const t of TAL.filter(x=>x.t===T))for(const p of R.tal[t.id].parts)if(!p.done){n++;if(!p.miss)c++;}
+    if(!n)return '<div class="dcov" style="'+tv(T)+'"><b>T'+T+'</b>tudo entregue</div>';
+    return '<div class="dcov" style="'+tv(T)+'"><b>T'+T+'</b>'+c+' de '+n+' entregas já no depósito<span class="dbar"><i style="width:'+(c/n*100)+'%"></i></span><small>'+(R.unl.has(T)?'liberado':'travado')+' · '+(T<=mx?'no estoque':'fora do estoque')+'</small></div>';}).join('')+'</div>';
+  h+='<div class="dlist" role="table"><div class="dhd" role="row"><span>Item</span><span>No depósito</span><span>T2</span><span>T3</span><span>T4</span><span>Sobra</span></div>';
+  h+=ids.map(id=>{const b=S.balance[id]||0,a=updAge(id);
+    return '<button type="button" class="drow" role="row" data-act="open" data-item="'+id+'" data-k="dep-'+id+'"><span class="dn">'+ico(id,28)+'<span><b>'+esc(shortNm(id))+'</b><small>'+(a===null?'sem data':a===0?'atualizado hoje':a===1?'atualizado ontem':'atualizado há '+a+' dias')+'</small></span></span><span class="dq">'+nf(b)+'</span>'
+    +[2,3,4].map(T=>{const P=R.per[id][T],need=P?P.tot-P.done:0;if(!need)return '<span class="dc na" data-l="T'+T+'">—</span>';return '<span class="dc'+(P.alloc>=need?' ok':'')+'" data-l="T'+T+'">'+nf(P.alloc)+'<small>de '+nf(need)+'</small></span>';}).join('')
+    +'<span class="dsb'+(R.left[id]>0?' pos':'')+'" data-l="Sobra">'+(R.left[id]>0?nf(R.left[id]):'0')+'</span></button>';}).join('');
+  h+='</div><p class="hint">Em cada tier: quanto do depósito está reservado, de quanto ainda falta entregar. Toque num item para abrir a ficha.</p>';
+  $('deposito').innerHTML=h;
 }
 function renderItens(R){
   const rows=R.rows.filter(r=>ui.ifil==='all'||r.miss>0),pend=R.rows.filter(r=>r.miss>0).length;
@@ -785,8 +822,8 @@ function patchSheet(R){
 }
 function renderTabbar(R){
   const ready=R.ready.length,pend=R.rows.filter(r=>r.miss>0).length;
-  $('tabbar').innerHTML=[['resumo','Resumo'],['itens','Itens'],['talentos','Talentos'],['bonus','Bônus']].map(([k,l])=>'<button type="button" data-act="tab" data-v="'+k+'"'+(ui.tab===k?' aria-current="page"':'')+'>'+ICON[k]+'<span>'+l+'</span>'+(k==='talentos'&&ready?'<i class="badge">'+ready+'</i>':k==='itens'&&pend?'<i class="badge" style="background:var(--mut)">'+pend+'</i>':'')+'</button>').join('');
-  for(const k of ['resumo','itens','talentos','bonus'])$(k).classList.toggle('on',ui.tab===k);
+  $('tabbar').innerHTML=[['resumo','Resumo'],['itens','Itens'],['deposito','Depósito'],['talentos','Talentos'],['bonus','Bônus']].map(([k,l])=>'<button type="button" data-act="tab" data-v="'+k+'"'+(ui.tab===k?' aria-current="page"':'')+'>'+ICON[k]+'<span>'+l+'</span>'+(k==='talentos'&&ready?'<i class="badge">'+ready+'</i>':k==='itens'&&pend?'<i class="badge" style="background:var(--mut)">'+pend+'</i>':'')+'</button>').join('');
+  for(const k of ['resumo','itens','deposito','talentos','bonus'])$(k).classList.toggle('on',ui.tab===k);
 }
 
 function parseQty(raw,cur){
@@ -896,7 +933,7 @@ function toggleUnl(T){
   if((S.money||0)>=u.m){S.money-=u.m;commit();toast('T'+T+' liberado. '+nf(u.m)+' descontados do dinheiro.',[{label:'Não descontar',fn:()=>{S.money=(S.money||0)+u.m;commit();}}]);}
   else{commit();toast('T'+T+' liberado.');}
 }
-function setTab(k){if(!['resumo','itens','talentos','bonus'].includes(k))k='resumo';ui.tab=k;try{history.replaceState(null,'','#'+k);}catch(e){}render();if(!isDesk())window.scrollTo(0,0);}
+function setTab(k){if(!['resumo','itens','deposito','talentos','bonus'].includes(k))k='resumo';ui.tab=k;try{history.replaceState(null,'','#'+k);}catch(e){}render();if(!isDesk())window.scrollTo(0,0);}
 function openItem(id){if(!ITEMS[IX[id]])return;ui.sheet={type:'item',id};$('menu').hidden=true;render();if(isDesk()){const el=$('sh-bal');if(el){el.focus();try{el.select();}catch(e){}}}}
 function closeSheet(){ui.sheet=null;edit=null;render();}
 function goTal(tid){const t=TX[tid];if(!t)return;ui.ttab=t.t;if(compute().tal[tid].complete)ui.tfil='todos';setTab('talentos');setTimeout(()=>{const el=$('tc-'+tid);if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1600);}},30);}
