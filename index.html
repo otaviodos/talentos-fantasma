@@ -97,7 +97,12 @@ button:disabled{cursor:default;opacity:.55}
 .pline{font-size:14px;color:var(--ink2);line-height:1.6}.pline b{font-size:18px;color:var(--ink)}
 .tbars{display:grid;gap:6px;margin-top:12px}
 .tb{display:grid;grid-template-columns:26px minmax(0,1fr) 46px;gap:8px;align-items:center;font-size:12px;font-weight:600}
-.tbb{height:8px;background:var(--track);border-radius:4px;overflow:hidden}
+.tbb{height:8px;background:var(--track);border-radius:4px;overflow:hidden;display:flex}
+.tbb i.pp{opacity:.85;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.38) 0 3px,transparent 3px 6px)!important}
+.tb{grid-template-columns:26px minmax(0,1fr) 74px}
+.tb small{display:block;font-size:10px;font-weight:500;color:var(--mut)}
+.tleg{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11px;color:var(--mut);margin-top:8px}.tleg i{display:inline-block;width:14px;height:8px;border-radius:2px;margin-right:4px;vertical-align:middle;background:var(--accent)}.tleg i.pp{background-color:var(--accent);opacity:.85;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.38) 0 3px,transparent 3px 6px)}
+.pnote{font-size:12px;color:var(--ink2);margin-top:6px}
 .tbb i{display:block;height:100%}
 .tb span:last-child{text-align:right;color:var(--mut)}
 .rl{display:flex;align-items:center;gap:8px;padding:7px 0;border:0;border-top:1px solid var(--line);font-size:13px;background:none;width:100%;text-align:left;color:var(--ink)}
@@ -576,7 +581,7 @@ function compute(){
   }
   rows.sort((a,b)=>okey(a.id)-okey(b.id));
   const pend=rows.filter(r=>r.miss>0),T=rows.reduce((x,r)=>x+r.tot,0),C=rows.reduce((x,r)=>x+r.cov,0);
-  const tstat={};for(const k of [1,2,3,4]){const L=TAL.filter(x=>x.t===k);tstat[k]={n:L.length,done:L.filter(x=>tal[x.id].complete).length,ready:L.filter(x=>tal[x.id].ready).length};}
+  const tstat={};for(const k of [1,2,3,4]){const L=TAL.filter(x=>x.t===k);const P=L.filter(x=>!tal[x.id].complete);tstat[k]={n:L.length,done:L.filter(x=>tal[x.id].complete).length,ready:L.filter(x=>tal[x.id].ready).length,pend:P.length,part:P.reduce((a,x)=>a+tal[x.id].nd/tal[x.id].n,0),one:P.filter(x=>tal[x.id].n-tal[x.id].nd===1).length,started:P.filter(x=>tal[x.id].nd>0).length};}
   const bon={};
   Object.keys(BON).forEach(k=>{bon[k]={on:0,pend:0,max:0,pendT:new Set()};});
   for(const t of TAL){const b=bon[t.cat];b.max+=t.v;if(tal[t.id].complete){if(unl.has(t.t))b.on+=t.v;else{b.pend+=t.v;b.pendT.add(t.t);}}}
@@ -668,7 +673,10 @@ function renderResumo(R){
   h+='</div></section>';
   h+='<section class="card c-lib"><div class="lbl">PRÓXIMA LIBERAÇÃO</div>'+libHtml(R,'r')+'</section>';
   const doneT=TAL.filter(t=>R.tal[t.id].complete).length;
-  h+='<section class="card c-pro"><div class="lbl">PROGRESSO</div><div class="pgrid">'+ring(R.overall)+'<div><div class="pline"><b>'+R.complete+'</b>/'+R.rows.length+' itens completos</div><div class="pline"><b>'+doneT+'</b>/'+TAL.length+' talentos concluídos</div></div></div><div class="tbars">'+[1,2,3,4].map(k=>{const z=R.tstat[k];return '<div class="tb"><span style="color:'+TIER[k].t+'">T'+k+'</span><span class="tbb"><i style="width:'+(z.done/z.n*100)+'%;background:'+TIER[k].c+'"></i></span><span>'+(R.unl.has(k)?z.done+'/'+z.n:'travado')+'</span></div>';}).join('')+'</div>';
+  h+='<section class="card c-pro"><div class="lbl">PROGRESSO</div><div class="pgrid">'+ring(R.overall)+'<div><div class="pline"><b>'+R.complete+'</b>/'+R.rows.length+' itens completos</div><div class="pline"><b>'+doneT+'</b>/'+TAL.length+' talentos concluídos</div></div></div><div class="tbars">'+[1,2,3,4].map(k=>{const z=R.tstat[k],u=R.unl.has(k),pc=pct=>Math.round(pct*100);
+    return '<div class="tb" title="T'+k+': '+z.done+' concluídos'+(z.pend?'; dos '+z.pend+' pendentes, '+z.started+' com entrega parcial':'')+'"><span style="color:'+TIER[k].t+'">T'+k+'</span><span class="tbb"><i style="width:'+(z.done/z.n*100)+'%;background:'+TIER[k].c+'"></i>'+(z.part>0?'<i class="pp" style="width:'+(z.part/z.n*100)+'%;background-color:'+TIER[k].c+'"></i>':'')+'</span><span>'+(u?z.done+'/'+z.n+(z.part>0?'<small title="contando as entregas parciais">≈'+pc((z.done+z.part)/z.n)+'%</small>':''):'travado')+'</span></div>';}).join('')+'</div>'
+  +'<div class="tleg"><span><i></i>concluídos</span><span><i class="pp"></i>entregue em parte</span></div>'
+  +(R.cur&&R.tstat[R.cur].pend?(()=>{const z=R.tstat[R.cur];return '<div class="pnote">T'+R.cur+': '+z.pend+' pendente'+(z.pend>1?'s':'')+(z.one?' · <b>'+z.one+'</b> falta'+(z.one>1?'m':'')+' só 1 item':'')+(z.started-z.one>0?' · '+(z.started-z.one)+' com mais de 1 item faltando':'')+(z.pend-z.started>0?' · '+(z.pend-z.started)+' sem entrega':'')+'.</div>';})():'');
   h+='<div class="pk" style="margin-top:8px">'+(!R.RI?'Registre o loot para ver previsões em dias.':(ob?'T'+ob.t+': '+(ob.eta===null?'previsão quando todos os itens tiverem loot registrado':ob.eta===0?'tudo no Balance':'fecha em '+etaTxt(ob.eta))+'. ':'')+'Ritmo: média de '+R.RI.span+' dia'+(R.RI.span>1?'s':'')+' de loot registrado.')+'</div></section>';
   h+='<section class="card c-qua"><div class="lbl">DÁ PARA CONCLUIR AGORA</div>';
   h+=R.ready.length?R.ready.slice(0,4).map(t=>'<div class="rl"><span class="tid" style="--tc:'+TIER[t.t].c+'">'+tn(t)+'</span><span class="rtx">+'+t.v+'% '+BON[t.cat][0]+'</span><button type="button" class="btn sm" data-act="tcomp" data-tid="'+t.id+'" data-k="rc-'+t.id+'"'+(ro()?' disabled':'')+'>Concluir</button></div>').join('')+(R.ready.length>4?'<div class="pk">e mais '+(R.ready.length-4)+' na aba Talentos.</div>':''):'<div class="pk">Nenhum talento fecha só com o Balance de agora.</div>';
