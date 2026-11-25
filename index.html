@@ -183,11 +183,50 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 .nmcard .ico{grid-row:span 3}
 .nmcard .use{font-size:12px;color:var(--mut);display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
 .nmcard .ask{white-space:nowrap}
-.okt{font-size:11px;font-weight:700;color:var(--ok);white-space:nowrap}
+.nmcard .okt{font-size:11px;font-weight:700;color:var(--ok);white-space:nowrap}
 .nmcard .tin::placeholder{color:var(--mut);font-style:italic;opacity:.75}
 .nmcard label{display:grid;gap:3px;font-size:11px;font-weight:600;color:var(--mut)}
 .nmcard .tin{min-height:38px;padding:6px 9px;font-size:15px}
 .asktag{border:0;cursor:pointer;font-family:inherit}
+.oblist{display:grid;gap:0;margin-top:12px;border-top:1px solid var(--ambLine);padding-top:8px}
+.oblist .ot{font-size:12px;font-weight:700;color:var(--brown);letter-spacing:.04em;margin-bottom:2px}
+.obrow{display:flex;align-items:center;gap:8px;border:0;background:none;padding:6px 0;font-size:14px;color:var(--ambInk);text-align:left;width:100%;border-top:1px solid var(--ambLine)}
+.obrow:first-of-type{border-top:0}
+.obrow .on{flex:1;min-width:0}.obrow b{font-weight:700;font-variant-numeric:tabular-nums}.obrow.cur .on{font-weight:700}
+.eta{color:var(--mut);font-size:12px;white-space:nowrap;min-width:58px;text-align:right}
+.c-fal .eta{display:block;min-width:0}
+.fetaline{font-size:13px;color:var(--brown);margin:-4px 0 10px}
+.libt{font-size:13px;color:var(--ink2);margin-bottom:2px}.libt b{color:var(--tt,var(--accent))}
+.req{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line);font-size:13px;flex-wrap:wrap}
+.libt+.req{border-top:0}
+.req .ri{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:none}
+.req .ri.ok{background:var(--okFill);color:#fff}.req .ri.no{background:var(--badSoft);border:1.5px solid var(--badLine)}
+.req .rt{flex:1;min-width:110px;color:var(--ink2)}
+.minp{width:150px;border:1.5px solid var(--line2);background:var(--card);color:var(--ink);border-radius:8px;padding:5px 8px;font-size:15px;min-height:36px;text-align:right;font-variant-numeric:tabular-nums;font-family:inherit}
+.minp.sm{width:76px}
+.mbar{display:block;height:6px;border-radius:3px;background:var(--track);overflow:hidden;margin:2px 0 4px}.mbar i{display:block;height:100%;background:var(--okFill)}
+.lootlist,.ordlist,.dllist{display:grid;gap:6px}
+.lrow{display:grid;grid-template-columns:32px minmax(0,1fr) 128px;gap:10px;align-items:center;padding:6px 8px;border:1px solid var(--line);border-radius:10px}
+.lrow input,.dlin input{border:1.5px solid var(--line2);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 8px;font-size:16px;min-height:40px;width:100%;text-align:right;font-variant-numeric:tabular-nums;font-family:inherit}
+.lrow input.bad,.dlin input.bad{border-color:var(--bad)}
+.lnm,.onm{display:grid;min-width:0}.lnm b,.onm b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lnm small,.onm small{font-size:12px;color:var(--mut)}
+.orow{display:grid;grid-template-columns:22px 30px minmax(0,1fr) auto auto auto;gap:8px;align-items:center;padding:6px 8px;border:1px solid var(--line);border-radius:10px}
+.orow.p{grid-template-columns:22px 30px minmax(0,1fr) auto}
+.onum{font-weight:700;color:var(--accent);text-align:center}
+.ob{border:1.5px solid var(--line2);background:var(--card);color:var(--ink);border-radius:8px;min-width:38px;min-height:38px;font-size:16px;font-weight:700;font-family:inherit}
+.ob.w{font-size:12px;padding:0 8px;font-weight:600}
+.ob:disabled{opacity:.3}
+.olbl{font-size:12px;font-weight:600;color:var(--mut);margin:8px 0 2px}
+.dlrow{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px;border:1px solid var(--line);border-radius:10px}
+.dlin{display:grid;gap:2px;font-size:11px;color:var(--mut);width:140px}
+.dlrow .okt{font-size:18px}
+.part.lock{opacity:.72}
+.tcard.flash{outline:3px solid var(--orange);outline-offset:2px}
+.phb{display:flex;gap:6px;flex-wrap:wrap}
+.ttab .lk{font-size:11px;font-weight:500;color:var(--mut)}
+.ttab[aria-selected=true] .lk{color:rgba(255,255,255,.86)}
+.rl .rtx b{color:var(--ink)}
+.obrow .rpk{font-size:12px;color:var(--brown);font-weight:400}
 .rl .rpk{font-size:12px;font-weight:400;color:var(--mut)}
 .pact{border:1.5px dashed var(--line3);background:var(--card);color:var(--accent);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;min-height:34px}
 .unl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:12px}
@@ -279,6 +318,9 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 <button type="button" class="icb" data-act="menu" aria-label="Mais opções" aria-haspopup="true">⋯</button>
 </header>
 <div id="menu" class="menu" hidden>
+<button type="button" data-act="loot">Registrar loot</button>
+<button type="button" data-act="ordem">Ordem de farm</button>
+<button type="button" data-act="undo">Desfazer última alteração</button>
 <button type="button" data-act="ia">Copiar para IA</button>
 <button type="button" data-act="bk">Copiar backup</button>
 <button type="button" data-act="rs">Restaurar backup</button>
@@ -322,6 +364,7 @@ const ITEMS=[
 {id:'ms3',name:'Mega stone azul',poke:'',order:24,ask:1}];
 const IX={};ITEMS.forEach((it,i)=>{IX[it.id]=i;});
 const TIER={1:{c:'var(--t1c)',s:'var(--t1s)',t:'var(--t1t)',unlock:''},2:{c:'var(--t2c)',s:'var(--t2s)',t:'var(--t2t)',unlock:'50.000.000'},3:{c:'var(--t3c)',s:'var(--t3s)',t:'var(--t3t)',unlock:'200.000.000'},4:{c:'var(--t4c)',s:'var(--t4s)',t:'var(--t4t)',unlock:'400.000.000'}};
+const UNL={2:{m:5e7,l:0},3:{m:2e8,l:0},4:{m:4e8,l:550}};
 const tv=k=>'--tc:'+TIER[k].c+';--ts:'+TIER[k].s+';--tt:'+TIER[k].t;
 const BON={dano:['Dano Fantasma','Base'],defesa:['Defesa Fantasma','Base'],cap:['Chance de captura','Captura'],moon:['Moon Balls','Captura'],crit:['Captura crítica','Captura'],shiny:['Respawn shiny','Captura'],cc:['Chance crítica','Combate'],cd:['Dano crítico','Combate'],prec:['Precisão contra evasão','Combate'],eva:['Evasão','Combate'],resc:['Resistência crítica','Combate'],mer:['Bolas no Sistema de Mérito','Bolas e drops'],pre:['Premier Balls','Bolas e drops'],ali:['Alliance Balls','Bolas e drops'],mm:['Mega stones míticas seladas','Bolas e drops'],ml:['Mega stones lendárias seladas','Bolas e drops']};
 const GROUPS=['Base','Captura','Combate','Bolas e drops'];
@@ -353,9 +396,9 @@ function paintTema(){const d=isDark(),m=document.querySelector('meta[name=theme-
   const b=document.getElementById('temaBtn');if(b){b.innerHTML=d?IC_SUN:IC_MOON;const l=d?'Mudar para o tema claro':'Mudar para o tema escuro';b.setAttribute('aria-label',l);b.title=l;}
   const p=temaPref();document.querySelectorAll('[data-act="tema-set"]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===p)));}
 function applyTema(p){const r=document.documentElement;if(p==='claro'||p==='escuro')r.setAttribute('data-tema',p);else r.removeAttribute('data-tema');try{if(p==='claro'||p==='escuro')localStorage.setItem(TKEY,p);else localStorage.removeItem(TKEY);}catch(e){}paintTema();}
-const blank=()=>({v:2,balance:{},parts:{},tiers:[2,3],unlocked:[],items:{}});
+const blank=()=>({v:2,balance:{},parts:{},tiers:[2,3],unlocked:[],items:{},money:0,level:0,hist:{},upd:{}});
 let S=blank(),mode='loading',ref=null,canWrite=true,edit=null,last=null,liveT=null,renderT=null,pendingRender=false;
-const ui={tab:'resumo',ttab:2,ifil:'pend',tfil:'pend',namesAll:false,sheet:null,confirmTier:0,showOut:false,importData:null};
+const ui={tab:'resumo',ttab:2,ifil:'pend',tfil:'pend',namesAll:false,lootMode:'drop',lootAll:false,sheet:null,confirmTier:0,showOut:false,importData:null};
 const $=id=>document.getElementById(id);
 const nf=n=>Math.round(n).toLocaleString('pt-BR');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -374,12 +417,31 @@ const ico=(id,sz)=>'<img class="ico" src="itens/'+id+'.png" width="'+sz+'" heigh
 const noName=id=>!!ITEMS[IX[id]].ask&&!(S.items[id]&&S.items[id].name);
 const needs=id=>noName(id)||!pokeOf(id);
 const needTxt=id=>{const a=noName(id),b=!pokeOf(id);return a&&b?'falta nome e Pokémon':a?'falta nome':b?'falta Pokémon':'';};
+const pad2=n=>String(n).padStart(2,'0');
+const dstr=d=>d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());
+const today=()=>dstr(new Date());
+const dparse=x=>{const a=x.split('-').map(Number);return new Date(a[0],a[1]-1,a[2]);};
+const ddiff=(a,b)=>Math.round((dparse(b)-dparse(a))/864e5);
+const DRE=/^\d{4}-\d{2}-\d{2}$/;
+function logDelta(id,d){if(!d||!ITEMS[IX[id]])return;const t=today();S.upd[id]=t;
+  if(d>0){const h=S.hist[t]||(S.hist[t]={});h[id]=(h[id]||0)+d;}
+  else{const h=S.hist[t];if(h&&h[id]){h[id]=Math.max(0,h[id]+d);if(!h[id])delete h[id];if(!Object.keys(h).length)delete S.hist[t];}}
+  for(const k of Object.keys(S.hist))if(ddiff(k,t)>120)delete S.hist[k];}
+function rateInfo(){
+  const t=today(),ks=Object.keys(S.hist).filter(k=>ddiff(k,t)>=0).sort();if(!ks.length)return null;
+  const span=Math.min(7,ddiff(ks[0],t)+1),sum={};
+  for(const k of ks)if(ddiff(k,t)<7)for(const [id,n] of Object.entries(S.hist[k]))sum[id]=(sum[id]||0)+n;
+  const rate={};for(const id in sum)rate[id]=sum[id]/span;return {span,rate};}
+const etaOf=(RI,id,q)=>!RI?undefined:q<=0?0:RI.rate[id]>0?Math.ceil(q/RI.rate[id]):null;
+const etaTxt=d=>d===undefined?'':d===null?'sem ritmo':d===0?'já tem':d===1?'~1 dia':'~'+nf(d)+' dias';
+const updAge=id=>S.upd[id]?Math.max(0,ddiff(S.upd[id],today())):null;
+const updTxt=id=>{const a=updAge(id);return a===null?'Balance sem data de atualização':a===0?'Balance atualizado hoje':a===1?'Balance atualizado ontem':'Balance atualizado há '+a+' dias';};
 const label=id=>{const p=pokeOf(id);return p?nm(id)+' ('+(p==='ALL'?'qualquer Pokémon Fantasma':p)+')':nm(id);};
 
 function norm(x){
   const s=blank();if(!x||typeof x!=='object')return s;
   if(x.balance&&typeof x.balance==='object')for(const it of ITEMS){const v=Number(x.balance[it.id]);if(Number.isFinite(v)&&v>0)s.balance[it.id]=Math.min(Math.floor(v),1e12);}
-  if(x.parts&&typeof x.parts==='object')for(const t of TAL){const p=x.parts[t.id];if(!p||typeof p!=='object')continue;const o={};for(const k of Object.keys(t.c))if(p[k]===true)o[k]=true;if(Object.keys(o).length)s.parts[t.id]=o;}
+  if(x.parts&&typeof x.parts==='object')for(const t of TAL){const p=x.parts[t.id];if(!p||typeof p!=='object')continue;const o={};for(const k of Object.keys(t.c))if(p[k]===true||p[k]===2)o[k]=p[k];if(Object.keys(o).length)s.parts[t.id]=o;}
   if(x.done&&typeof x.done==='object')for(const t of TAL)if(x.done[t.id]===true){const o={};for(const k of Object.keys(t.c))o[k]=true;s.parts[t.id]=o;}
   if(Array.isArray(x.tiers)){const t=[1,2,3,4].filter(n=>x.tiers.includes(n));if(t.length)s.tiers=t;}
   if(Array.isArray(x.unlocked))s.unlocked=[2,3,4].filter(n=>x.unlocked.includes(n));
@@ -388,47 +450,64 @@ function norm(x){
     if(typeof o.name==='string'&&o.name.trim())e.name=o.name.trim().slice(0,60);
     if(typeof o.poke==='string')e.poke=o.poke.trim().slice(0,40);
     if(Object.keys(e).length)s.items[it.id]=e;}
+  {const m=Number(x.money);if(Number.isFinite(m)&&m>0)s.money=Math.min(Math.floor(m),1e13);}
+  {const l=Number(x.level);if(Number.isFinite(l)&&l>0)s.level=Math.min(Math.floor(l),9999);}
+  if(x.hist&&typeof x.hist==='object')for(const [d,o] of Object.entries(x.hist)){if(!DRE.test(d)||!o||typeof o!=='object')continue;const e={};for(const it of ITEMS){const v=Number(o[it.id]);if(Number.isFinite(v)&&v>0)e[it.id]=Math.min(Math.floor(v),1e12);}if(Object.keys(e).length)s.hist[d]=e;}
+  if(x.upd&&typeof x.upd==='object')for(const it of ITEMS){const d=x.upd[it.id];if(typeof d==='string'&&DRE.test(d))s.upd[it.id]=d;}
   return s;
 }
 
 function compute(){
-  const sel=new Set(S.tiers),avail={},per={},tal={};
+  const sel=new Set(S.tiers),avail={},per={},tal={},RI=rateInfo();
   ITEMS.forEach(it=>{avail[it.id]=S.balance[it.id]||0;per[it.id]={};});
-  const seq=[...TAL].sort((a,b)=>(sel.has(a.t)?0:1)-(sel.has(b.t)?0:1)||a.t-b.t||a.i-b.i);
-  const nextOf={};
-  for(const t of seq){
-    const P0=S.parts[t.id]||{},parts=[];let nd=0,ok=true;
-    for(const [id,q] of Object.entries(t.c)){
-      const P=per[id][t.t]||(per[id][t.t]={tot:0,done:0,alloc:0,miss:0});
-      P.tot+=q;
-      if(P0[id]){nd++;P.done+=q;parts.push({id,q,done:true,alloc:0,miss:0});continue;}
-      const a=Math.min(avail[id],q),m=q-a;avail[id]-=a;P.alloc+=a;P.miss+=m;
-      if(m>0){ok=false;if(sel.has(t.t)&&!nextOf[id])nextOf[id]={t,q,a,m};}
-      parts.push({id,q,done:false,alloc:a,miss:m});
+  const unl=new Set([1,...S.unlocked]);
+  for(const t of TAL)if(S.parts[t.id])unl.add(t.t);
+  {const mx=Math.max(...unl);for(let k=1;k<mx;k++)unl.add(k);}
+  const nextOf={},cum={};ITEMS.forEach(it=>{cum[it.id]=0;});let rank=0;
+  for(const T of [1,2,3,4].sort((a,b)=>(sel.has(a)?0:1)-(sel.has(b)?0:1)||a-b)){
+    const sc=t=>{const P0=S.parts[t.id]||{};let x=0,u=0;for(const [id,q] of Object.entries(t.c))if(!P0[id]){u++;x+=Math.min(1,Math.max(0,q-avail[id])/q);}return u?x:-1;};
+    const L=TAL.filter(x=>x.t===T).map(t=>({t,k:sc(t)})).sort((a,b)=>a.k-b.k||a.t.i-b.t.i);
+    for(const {t} of L){
+      const P0=S.parts[t.id]||{},parts=[];let nd=0,ok=true;
+      for(const [id,q] of Object.entries(t.c)){
+        const P=per[id][T]||(per[id][T]={tot:0,done:0,alloc:0,miss:0});P.tot+=q;
+        if(P0[id]){nd++;P.done+=q;parts.push({id,q,done:true,alloc:0,miss:0,cum:0});continue;}
+        const a=Math.min(avail[id],q),m=q-a;avail[id]-=a;P.alloc+=a;P.miss+=m;
+        if(sel.has(T))cum[id]+=m;
+        if(m>0){ok=false;if(sel.has(T)&&!nextOf[id])nextOf[id]={t,q,a,m};}
+        parts.push({id,q,done:false,alloc:a,miss:m,cum:sel.has(T)?cum[id]:m});
+      }
+      const n=parts.length,complete=nd===n,lock=!unl.has(T);
+      tal[t.id]={parts,nd,n,complete,lock,rank:rank++,ready:!complete&&ok&&!lock,status:complete?'feito':ok?(lock?'guardado':'pronto'):nd>0?'parcial':'falta'};
     }
-    const n=parts.length,complete=nd===n;
-    tal[t.id]={parts,nd,n,complete,ready:!complete&&ok,status:complete?'feito':ok?'pronto':nd>0?'parcial':'falta'};
   }
   const rows=[],byId={};
   for(const it of ITEMS){
     const P=per[it.id];let tot=0,miss=0;const tiers={};
     for(const T of S.tiers)if(P[T]&&P[T].tot){tiers[T]=P[T];tot+=P[T].tot;miss+=P[T].miss;}
     if(!tot)continue;
-    const cov=tot-miss,r={id:it.id,tot,miss,cov,pct:cov/tot,tiers,next:nextOf[it.id]||null,status:miss===0?'Completo':cov>0?'Em andamento':'Sem progresso'};
+    const cov=tot-miss,r={id:it.id,tot,miss,cov,pct:cov/tot,tiers,next:nextOf[it.id]||null,eta:etaOf(RI,it.id,miss),status:miss===0?'Completo':cov>0?'Em andamento':'Sem progresso'};
     rows.push(r);byId[it.id]=r;
   }
   rows.sort((a,b)=>okey(a.id)-okey(b.id));
-  const pend=rows.filter(r=>r.miss>0),T=rows.reduce((s,r)=>s+r.tot,0),C=rows.reduce((s,r)=>s+r.cov,0);
+  const pend=rows.filter(r=>r.miss>0),T=rows.reduce((x,r)=>x+r.tot,0),C=rows.reduce((x,r)=>x+r.cov,0);
   const tstat={};for(const k of [1,2,3,4]){const L=TAL.filter(x=>x.t===k);tstat[k]={n:L.length,done:L.filter(x=>tal[x.id].complete).length,ready:L.filter(x=>tal[x.id].ready).length};}
-  const unl=new Set([1,...S.unlocked]),bon={};
+  const bon={};
   Object.keys(BON).forEach(k=>{bon[k]={on:0,pend:0,max:0,pendT:new Set()};});
   for(const t of TAL){const b=bon[t.cat];b.max+=t.v;if(tal[t.id].complete){if(unl.has(t.t))b.on+=t.v;else{b.pend+=t.v;b.pendT.add(t.t);}}}
   for(const k of [2,3,4]){bon.dano.max++;bon.defesa.max++;if(unl.has(k)){bon.dano.on++;bon.defesa.on++;}}
-  const ready=TAL.filter(t=>sel.has(t.t)&&tal[t.id].ready);
-  return {rows,byId,per,tal,tstat,bon,ready,focus:pend[0]?pend[0].id:null,next:pend[1]?pend[1].id:null,overall:T?C/T:1,complete:rows.filter(r=>r.miss===0).length};
+  const ready=TAL.filter(t=>tal[t.id].ready).sort((a,b)=>tal[a.id].rank-tal[b.id].rank);
+  const cur=[1,2,3,4].find(k=>unl.has(k)&&tstat[k].done<tstat[k].n)||null,nextLock=[2,3,4].find(k=>!unl.has(k))||null;
+  const maxEta=L=>{if(!RI)return undefined;let e=0;for(const x of L){if(x===null)return null;e=Math.max(e,x);}return e;};
+  let obj=null;
+  if(cur){const items=ITEMS.filter(it=>per[it.id][cur]&&per[it.id][cur].miss>0).map(it=>({id:it.id,miss:per[it.id][cur].miss,eta:etaOf(RI,it.id,per[it.id][cur].miss)})).sort((a,b)=>okey(a.id)-okey(b.id));
+    obj={t:cur,items,eta:maxEta(items.map(x=>x.eta))};}
+  const near=TAL.filter(t=>unl.has(t.t)&&!tal[t.id].complete&&!tal[t.id].ready).map(t=>{const ms=tal[t.id].parts.filter(p=>!p.done&&p.miss>0);return {t,miss:ms,fr:ms.reduce((x,p)=>x+p.miss/p.q,0),eta:maxEta(ms.map(p=>etaOf(RI,p.id,p.cum)))};}).sort((a,b)=>a.fr-b.fr||tal[a.t.id].rank-tal[b.t.id].rank);
+  const oid=obj?obj.items.map(x=>x.id):[],fl=[...oid,...pend.map(r=>r.id).filter(id=>!oid.includes(id))];
+  return {rows,byId,per,tal,tstat,bon,ready,unl,cur,nextLock,obj,near,RI,etaAll:maxEta(pend.map(r=>r.eta)),focus:fl[0]||null,next:fl[1]||null,overall:T?C/T:1,complete:rows.filter(r=>r.miss===0).length};
 }
 
-const tierChips=loc=>[1,2,3,4].map(k=>'<button type="button" class="chipT" data-act="tier" data-t="'+k+'" data-k="tier-'+loc+'-'+k+'" aria-pressed="'+S.tiers.includes(k)+'"'+(ro()?' disabled':'')+'>T'+k+'</button>').join('');
+const tierChips=loc=>[1,2,3,4].map(k=>'<button type="button" class="chipT" data-act="tier" data-t="'+k+'" data-k="tier-'+loc+'-'+k+'" title="Guardar itens para o Tier '+k+'" aria-pressed="'+S.tiers.includes(k)+'"'+(ro()?' disabled':'')+'>T'+k+'</button>').join('');
 const stHtml=r=>{const c=r.status==='Completo'?'p-ok':r.status==='Em andamento'?'p-mid':'p-bad';return '<span class="pill '+c+'">'+r.status+'</span>';};
 function stgHtml(r,withCap){
   const Ts=S.tiers.filter(k=>r.tiers[k]);
@@ -439,9 +518,9 @@ function stgHtml(r,withCap){
 }
 const mkHtml=(r,R)=>r.id===R.focus?'<i class="mk f" title="Foco agora">▶</i>':r.id===R.next?'<i class="mk n" title="Próximo">▷</i>':'';
 const rowCls=(r,R)=>r.id===R.focus?'f':r.id===R.next?'n':r.miss===0?'done':'';
-const falHtml=r=>'<b>'+nf(r.miss)+'</b><small'+(r.next?' title="Faltam '+nf(r.next.m)+' para cobrir o '+tn(r.next.t)+'"':'')+'>'+(r.next?'próx. '+nf(r.next.m):'completo')+'</small>';
+const falHtml=r=>'<b>'+nf(r.miss)+'</b><small'+(r.next?' title="Faltam '+nf(r.next.m)+' para cobrir o '+tn(r.next.t)+'"':'')+'>'+(r.next?'próx. '+nf(r.next.m):'completo')+'</small>'+(r.miss&&r.eta>0?'<small class="eta">'+etaTxt(r.eta)+'</small>':'');
 const balField=(loc,id)=>'<span class="bal"><input type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" data-k="'+loc+'-bal-'+id+'" data-bal="'+id+'" value="'+nf(S.balance[id]||0)+'" aria-label="Balance de '+esc(nm(id))+'"'+(ro()?' disabled':'')+'><button type="button" class="plus" data-act="open" data-item="'+id+'" data-k="'+loc+'-open-'+id+'" aria-label="Somar loot em '+esc(nm(id))+'">+</button></span>';
-const itemRow=(r,R)=>'<div class="irow '+rowCls(r,R)+'" data-item="'+r.id+'" data-act="open"><span class="c-mk">'+mkHtml(r,R)+'</span><span class="c-nm">'+ico(r.id,30)+'<span><span class="nm">'+esc(nm(r.id))+'</span><span class="pk">'+esc(pokeTxt(r.id))+(ordOf(r.id)==='P'?' · Passivo':'')+'<span class="mbal"> · Balance '+nf(S.balance[r.id]||0)+'</span></span></span></span><span class="c-bal">'+balField('l',r.id)+'</span><span class="c-fal">'+falHtml(r)+'</span><span class="c-stg">'+stgHtml(r)+'</span><span class="c-st">'+stHtml(r)+'</span></div>';
+const itemRow=(r,R)=>'<div class="irow '+rowCls(r,R)+'" data-item="'+r.id+'" data-act="open"><span class="c-mk">'+mkHtml(r,R)+'</span><span class="c-nm">'+ico(r.id,30)+'<span><span class="nm">'+esc(nm(r.id))+'</span><span class="pk">'+esc(pokeTxt(r.id))+(ordOf(r.id)==='P'?' · Passivo':'')+(updAge(r.id)>=3?' · atualizado há '+updAge(r.id)+' dias':'')+'<span class="mbal"> · Balance '+nf(S.balance[r.id]||0)+'</span></span></span></span><span class="c-bal">'+balField('l',r.id)+'</span><span class="c-fal">'+falHtml(r)+'</span><span class="c-stg">'+stgHtml(r)+'</span><span class="c-st">'+stHtml(r)+'</span></div>';
 function ring(p){const R0=31,C=2*Math.PI*R0,v=Math.round(p*100);return '<svg class="ring" width="84" height="84" viewBox="0 0 84 84" role="img" aria-label="'+v+'% do farm"><circle cx="42" cy="42" r="'+R0+'" fill="none" style="stroke:var(--track)" stroke-width="10"/><circle cx="42" cy="42" r="'+R0+'" fill="none" style="stroke:var(--okFill)" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-p)).toFixed(1)+'" transform="rotate(-90 42 42)"/><text x="42" y="41" text-anchor="middle" font-size="18" font-weight="700" style="fill:var(--ink)">'+v+'%</text><text x="42" y="56" text-anchor="middle" font-size="10" style="fill:var(--mut)">do farm</text></svg>';}
 
 function render(){
@@ -461,36 +540,62 @@ function scheduleLive(){clearTimeout(liveT);liveT=setTimeout(liveRender,120);}
 function typing(){const a=document.activeElement;return !!(a&&a.matches&&a.matches('input[type=text],textarea'));}
 function renderSafe(){if(typing()){pendingRender=true;liveRender();}else render();}
 
-function renderTop(){$('tselD').innerHTML='<span>Tiers no total</span>'+tierChips('d');}
+function renderTop(){$('tselD').innerHTML='<span>Guardando para</span>'+tierChips('d');}
+function focusHint(f,R){
+  const r=R.byId[f];let nx=r&&r.next;
+  if(!nx){const t=TAL.filter(x=>R.tal[x.id].parts.some(p=>p.id===f&&p.miss>0)).sort((a,b)=>R.tal[a.id].rank-R.tal[b.id].rank)[0];if(!t)return '';const p=R.tal[t.id].parts.find(q=>q.id===f);nx={t,q:p.q,a:p.alloc,m:p.miss};}
+  const oth=R.tal[nx.t.id].parts.filter(p=>!p.done&&p.miss>0&&p.id!==f);
+  return '<div class="fhint">Próximo talento: <b>'+tn(nx.t)+'</b> precisa de '+nf(nx.q)+(nx.a?'; o Balance cobre '+nf(nx.a):'')+', faltam <b>'+nf(nx.m)+'</b>. '+(oth.length?'No mesmo talento faltam também '+oth.map(p=>nf(p.miss)+' '+esc(shortNm(p.id))).join(' e ')+'.':'É o único item que falta nesse talento.')+'</div>';
+}
+function libHtml(R,loc){
+  const T=R.nextLock;if(!T)return '<div class="pk">Todos os tiers estão liberados.</div>';
+  const pv=R.tstat[T-1],u=UNL[T],mo=S.money||0,okP=pv.done===pv.n,okM=mo>=u.m,okL=!u.l||S.level>=u.l,ri=ok=>'<span class="ri '+(ok?'ok':'no')+'" aria-label="'+(ok?'ok':'pendente')+'">'+(ok?'✓':'')+'</span>';
+  let h='<div class="libt" style="'+tv(T)+'"><b>Liberar o Tier '+T+'</b> · ganha +1% de dano e +1% de defesa Fantasma</div>';
+  h+='<div class="req">'+ri(okP)+'<span class="rt">T'+(T-1)+' 100% concluído</span><b>'+pv.done+' de '+pv.n+'</b></div>';
+  h+='<div class="req">'+ri(okM)+'<span class="rt">Dinheiro'+(okM?'':' · faltam '+nf(u.m-mo))+'</span><span><input type="text" class="minp" inputmode="numeric" enterkeyhint="done" autocomplete="off" data-money="1" data-k="'+loc+'-money" value="'+nf(mo)+'" aria-label="Seu dinheiro no jogo"'+(ro()?' disabled':'')+'> <small class="pk">de '+nf(u.m)+'</small></span></div><span class="mbar"><i style="width:'+Math.min(100,mo/u.m*100)+'%"></i></span>';
+  if(u.l)h+='<div class="req">'+ri(okL)+'<span class="rt">Nível</span><span><input type="text" class="minp sm" inputmode="numeric" enterkeyhint="done" autocomplete="off" data-level="1" data-k="'+loc+'-lvl" value="'+(S.level||'')+'" placeholder="0" aria-label="Seu nível"'+(ro()?' disabled':'')+'> <small class="pk">de '+u.l+'</small></span></div>';
+  h+='<div class="fact"><button type="button" class="btn sm" data-act="unl" data-t="'+T+'" data-k="'+loc+'-unl"'+(ro()?' disabled':'')+'>Marcar T'+T+' como liberado</button></div>';
+  return h;
+}
 function renderResumo(R){
-  const f=R.focus,n=R.next,rf=f&&R.byId[f],rn=n&&R.byId[n];
-  let h='<div class="tsel light mobonly"><span>Tiers no total</span>'+tierChips('m')+'</div>';
+  const f=R.focus,rf=f&&R.byId[f],ob=R.obj;
+  let h='<div class="tsel light mobonly"><span>Guardando para</span>'+tierChips('m')+'</div>';
   if(ui.importData){const d=ui.importData,nt=TAL.filter(t=>{const p=d.parts[t.id];return p&&Object.keys(t.c).every(k=>p[k]);}).length;
     h+='<div class="imp"><p><b>Este link traz dados de outro aparelho:</b> '+nt+' talentos concluídos e Balance de '+Object.keys(d.balance).length+' itens. Importar substitui os dados deste aparelho.</p><button type="button" class="btn pri" data-act="imp">Importar</button><button type="button" class="btn ghost" data-act="impno">Ignorar</button></div>';}
-  h+='<div class="rgrid"><section class="focus"><div class="hd"><span class="mk" style="color:var(--orange)">▶</span> FOCO AGORA</div><div class="bd">';
+  h+='<div class="rgrid"><section class="focus"><div class="hd"><span class="mk" style="color:var(--orange)">▶</span> FOCO AGORA'+(ob&&ob.items.length?' · FECHAR O T'+ob.t:'')+'</div><div class="bd">';
   if(mode==='loading')h+='<div class="fname">Carregando…</div>';
-  else if(!R.rows.length)h+='<div class="fname">Nenhum item com demanda nos tiers do total</div>';
-  else if(!f)h+='<div class="fname">Tudo concluído nos tiers do total</div>';
-  else h+='<div class="fhead">'+ico(f,44)+'<div><div class="fname">'+esc(nm(f))+'</div><div class="fpoke">Dropa de: '+esc(pokeTxt(f))+'</div></div></div><div class="fbig">'+nf(rf.miss)+' <small>itens</small></div>'+stgHtml(rf)+(rf.next?'<div class="fhint">Próximo talento: <b>'+tn(rf.next.t)+'</b> precisa de '+nf(rf.next.q)+'; o Balance cobre '+nf(rf.next.a)+', faltam <b>'+nf(rf.next.m)+'</b>.</div>':'')+'<div class="fact"><button type="button" class="btn pri" data-act="open" data-item="'+f+'" data-k="f-open">Somar loot</button></div>';
-  h+='</div></section><section class="card"><div class="lbl"><span class="mk n">▷</span> PRÓXIMO</div>';
-  h+=rn?'<div class="nname">'+esc(nm(n))+'</div><div class="pk">Dropa de: '+esc(pokeTxt(n))+'</div><div class="nbig">'+nf(rn.miss)+' <small>itens</small></div>'+stgHtml(rn):'<div class="pk">'+(f?'Nenhum: o foco é o último item com falta.':'—')+'</div>';
+  else if(!f)h+='<div class="fname">'+(R.rows.length?'Nada falta nos tiers marcados em Guardando para':'Nenhum item com demanda em Guardando para')+'</div>';
+  else{
+    const oi=ob&&ob.items.find(x=>x.id===f),miss=oi?oi.miss:(rf?rf.miss:0),eta=oi?oi.eta:(rf?rf.eta:undefined);
+    h+='<div class="fhead">'+ico(f,44)+'<div><div class="fname">'+esc(nm(f))+'</div><div class="fpoke">Dropa de: '+esc(pokeTxt(f))+'</div></div></div>';
+    h+='<div class="fbig">'+nf(miss)+' <small>'+(oi?'para fechar o T'+ob.t:'itens')+'</small></div>';
+    h+='<div class="fetaline">'+(eta===undefined?'Registre o loot para ver a previsão.':eta===null?'Sem previsão: ainda não há loot registrado deste item.':'Previsão: '+etaTxt(eta)+' no seu ritmo.')+'</div>';
+    if(rf)h+=stgHtml(rf);
+    h+=focusHint(f,R);
+    h+='<div class="fact"><button type="button" class="btn pri" data-act="loot" data-k="f-loot"'+(ro()?' disabled':'')+'>Registrar loot</button><button type="button" class="btn" data-act="open" data-item="'+f+'" data-k="f-open">Ficha do item</button></div>';
+  }
+  if(ob&&ob.items.length)h+='<div class="oblist"><div class="ot">PARA FECHAR O T'+ob.t+(ob.eta===undefined?'':ob.eta===null?' · previsão incompleta':' · '+etaTxt(ob.eta))+'</div>'+ob.items.map(x=>'<button type="button" class="obrow'+(x.id===f?' cur':'')+'" data-act="open" data-item="'+x.id+'" data-k="ob-'+x.id+'">'+ico(x.id,22)+'<span class="on">'+esc(shortNm(x.id))+(dropShort(x.id)?' <span class="rpk">'+esc(dropShort(x.id))+'</span>':'')+'</span><b>'+nf(x.miss)+'</b>'+(x.eta===undefined?'':'<span class="eta">'+etaTxt(x.eta)+'</span>')+'</button>').join('')+'</div>';
+  else if(ob)h+='<div class="fhint">Tudo o que falta no T'+ob.t+' já está no Balance: entregue os talentos prontos.</div>';
+  h+='</div></section>';
+  h+='<section class="card"><div class="lbl">PRÓXIMA LIBERAÇÃO</div>'+libHtml(R,'r')+'</section>';
   const doneT=TAL.filter(t=>R.tal[t.id].complete).length;
-  h+='</section><section class="card"><div class="lbl">PROGRESSO</div><div class="pgrid">'+ring(R.overall)+'<div><div class="pline"><b>'+R.complete+'</b>/'+R.rows.length+' itens completos</div><div class="pline"><b>'+doneT+'</b>/'+TAL.length+' talentos concluídos</div></div></div><div class="tbars">'+[1,2,3,4].map(k=>{const z=R.tstat[k];return '<div class="tb"><span style="color:'+TIER[k].t+'">T'+k+'</span><span class="tbb"><i style="width:'+(z.done/z.n*100)+'%;background:'+TIER[k].c+'"></i></span><span>'+z.done+'/'+z.n+'</span></div>';}).join('')+'</div></section>';
+  h+='<section class="card"><div class="lbl">PROGRESSO</div><div class="pgrid">'+ring(R.overall)+'<div><div class="pline"><b>'+R.complete+'</b>/'+R.rows.length+' itens completos</div><div class="pline"><b>'+doneT+'</b>/'+TAL.length+' talentos concluídos</div></div></div><div class="tbars">'+[1,2,3,4].map(k=>{const z=R.tstat[k];return '<div class="tb"><span style="color:'+TIER[k].t+'">T'+k+'</span><span class="tbb"><i style="width:'+(z.done/z.n*100)+'%;background:'+TIER[k].c+'"></i></span><span>'+(R.unl.has(k)?z.done+'/'+z.n:'travado')+'</span></div>';}).join('')+'</div>';
+  h+='<div class="pk" style="margin-top:8px">'+(!R.RI?'Registre o loot para ver previsões em dias.':(ob?'T'+ob.t+': '+(ob.eta===null?'previsão quando todos os itens tiverem loot registrado':ob.eta===0?'tudo no Balance':'fecha em '+etaTxt(ob.eta))+'. ':'')+'Ritmo: média de '+R.RI.span+' dia'+(R.RI.span>1?'s':'')+' de loot registrado.')+'</div></section>';
   h+='<section class="card"><div class="lbl">DÁ PARA CONCLUIR AGORA</div>';
   h+=R.ready.length?R.ready.slice(0,4).map(t=>'<div class="rl"><span class="tid" style="--tc:'+TIER[t.t].c+'">'+tn(t)+'</span><span class="rtx">+'+t.v+'% '+BON[t.cat][0]+'</span><button type="button" class="btn sm" data-act="tcomp" data-tid="'+t.id+'" data-k="rc-'+t.id+'"'+(ro()?' disabled':'')+'>Concluir</button></div>').join('')+(R.ready.length>4?'<div class="pk">e mais '+(R.ready.length-4)+' na aba Talentos.</div>':''):'<div class="pk">Nenhum talento fecha só com o Balance de agora.</div>';
-  const near=R.rows.filter(r=>r.next).sort((a,b)=>a.next.m-b.next.m).slice(0,4);
-  h+='<div class="lbl" style="margin-top:12px">QUASE LÁ</div>'+(near.length?near.map(r=>'<button type="button" class="rl" data-act="open" data-item="'+r.id+'" data-k="near-'+r.id+'">'+ico(r.id,22)+'<span class="rnm">'+esc(shortNm(r.id))+(dropShort(r.id)?' <span class="rpk">'+esc(dropShort(r.id))+'</span>':'')+'</span><span class="rtx">faltam <b>'+nf(r.next.m)+'</b> p/ '+tn(r.next.t)+'</span></button>').join(''):'<div class="pk">Nada pendente.</div>')+'</section></div>';
+  const near=R.near.slice(0,4);
+  h+='<div class="lbl" style="margin-top:12px">QUASE LÁ</div>'+(near.length?near.map(z=>'<button type="button" class="rl" data-act="tgo" data-tid="'+z.t.id+'" data-k="near-'+z.t.id+'"><span class="tid" style="--tc:'+TIER[z.t.t].c+'">'+tn(z.t)+'</span><span class="rtx">faltam '+z.miss.map(p=>'<b>'+nf(p.miss)+'</b> '+esc(shortNm(p.id))).join(' + ')+'</span>'+(z.eta===undefined?'':'<span class="eta">'+etaTxt(z.eta)+'</span>')+'</button>').join(''):'<div class="pk">Nada pendente nos tiers liberados.</div>')+'</section></div>';
   $('resumo').innerHTML=h;
 }
 function renderItens(R){
   const rows=R.rows.filter(r=>ui.ifil==='all'||r.miss>0),pend=R.rows.filter(r=>r.miss>0).length;
-  let h='<div class="ph"><h2>Banco de itens</h2><span class="cnt">'+pend+' com falta · '+R.rows.length+' nos tiers do total</span><span class="seg sp" role="group" aria-label="Filtro de itens"><button type="button" data-act="ifil" data-v="pend" aria-pressed="'+(ui.ifil==='pend')+'">Com falta</button><button type="button" data-act="ifil" data-v="all" aria-pressed="'+(ui.ifil==='all')+'">Todos</button></span></div>';
+  let h='<div class="ph"><h2>Banco de itens</h2><span class="cnt">'+pend+' com falta · '+R.rows.length+' em Guardando para</span><span class="phb"><button type="button" class="btn sm pri" data-act="loot" data-k="i-loot"'+(ro()?' disabled':'')+'>Registrar loot</button><button type="button" class="btn sm ghost" data-act="ordem" data-k="i-ordem">Ordem de farm</button></span><span class="seg sp" role="group" aria-label="Filtro de itens"><button type="button" data-act="ifil" data-v="pend" aria-pressed="'+(ui.ifil==='pend')+'">Com falta</button><button type="button" data-act="ifil" data-v="all" aria-pressed="'+(ui.ifil==='all')+'">Todos</button></span></div>';
   h+='<div class="ilist"><div class="irow ihead"><span></span><span>Item</span><span class="r">Balance</span><span class="r">Falta</span><span>Etapas (T2, T3…) e %</span><span class="c">Status</span></div>';
   h+=rows.map(r=>itemRow(r,R)).join('');
-  if(!rows.length)h+='<div class="empty">'+(R.rows.length?'Nenhum item com falta nos tiers do total.':'Nenhum item com demanda nos tiers do total.')+'</div>';
+  if(!rows.length)h+='<div class="empty">'+(R.rows.length?'Nenhum item com falta em Guardando para.':'Nenhum item com demanda em Guardando para.')+'</div>';
   h+='</div>';
   const out=ITEMS.filter(it=>!R.byId[it.id]);
-  if(out.length)h+='<div class="outb"><button type="button" class="lnk" data-act="out">'+(ui.showOut?'Esconder':'Mostrar')+' itens fora dos tiers do total ('+out.length+')</button>'+(ui.showOut?'<div class="olist">'+out.map(it=>'<button type="button" class="ochip" data-act="open" data-item="'+it.id+'">'+esc(nm(it.id))+' · '+nf(S.balance[it.id]||0)+'</button>').join('')+'</div>':'')+'</div>';
+  if(out.length)h+='<div class="outb"><button type="button" class="lnk" data-act="out">'+(ui.showOut?'Esconder':'Mostrar')+' itens fora de Guardando para ('+out.length+')</button>'+(ui.showOut?'<div class="olist">'+out.map(it=>'<button type="button" class="ochip" data-act="open" data-item="'+it.id+'">'+esc(nm(it.id))+' · '+nf(S.balance[it.id]||0)+'</button>').join('')+'</div>':'')+'</div>';
   $('itens').innerHTML=h;
 }
 function patchItens(R){
@@ -503,21 +608,26 @@ function patchItens(R){
     el.querySelector('.c-st').innerHTML=stHtml(r);
   }
 }
-const STL={feito:['Concluído','p-ok'],pronto:['Pronto para concluir','p-mid'],parcial:['Parcial','p-par'],falta:['Faltam itens','p-bad']};
+const STL={feito:['Concluído','p-ok'],pronto:['Pronto para concluir','p-mid'],guardado:['Itens guardados','p-mid'],parcial:['Parcial','p-par'],falta:['Faltam itens','p-bad']};
 function talCard(x,z){
   const [lab,cls]=STL[z.status];
   const parts=z.parts.map(p=>{const st=p.done?'done':p.miss?'miss':'cov',tg=p.done?'entregue':p.miss?(p.alloc?'tem '+nf(p.alloc)+' · falta '+nf(p.miss):'falta '+nf(p.miss)):'no Balance';
-    return '<button type="button" class="part '+st+'" data-act="part" data-tid="'+x.id+'" data-item="'+p.id+'" data-k="part-'+x.id+'-'+p.id+'" aria-pressed="'+p.done+'" title="'+(p.done?'Desmarcar entrega':'Marcar como entregue')+'"'+(ro()?' disabled':'')+'><span class="bx">'+(p.done?'✓':'')+'</span>'+ico(p.id,20)+'<span class="q">'+nf(p.q)+'</span><span>'+esc(shortNm(p.id))+'</span>'+(dropShort(p.id)?'<span class="pkm">· '+esc(dropShort(p.id))+'</span>':'')+'<span class="tg">· '+tg+'</span></button>';}).join('');
-  const act=z.complete?'<button type="button" class="lnk" data-act="tundo" data-tid="'+x.id+'" data-k="tundo-'+x.id+'"'+(ro()?' disabled':'')+'>Desmarcar</button>':'<button type="button" class="pact" data-act="tcomp" data-tid="'+x.id+'" data-k="tcomp-'+x.id+'"'+(ro()?' disabled':'')+'>✓ Concluir talento</button>';
-  return '<article class="tcard '+z.status+'" style="'+tv(x.t)+'"><div class="tline"><span class="tid">'+tn(x)+'</span><span class="tbon">+'+x.v+'% '+BON[x.cat][0]+'</span>'+(x.l?'<span class="lvl">Nível '+x.l+'</span>':'')+'<span class="pill '+cls+' sp">'+lab+(z.status==='parcial'?' '+z.nd+'/'+z.n:'')+'</span></div><div class="ttx">'+esc(x.x)+'</div><div class="parts">'+parts+act+'</div></article>';
+    return '<button type="button" class="part '+st+(z.lock?' lock':'')+'" data-act="part" data-tid="'+x.id+'" data-item="'+p.id+'" data-k="part-'+x.id+'-'+p.id+'" aria-pressed="'+p.done+'" title="'+(z.lock?'Tier travado':p.done?'Desmarcar entrega (devolve ao Balance)':'Entregar e descontar do Balance')+'"'+(ro()?' disabled':'')+'><span class="bx">'+(p.done?'✓':'')+'</span>'+ico(p.id,20)+'<span class="q">'+nf(p.q)+'</span><span>'+esc(shortNm(p.id))+'</span>'+(dropShort(p.id)?'<span class="pkm">· '+esc(dropShort(p.id))+'</span>':'')+'<span class="tg">· '+tg+'</span></button>';}).join('');
+  const act=z.complete?'<button type="button" class="lnk" data-act="tundo" data-tid="'+x.id+'" data-k="tundo-'+x.id+'"'+(ro()?' disabled':'')+'>Desmarcar</button>':z.lock?'':'<button type="button" class="pact" data-act="tcomp" data-tid="'+x.id+'" data-k="tcomp-'+x.id+'"'+(ro()?' disabled':'')+'>✓ Concluir talento</button>';
+  return '<article class="tcard '+z.status+'" id="tc-'+x.id+'" style="'+tv(x.t)+'"><div class="tline"><span class="tid">'+tn(x)+'</span><span class="tbon">+'+x.v+'% '+BON[x.cat][0]+'</span>'+(x.l?'<span class="lvl">Nível '+x.l+'</span>':'')+'<span class="pill '+cls+' sp">'+lab+(z.status==='parcial'?' '+z.nd+'/'+z.n:'')+'</span></div><div class="ttx">'+esc(x.x)+'</div><div class="parts">'+parts+act+'</div></article>';
 }
 function renderTal(R){
-  const T=ui.ttab,L=TAL.filter(x=>x.t===T),st=R.tstat[T],unl=T===1||S.unlocked.includes(T);
-  let h='<div class="ph"><h2>Talentos</h2><span class="cnt">toque em cada item do talento para marcar a entrega</span><span class="seg sp" role="group" aria-label="Filtro de talentos"><button type="button" data-act="tfil" data-v="todos" aria-pressed="'+(ui.tfil==='todos')+'">Todos</button><button type="button" data-act="tfil" data-v="pend" aria-pressed="'+(ui.tfil==='pend')+'">Pendentes</button></span></div>';
-  h+='<div class="ttabs" role="tablist">'+[1,2,3,4].map(k=>{const z=R.tstat[k];return '<button type="button" role="tab" class="ttab" data-act="ttab" data-t="'+k+'" aria-selected="'+(k===T)+'" style="--tc:'+TIER[k].c+'"><span class="dot"></span>Tier '+k+'<span class="tcnt">'+z.done+'/'+z.n+'</span></button>';}).join('')+'</div>';
-  h+='<div class="tierhd" style="'+tv(T)+'"><div class="tr1"><b>Tier '+T+'</b><span>'+st.done+' de '+st.n+' concluídos'+(st.ready?' · '+st.ready+' pronto'+(st.ready>1?'s':'')+' para concluir':'')+(S.tiers.includes(T)?'':' · fora do total')+'</span></div><div class="tbar"><i style="width:'+(st.done/st.n*100)+'%"></i></div><div class="tr2">'+(T===1?'Sempre liberado. Bônus ativos em todos os tiers.':'Liberar: '+TIER[T].unlock+' · ao liberar: +1% de dano e +1% de defesa Fantasma.')+'</div><div class="tr3">';
-  if(T>1)h+='<button type="button" class="btn sm '+(unl?'on':'')+'" data-act="unl" data-t="'+T+'" data-k="unl-'+T+'" aria-pressed="'+unl+'"'+(ro()?' disabled':'')+'>'+(unl?'✓ Tier liberado':'Marcar tier como liberado')+'</button>';
-  if(st.done<st.n)h+='<button type="button" class="btn sm ghost" data-act="tierall" data-t="'+T+'" data-k="tierall-'+T+'"'+(ro()?' disabled':'')+'>'+(ui.confirmTier===T?'Confirmar: concluir os '+(st.n-st.done):'Concluir todos do tier')+'</button>';
+  const T=ui.ttab,L=TAL.filter(x=>x.t===T),st=R.tstat[T],unl=R.unl.has(T);
+  let h='<div class="ph"><h2>Talentos</h2><span class="cnt">toque no item para entregar: desconta do Balance</span><span class="seg sp" role="group" aria-label="Filtro de talentos"><button type="button" data-act="tfil" data-v="todos" aria-pressed="'+(ui.tfil==='todos')+'">Todos</button><button type="button" data-act="tfil" data-v="pend" aria-pressed="'+(ui.tfil==='pend')+'">Pendentes</button></span></div>';
+  h+='<div class="ttabs" role="tablist">'+[1,2,3,4].map(k=>{const z=R.tstat[k];return '<button type="button" role="tab" class="ttab" data-act="ttab" data-t="'+k+'" aria-selected="'+(k===T)+'" style="--tc:'+TIER[k].c+'"><span class="dot"></span>Tier '+k+'<span class="tcnt">'+z.done+'/'+z.n+'</span>'+(R.unl.has(k)?'':'<span class="lk">travado</span>')+'</button>';}).join('')+'</div>';
+  h+='<div class="tierhd" style="'+tv(T)+'"><div class="tr1"><b>Tier '+T+'</b><span>'+st.done+' de '+st.n+' concluídos'+(st.ready?' · '+st.ready+' pronto'+(st.ready>1?'s':'')+' para concluir':'')+(S.tiers.includes(T)?'':' · fora de Guardando para')+'</span></div><div class="tbar"><i style="width:'+(st.done/st.n*100)+'%"></i></div>';
+  if(T===1)h+='<div class="tr2">Sempre liberado.</div>';
+  else if(unl)h+='<div class="tr2">Liberado · +1% de dano e +1% de defesa Fantasma.</div>';
+  else if(T===R.nextLock)h+='<div class="tr2">Travado. Os itens deste tier ficam guardados no Balance até liberar.</div><div>'+libHtml(R,'t')+'</div>';
+  else h+='<div class="tr2">Travado. Antes, libere o T'+(T-1)+'. Custo: '+nf(UNL[T].m)+(UNL[T].l?' e nível '+UNL[T].l:'')+'. Os itens ficam guardados no Balance até lá.</div>';
+  h+='<div class="tr3">';
+  if(T>1&&unl&&S.unlocked.includes(T)&&!TAL.some(t=>t.t>=T&&S.parts[t.id])&&!S.unlocked.some(x=>x>T))h+='<button type="button" class="lnk" data-act="unl" data-t="'+T+'" data-k="unl-'+T+'"'+(ro()?' disabled':'')+'>Desfazer liberação</button>';
+  if(unl&&st.done<st.n)h+='<button type="button" class="btn sm ghost" data-act="tierall" data-t="'+T+'" data-k="tierall-'+T+'"'+(ro()?' disabled':'')+'>'+(ui.confirmTier===T?'Confirmar: marcar os '+(st.n-st.done)+' sem descontar':'Marcar todos como concluídos')+'</button>';
   h+='</div></div><div class="tcards">';
   const vis=L.filter(x=>ui.tfil==='todos'||!R.tal[x.id].complete);
   h+=vis.map(x=>talCard(x,R.tal[x.id])).join('');
@@ -526,8 +636,8 @@ function renderTal(R){
   $('talentos').innerHTML=h;
 }
 function renderBonus(R){
-  const unl=new Set([1,...S.unlocked]);
-  let h='<div class="ph"><h2>Bônus liberados</h2></div><div class="card"><div class="lbl">TIERS LIBERADOS</div><div class="unl">'+[1,2,3,4].map(k=>{const on=unl.has(k);return '<button type="button" class="ub '+(on?'on':'')+'" style="'+tv(k)+'" data-act="unl" data-t="'+k+'" data-k="ub-'+k+'" aria-pressed="'+on+'"'+(k===1||ro()?' disabled':'')+'><b>T'+k+'</b><span>'+(k===1?'sempre':on?'liberado':'bloqueado')+'</span></button>';}).join('')+'</div>';
+  const unl=R.unl;
+  let h='<div class="ph"><h2>Bônus liberados</h2></div><div class="card"><div class="lbl">TIERS LIBERADOS</div><div class="unl">'+[1,2,3,4].map(k=>{const on=unl.has(k);return '<button type="button" class="ub '+(on?'on':'')+'" style="'+tv(k)+'" data-act="unl" data-t="'+k+'" data-k="ub-'+k+'" aria-pressed="'+on+'"'+(k===1||ro()?' disabled':'')+'><b>T'+k+'</b><span>'+(k===1?'sempre':on?'liberado':'travado')+'</span></button>';}).join('')+'</div>';
   const act=Object.keys(BON).filter(k=>R.bon[k].on>0);
   h+='<div class="lbl">ATIVOS AGORA</div><div class="bsum">'+(act.length?act.map(k=>'<span class="bchip">+'+R.bon[k].on+'% '+BON[k][0]+'</span>').join(''):'<span class="pk">Nenhum bônus ativo ainda.</span>')+'</div>';
   for(const g of GROUPS){
@@ -541,14 +651,16 @@ function renderBonus(R){
 const closeBtn='<button type="button" class="x" data-act="close" aria-label="Fechar">×</button>';
 function sheetStats(id,R){
   const r=R.byId[id],P=R.per[id];
-  let h='<div class="sstat"><div><div class="lbl">FALTA (TIERS DO TOTAL)</div><div class="nbig">'+(r?nf(r.miss):'0')+'</div></div><div><div class="lbl">CONCLUÍDO</div><div class="nbig okt">'+(r?pc(r):100)+'%</div></div></div>';
-  h+=[1,2,3,4].filter(k=>P[k]&&P[k].tot).map(k=>{const x=P[k],c=TIER[k].c;return '<div class="strow"><span class="tt" style="color:'+TIER[k].t+'">Tier '+k+(S.tiers.includes(k)?'':' (fora)')+'</span><span class="stg"><span class="s"><i style="width:'+(x.done/x.tot*100)+'%;background:'+c+'"></i><i style="left:'+(x.done/x.tot*100)+'%;width:'+(x.alloc/x.tot*100)+'%;background:'+c+';opacity:.4"></i></span></span><span>'+(x.miss?'falta <b>'+nf(x.miss)+'</b>':'<b class="okt">completo</b>')+' <span class="pk">de '+nf(x.tot)+'</span></span></div>';}).join('');
+  let h='<div class="sstat"><div><div class="lbl">FALTA (GUARDANDO PARA)</div><div class="nbig">'+(r?nf(r.miss):'0')+'</div></div><div><div class="lbl">CONCLUÍDO</div><div class="nbig okt">'+(r?pc(r):100)+'%</div></div></div>';
+  h+=[1,2,3,4].filter(k=>P[k]&&P[k].tot).map(k=>{const x=P[k],c=TIER[k].c;return '<div class="strow"><span class="tt" style="color:'+TIER[k].t+'">Tier '+k+(S.tiers.includes(k)?'':' (fora)')+(R.unl.has(k)?'':' · travado')+'</span><span class="stg"><span class="s"><i style="width:'+(x.done/x.tot*100)+'%;background:'+c+'"></i><i style="left:'+(x.done/x.tot*100)+'%;width:'+(x.alloc/x.tot*100)+'%;background:'+c+';opacity:.4"></i></span></span><span>'+(x.miss?'falta <b>'+nf(x.miss)+'</b>':'<b class="okt">completo</b>')+' <span class="pk">de '+nf(x.tot)+'</span></span></div>';}).join('');
   if(r&&r.next)h+='<div class="fhint">Próximo talento: <b>'+tn(r.next.t)+'</b> precisa de '+nf(r.next.q)+'; faltam <b>'+nf(r.next.m)+'</b>.</div>';
+  const RI=R.RI,rt=RI&&RI.rate[id];
+  h+='<div class="pk">'+updTxt(id)+(rt?' · ritmo ~'+nf(rt)+' por dia'+(r&&r.miss?' · previsão '+etaTxt(r.eta):''):RI?' · sem loot registrado nos últimos 7 dias':'')+'</div>';
   return h;
 }
 function sheetParts(id,R){
   const L=TAL.filter(t=>t.c[id]);
-  return '<div class="lbl">TALENTOS QUE USAM ESTE ITEM ('+L.length+') · toque para marcar a entrega</div><div class="splist">'+L.map(t=>{const p=R.tal[t.id].parts.find(q=>q.id===id),st=p.done?'done':p.miss?'miss':'cov';
+  return '<div class="lbl">TALENTOS QUE USAM ESTE ITEM ('+L.length+') · toque para entregar (desconta do Balance)</div><div class="splist">'+L.map(t=>{const p=R.tal[t.id].parts.find(q=>q.id===id),st=p.done?'done':p.miss?'miss':'cov';
     return '<button type="button" class="sprow '+st+'" data-act="part" data-tid="'+t.id+'" data-item="'+id+'" data-k="sp-'+t.id+'" aria-pressed="'+p.done+'"'+(ro()?' disabled':'')+'><span class="bx">'+(p.done?'✓':'')+'</span><span class="tid" style="--tc:'+TIER[t.t].c+'">'+tn(t)+'</span><span>+'+t.v+'% '+BON[t.cat][0]+'</span><span class="spq">'+nf(p.q)+'</span><span class="spt">'+(p.done?'entregue':p.miss?(p.alloc?'tem '+nf(p.alloc)+' · falta '+nf(p.miss):'falta '+nf(p.miss)):'coberto pelo Balance')+'</span></button>';}).join('')+'</div>';
 }
 function itemSheet(R){
@@ -558,11 +670,65 @@ function itemSheet(R){
   return '<div class="shh">'+ico(id,52)+'<div><b id="shT">'+esc(nm(id))+'</b><div class="pk">Dropa de: '+esc(pokeTxt(id))+(o==='P'?' · Passivo':'')+'</div></div><span class="sh-st">'+(r?stHtml(r):'')+'</span>'+closeBtn+'</div>'
   +'<div><div class="lbl">BALANCE (QUANTO VOCÊ TEM AGORA)</div><div class="bigin"><input id="sh-bal" type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" data-k="s-bal-'+id+'" data-bal="'+id+'" value="'+nf(S.balance[id]||0)+'" aria-label="Balance de '+esc(nm(id))+'"'+(ro()?' disabled':'')+'></div></div>'
   +'<div class="steps">'+steps.map(v=>'<button type="button" class="btn" data-act="add" data-item="'+id+'" data-v="'+v+'" data-k="add-'+v+'"'+(ro()?' disabled':'')+'>+'+nf(v)+'</button>').join('')+steps.slice(1,3).map(v=>'<button type="button" class="btn ghost" data-act="add" data-item="'+id+'" data-v="-'+v+'" data-k="sub-'+v+'"'+(ro()?' disabled':'')+'>−'+nf(v)+'</button>').join('')+'</div>'
-  +'<div class="addrow"><input id="sh-add" type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" placeholder="Somar loot da hunt, ex.: 878" data-k="s-add" aria-label="Quantidade para somar"'+(ro()?' disabled':'')+'><button type="button" class="btn pri" data-act="addv" data-item="'+id+'"'+(ro()?' disabled':'')+'>Somar</button></div>'
+  +'<div class="addrow"><input id="sh-add" type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" placeholder="Somar o que dropou, ex.: 878" data-k="s-add" aria-label="Quantidade para somar"'+(ro()?' disabled':'')+'><button type="button" class="btn pri" data-act="addv" data-item="'+id+'"'+(ro()?' disabled':'')+'>Somar</button></div>'
   +'<div class="sh-stats">'+sheetStats(id,R)+'</div><div class="sh-parts">'+sheetParts(id,R)+'</div>'
   +'<div class="shset"><label>Ordem de farm<input type="text" class="tin" data-k="s-ord-'+id+'" data-ord="'+id+'" value="'+(o==='P'?'Passivo':esc(o))+'"'+(ro()?' disabled':'')+'></label><label>Nome do item'+(it.ask&&!(S.items[id]&&S.items[id].name)?' <button type="button" class="ask asktag" data-act="names">confirmar nome</button>':'')+'<input type="text" class="tin" data-k="s-nm-'+id+'" data-nm="'+id+'" value="'+esc(nm(id))+'"'+(ro()?' disabled':'')+'></label></div>'
   +'<label class="shset1"><span class="lbl">POKÉMON QUE DROPA ESTE ITEM</span><input type="text" class="tin" data-k="s-pk-'+id+'" data-pk="'+id+'" value="'+esc(pokeOf(id)==='ALL'?'Todos os Fantasma':pokeOf(id))+'" placeholder="ex.: Gengar" aria-label="Pokémon que dropa"'+(ro()?' disabled':'')+'></label>'
   +'<p class="hint">Ordem: 1, 2, 3… ou Passivo (vai para o fim da fila). Pokémon: “Todos os Fantasma” vale para qualquer Fantasma. No Balance vale 2622, 2.622, +500, -200 ou 10k.</p>';
+}
+function lootSheet(R){
+  const drop=ui.lootMode!=='total';
+  const ids=(ui.lootAll?ITEMS.map(i=>i.id):R.rows.map(r=>r.id)).sort((a,b)=>okey(a)-okey(b));
+  return '<div class="shh"><div><b id="shT">Registrar loot</b><div class="pk">Preencha só os itens que mudaram. Vai para o Balance e para o histórico da previsão.</div></div>'+closeBtn+'</div>'
+  +'<div class="ph" style="margin:0"><span class="seg" role="group" aria-label="Como lançar"><button type="button" data-act="lootmode" data-v="drop" aria-pressed="'+drop+'">Dropei (soma)</button><button type="button" data-act="lootmode" data-v="total" aria-pressed="'+!drop+'">Tenho (total)</button></span></div>'
+  +'<div class="lootlist">'+ids.map(id=>{const b=S.balance[id]||0;return '<label class="lrow">'+ico(id,32)+'<span class="lnm"><b>'+esc(shortNm(id))+'</b><small>'+(dropShort(id)?esc(dropShort(id))+' · ':'')+'tem '+nf(b)+'</small></span><input type="text" inputmode="numeric" enterkeyhint="next" autocomplete="off" data-loot="'+id+'" data-k="loot-'+id+'" data-bal0="'+b+'" placeholder="'+(drop?'+0':nf(b))+'" aria-label="'+esc(nm(id))+'"></label>';}).join('')+'</div>'
+  +'<div class="fact"><button type="button" class="btn pri" data-act="lootgo"'+(ro()?' disabled':'')+'>Lançar</button><button type="button" class="lnk" data-act="lootall">'+(ui.lootAll?'Mostrar só Guardando para':'Mostrar todos os itens')+'</button></div>'
+  +'<p class="hint">Aceita 1590, 1.590, 1,5k e 2kk. Em “Tenho (total)” o número substitui o Balance; a diferença conta como drop de hoje.</p>';
+}
+function lootVals(){const o={};document.querySelectorAll('#sheet [data-loot]').forEach(el=>{if(el.value.trim())o[el.dataset.loot]=el.value;});return o;}
+function rerenderSheet(after){const sh=document.querySelector('#sheet .sh'),st=sh?sh.scrollTop:0;$('sheet').dataset.type='';render();if(after)after();const n=document.querySelector('#sheet .sh');if(n)n.scrollTop=st;}
+function lootGo(){
+  if(ro())return;const drop=ui.lootMode!=='total',ch=[];let bad=false;
+  for(const el of document.querySelectorAll('#sheet [data-loot]')){const x=el.value.trim();el.classList.remove('bad');if(!x)continue;const id=el.dataset.loot,cur=S.balance[id]||0;
+    const v=drop?parseQty(x.replace(/^\+/,''),0):parseQty(x,cur);if(v===null){el.classList.add('bad');bad=true;continue;}
+    const nv=drop?cur+v:v;if(nv!==cur)ch.push([id,cur,nv]);}
+  if(bad){toast('Corrija os valores marcados em vermelho.');return;}
+  if(!ch.length){toast('Nada para lançar.');return;}
+  const ph=JSON.stringify(S.hist),pu=JSON.stringify(S.upd);
+  for(const [id,cur,nv] of ch){setBal(id,nv);logDelta(id,nv-cur);}
+  ui.sheet=null;commit();
+  toast('Lançado: '+ch.map(([id,c,n])=>(n>=c?'+':'−')+nf(Math.abs(n-c))+' '+shortNm(id)).join(', ')+'.',[{label:'Desfazer',fn:()=>{for(const [id,cur] of ch)setBal(id,cur);S.hist=JSON.parse(ph);S.upd=JSON.parse(pu);commit();toast('Lançamento desfeito.');}}]);
+}
+function ordIds(){return compute().rows.map(r=>r.id).sort((a,b)=>okey(a)-okey(b));}
+function setOrder(list){list.forEach((id,i)=>{S.items[id]=Object.assign({},S.items[id],{order:i+1});});}
+function ordMove(id,d){if(ro())return;const L=ordIds().filter(x=>ordOf(x)!=='P'),i=L.indexOf(id),j=i+d;if(i<0||j<0||j>=L.length)return;[L[i],L[j]]=[L[j],L[i]];setOrder(L);save();rerenderSheet();}
+function ordPassive(id){if(ro())return;const L=ordIds().filter(x=>ordOf(x)!=='P');
+  if(ordOf(id)==='P'){L.push(id);setOrder(L);}else{S.items[id]=Object.assign({},S.items[id],{order:'P'});setOrder(L.filter(x=>x!==id));}
+  save();rerenderSheet();}
+function ordemSheet(R){
+  const ids=R.rows.map(r=>r.id).sort((a,b)=>okey(a)-okey(b)),act=ids.filter(id=>ordOf(id)!=='P'),pas=ids.filter(id=>ordOf(id)==='P');
+  const info=id=>'<span class="onm"><b>'+esc(shortNm(id))+'</b><small>'+(dropShort(id)?esc(dropShort(id))+' · ':'')+(R.byId[id].miss?'falta '+nf(R.byId[id].miss):'completo')+'</small></span>';
+  return '<div class="shh"><div><b id="shT">Ordem de farm</b><div class="pk">O Foco segue esta ordem, começando pelo que falta para fechar o tier atual. Passivos caem junto e ficam no fim da fila.</div></div>'+closeBtn+'</div>'
+  +'<div class="ordlist">'+act.map((id,i)=>'<div class="orow"><span class="onum">'+(i+1)+'</span>'+ico(id,30)+info(id)+'<button type="button" class="ob" data-act="ordmv" data-item="'+id+'" data-v="-1" data-k="om-u-'+id+'" aria-label="Subir '+esc(shortNm(id))+'"'+(i===0||ro()?' disabled':'')+'>↑</button><button type="button" class="ob" data-act="ordmv" data-item="'+id+'" data-v="1" data-k="om-d-'+id+'" aria-label="Descer '+esc(shortNm(id))+'"'+(i===act.length-1||ro()?' disabled':'')+'>↓</button><button type="button" class="ob w" data-act="ordp" data-item="'+id+'" data-k="om-p-'+id+'"'+(ro()?' disabled':'')+'>Passivo</button></div>').join('')+'</div>'
+  +(pas.length?'<div class="olbl">PASSIVOS</div><div class="ordlist">'+pas.map(id=>'<div class="orow p"><span class="onum">P</span>'+ico(id,30)+info(id)+'<button type="button" class="ob w" data-act="ordp" data-item="'+id+'" data-k="om-p-'+id+'"'+(ro()?' disabled':'')+'>Tirar de passivo</button></div>').join('')+'</div>':'')
+  +'<p class="hint">Mostra os itens dos tiers marcados em Guardando para.</p>';
+}
+function deliverSheet(){
+  const t=TX[ui.sheet.tid],its=ui.sheet.items;
+  return '<div class="shh"><div><b id="shT">Entregar no '+tn(t)+'</b><div class="pk">O Balance da página não cobre esta entrega. Informe quanto você tem agora no jogo, antes de entregar.</div></div>'+closeBtn+'</div>'
+  +'<div class="dllist">'+its.map(k=>{const q=t.c[k],b=S.balance[k]||0,ok=b>=q;return '<div class="dlrow">'+ico(k,36)+'<div><b>'+nf(q)+' '+esc(shortNm(k))+'</b><div class="pk">'+(ok?'Balance '+nf(b)+': cobre':'Na página: '+nf(b)+' (faltam '+nf(q-b)+')')+'</div></div>'+(ok?'<span class="okt">✓</span>':'<label class="dlin"><span>Você tem agora</span><input type="text" inputmode="numeric" enterkeyhint="done" autocomplete="off" data-dlv="'+k+'" data-k="dlv-'+k+'" value="'+nf(b)+'"></label>')+'</div>';}).join('')+'</div>'
+  +'<div class="fact"><button type="button" class="btn pri" data-act="dlvgo"'+(ro()?' disabled':'')+'>Entregar e descontar</button><button type="button" class="btn ghost" data-act="dlvno"'+(ro()?' disabled':'')+'>Marcar sem descontar</button></div><p class="hint">“Marcar sem descontar” só marca como entregue e não mexe no Balance.</p>';
+}
+function dlvGo(noDisc){
+  if(ro()||!ui.sheet||ui.sheet.type!=='deliver')return;const t=TX[ui.sheet.tid],its=ui.sheet.items,map={};
+  if(!noDisc){const set=[];
+    for(const el of document.querySelectorAll('#sheet [data-dlv]')){const k=el.dataset.dlv,v=parseQty(el.value,S.balance[k]||0);el.classList.remove('bad');
+      if(v===null){el.classList.add('bad');toast('Valor inválido.');return;}
+      if(v<t.c[k]){el.classList.add('bad');toast('Com '+nf(v)+' de '+shortNm(k)+' ainda não dá: a entrega pede '+nf(t.c[k])+'.');return;}
+      set.push([k,v]);}
+    for(const [k,v] of set){const prev=S.balance[k]||0;setBal(k,v);logDelta(k,v-prev);}}
+  for(const k of its)map[k]=t.c[k];
+  ui.sheet=null;deliver(t,map,noDisc);
 }
 function useHtml(id){const n=needTxt(id);return (n?'<span class="ask">'+n+'</span>':'<span class="okt">✓ preenchido</span>')+'<span>Usado em '+esc(useTxt(id))+'</span>';}
 function patchNames(){if(!ui.sheet||ui.sheet.type!=='names')return;const c=document.querySelector('#sheet .nmcnt');if(c)c.textContent=ITEMS.filter(it=>needs(it.id)).length+' a confirmar';for(const el of document.querySelectorAll('#sheet [data-nmc]'))el.innerHTML=useHtml(el.dataset.nmc);}
@@ -576,7 +742,18 @@ function namesSheet(){
   +'<div class="fact"><button type="button" class="btn pri" data-act="nmcopy">Copiar lista para o Claude</button></div><p class="hint">No app dentro do Claude eu leio os nomes direto daqui; na página do GitHub, use o botão acima e cole o texto no chat.</p>';
 }
 function namesText(){return 'NOMES DOS ITENS - Talentos Fantasma (para atualizar o projeto)\nid | nome | Pokémon que dropa | usado em\n'+ITEMS.map(it=>it.id+' | '+nm(it.id)+(noName(it.id)?' (provisório)':'')+' | '+(pokeOf(it.id)==='ALL'?'Todos os Fantasma':pokeOf(it.id)||'(a definir)')+' | '+useTxt(it.id)).join('\n');}
-function helpHtml(){return '<div class="shh"><div><b id="shT">Como funciona</b></div>'+closeBtn+'</div><ul class="help"><li><b>Balance</b>: quanto você tem agora de cada item. Aceita 2622, +500 (soma), -200 (tira) e 10k.</li><li>Cada talento custa vários itens. Toque em cada item do talento para marcar a entrega (dá para entregar 1 de 3, por exemplo). Quando todos estão entregues, o talento fica concluído.</li><li><b>Falta</b> de um item = partes ainda não entregues, nos tiers do total, menos o Balance. O Balance cobre na ordem do jogo: T1 a T4, de cima para baixo.</li><li><b>Foco agora</b> = primeiro item da ordem de farm com falta; <b>Próximo</b> = o seguinte. Itens Passivo ficam no fim da fila.</li><li><b>Nomes dos itens</b> (menu ⋯): mostra o ícone de cada item para você escrever o nome e o Pokémon que dropa.</li><li><b>De onde vem cada item</b>: em cada talento, ao lado do item aparece o Pokémon que dropa (todos Fantasma = qualquer Pokémon do tipo Fantasma). Itens sem Pokémon definido podem ser editados na ficha do item.</li><li><b>Bônus</b>: soma dos talentos concluídos em tiers liberados, mais +1% de dano e +1% de defesa por tier liberado (T2 a T4).</li><li>Marcar uma entrega não mexe no Balance. Se os itens já saíram do jogo, use “Descontar do Balance” no aviso.</li><li>No Claude os dados sincronizam sozinhos entre PC e celular. Na página do GitHub ficam salvos no navegador: use “Copiar link com meus dados” para levar a outro aparelho.</li></ul>';}
+function helpHtml(){return '<div class="shh"><div><b id="shT">Como funciona</b></div>'+closeBtn+'</div><ul class="help">'
++'<li><b>Balance</b>: quanto você tem agora de cada item. Aceita 2622, +500 (soma), -200 (tira), 10k e 2kk.</li>'
++'<li><b>Registrar loot</b>: lance o que dropou (soma) ou o total que tem. Cada lançamento vai para o histórico, que calcula o seu ritmo dos últimos 7 dias e a <b>previsão em dias</b>.</li>'
++'<li><b>Entregar</b>: toque no item do talento. A página marca a entrega e desconta do Balance; no aviso há “Não descontar”. Se o Balance não cobre, ela pergunta quanto você tem no jogo. Tocar de novo desmarca e devolve ao Balance.</li>'
++'<li><b>Tiers em sequência</b>: um tier só libera com o anterior 100% concluído e o pagamento (T2: 50.000.000; T3: 200.000.000; T4: 400.000.000 e nível 550). Em tier travado não dá para entregar; os itens ficam guardados no Balance.</li>'
++'<li><b>Guardando para</b>: os tiers para os quais você está juntando itens. A falta e o progresso contam só esses tiers.</li>'
++'<li>Sem ordem dentro do tier: o Balance cobre primeiro os talentos mais perto de fechar.</li>'
++'<li><b>Foco agora</b>: o primeiro item da <b>Ordem de farm</b> que falta para fechar o tier atual; depois, o que falta nos outros tiers de Guardando para. Passivos ficam no fim.</li>'
++'<li><b>Quase lá</b>: talentos dos tiers liberados com tudo o que ainda falta para fechar.</li>'
++'<li><b>Bônus</b>: talentos concluídos em tiers liberados, mais +1% de dano e +1% de defesa por tier liberado (T2 a T4).</li>'
++'<li><b>Desfazer última alteração</b> (menu ⋯) volta um passo de cada vez.</li>'
++'<li>No Claude os dados sincronizam sozinhos entre PC e celular. Na página do GitHub ficam salvos no navegador: use “Copiar link com meus dados” para levar a outro aparelho.</li></ul>';}
 function renderSheet(R,keep){
   const el=$('sheet');
   if(!ui.sheet){el.hidden=true;el.innerHTML='';document.body.classList.remove('lock');return;}
@@ -587,6 +764,9 @@ function renderSheet(R,keep){
   else if(ui.sheet.type==='restore')h+='<div class="shh"><div><b id="shT">Restaurar backup</b><div class="pk">Cole o texto copiado em “Copiar backup”.</div></div>'+closeBtn+'</div><textarea class="ta" id="rsTa" aria-label="Backup"></textarea><div class="fact"><button type="button" class="btn pri" data-act="rsgo">Restaurar</button></div>';
   else if(ui.sheet.type==='help')h+=helpHtml();
   else if(ui.sheet.type==='names')h+=namesSheet();
+  else if(ui.sheet.type==='loot')h+=lootSheet(R);
+  else if(ui.sheet.type==='ordem')h+=ordemSheet(R);
+  else if(ui.sheet.type==='deliver')h+=deliverSheet();
   el.innerHTML=h+'</div>';el.dataset.type=ui.sheet.type;el.hidden=false;document.body.classList.add('lock');
 }
 function patchSheet(R){
@@ -603,9 +783,9 @@ function renderTabbar(R){
 function parseQty(raw,cur){
   const s=String(raw).trim().toLowerCase().replace(/\s+/g,'');
   if(s==='')return 0;
-  const m=s.match(/^([+-]?)(\d[\d.,]*)(k|mil)?$/);if(!m)return null;
+  const m=s.match(/^([+-]?)(\d[\d.,]*)(kkk|kk|k|mil|mi|m|bi|b)?$/);if(!m)return null;
   let v;
-  if(m[3]){const t=m[2].replace(/,/g,'.');v=(t.split('.').length===2?parseFloat(t):parseFloat(t.replace(/\./g,'')))*1000;}
+  if(m[3]){const t=m[2].replace(/,/g,'.'),mu={k:1e3,mil:1e3,kk:1e6,mi:1e6,m:1e6,kkk:1e9,b:1e9,bi:1e9}[m[3]];v=(t.split('.').length===2?parseFloat(t):parseFloat(t.replace(/\./g,'')))*mu;}
   else v=parseFloat(m[2].replace(/[.,]/g,''));
   if(!Number.isFinite(v))return null;v=Math.round(v);
   return m[1]==='+'?cur+v:m[1]==='-'?Math.max(0,cur-v):v;
@@ -638,7 +818,10 @@ async function flush(){
     else{dirty=true;status('Não salvou'+(c?' ('+c+')':''),'bad');}}
   finally{saving=false;if(dirty&&!retried)flush();}
 }
-function commit(){save();schedule();}
+let undoStack=[],prevJ=null;
+function baseSnap(){prevJ=JSON.stringify(S);}
+function commit(){const j=JSON.stringify(S);if(prevJ!==null&&prevJ!==j){undoStack.push(prevJ);if(undoStack.length>30)undoStack.shift();}prevJ=j;save();schedule();}
+function undoLast(){if(ro())return;const j=undoStack.pop();if(!j){toast('Nada para desfazer.');return;}S=norm(JSON.parse(j));prevJ=JSON.stringify(S);ui.sheet=null;save();schedule();toast('Última alteração desfeita.');}
 
 function discount(map,what){
   const prev={};for(const [k,q] of Object.entries(map)){prev[k]=S.balance[k]||0;setBal(k,prev[k]-q);}
@@ -646,58 +829,91 @@ function discount(map,what){
 }
 function giveBack(map,what){for(const [k,q] of Object.entries(map))setBal(k,(S.balance[k]||0)+q);commit();toast('Devolvido ao Balance: '+what+'.');}
 const listOf=map=>Object.entries(map).map(([k,q])=>nf(q)+' '+shortNm(k)).join(' + ');
-function setPart(tid,item,on){const p=S.parts[tid]||(S.parts[tid]={});if(on)p[item]=true;else delete p[item];if(!Object.keys(p).length)delete S.parts[tid];}
+function setPart(tid,item,on,disc){const p=S.parts[tid]||(S.parts[tid]={});if(on)p[item]=disc?2:true;else delete p[item];if(!Object.keys(p).length)delete S.parts[tid];}
+function lockMsg(t){toast('O T'+t.t+' está travado: libere o tier antes de entregar.');}
+function deliver(t,map,noDisc){
+  for(const k in map)setPart(t.id,k,true,!noDisc);
+  if(!noDisc)for(const [k,q] of Object.entries(map)){setBal(k,(S.balance[k]||0)-q);S.upd[k]=today();}
+  commit();
+  const full=Object.keys(t.c).every(k=>S.parts[t.id]&&S.parts[t.id][k]),n=Object.keys(map).length;
+  toast(tn(t)+': '+listOf(map)+' entregue'+(n>1?'s':'')+(noDisc?' (sem descontar).':' e descontado'+(n>1?'s':'')+' do Balance.')+(full?' Talento concluído (+'+t.v+'% '+BON[t.cat][0]+').':''),
+    noDisc?[]:[{label:'Não descontar',fn:()=>{for(const [k,q] of Object.entries(map)){setBal(k,(S.balance[k]||0)+q);if(S.parts[t.id]&&S.parts[t.id][k])S.parts[t.id][k]=true;}commit();toast('Balance mantido.');}}]);
+}
+function openDeliver(tid,items){ui.sheet={type:'deliver',tid,items};$('sheet').dataset.type='';$('menu').hidden=true;render();setTimeout(()=>{const el=document.querySelector('#sheet [data-dlv]');if(el){el.focus();try{el.select();}catch(e){}}},0);}
 function togglePart(tid,item){
-  const t=TX[tid];if(!t||!t.c[item]||ro())return;
-  const on=!(S.parts[tid]&&S.parts[tid][item]),map={[item]:t.c[item]};
-  setPart(tid,item,on);commit();
-  const full=Object.keys(t.c).every(k=>S.parts[tid]&&S.parts[tid][k]);
-  if(on)toast(tn(t)+': '+listOf(map)+' entregue.'+(full?' Talento concluído.':''),[{label:'Descontar do Balance',fn:()=>discount(map,listOf(map))}]);
-  else toast(tn(t)+': entrega de '+shortNm(item)+' desmarcada.',[{label:'Devolver ao Balance',fn:()=>giveBack(map,listOf(map))}]);
+  const t=TX[tid];if(!t||!t.c[item]||ro())return;const q=t.c[item];
+  const on=!(S.parts[tid]&&S.parts[tid][item]);
+  if(on){if(compute().tal[tid].lock){lockMsg(t);return;}
+    if((S.balance[item]||0)<q){openDeliver(tid,[item]);return;}
+    deliver(t,{[item]:q});return;}
+  const was=S.parts[tid][item];setPart(tid,item,false);
+  if(was===2){setBal(item,(S.balance[item]||0)+q);S.upd[item]=today();commit();
+    toast(tn(t)+': entrega de '+shortNm(item)+' desmarcada; '+nf(q)+' devolvidos ao Balance.',[{label:'Não devolver',fn:()=>{setBal(item,(S.balance[item]||0)-q);commit();}}]);}
+  else{commit();toast(tn(t)+': entrega de '+shortNm(item)+' desmarcada. Ela não tinha sido descontada, então o Balance não mudou.',[{label:'Devolver ao Balance',fn:()=>{setBal(item,(S.balance[item]||0)+q);commit();}}]);}
 }
 function completeTalent(tid){
-  const t=TX[tid];if(!t||ro())return;const map={};
-  for(const [k,q] of Object.entries(t.c))if(!(S.parts[tid]&&S.parts[tid][k])){map[k]=q;setPart(tid,k,true);}
-  commit();
-  if(Object.keys(map).length)toast(tn(t)+' concluído (+'+t.v+'% '+BON[t.cat][0]+').',[{label:'Descontar do Balance',fn:()=>discount(map,listOf(map))}]);
+  const t=TX[tid];if(!t||ro())return;if(compute().tal[tid].lock){lockMsg(t);return;}
+  const map={};for(const [k,q] of Object.entries(t.c))if(!(S.parts[tid]&&S.parts[tid][k]))map[k]=q;
+  if(!Object.keys(map).length)return;
+  if(Object.keys(map).some(k=>(S.balance[k]||0)<map[k])){openDeliver(tid,Object.keys(map));return;}
+  deliver(t,map);
 }
 function undoTalent(tid){
-  const t=TX[tid];if(!t||ro())return;const map={};
-  for(const [k,q] of Object.entries(t.c))if(S.parts[tid]&&S.parts[tid][k])map[k]=q;
-  delete S.parts[tid];commit();
-  toast(tn(t)+' desmarcado.',[{label:'Devolver ao Balance',fn:()=>giveBack(map,listOf(map))}]);
+  const t=TX[tid];if(!t||ro())return;const back={},rest={};
+  for(const [k,q] of Object.entries(t.c))if(S.parts[tid]&&S.parts[tid][k])(S.parts[tid][k]===2?back:rest)[k]=q;
+  delete S.parts[tid];for(const [k,q] of Object.entries(back))setBal(k,(S.balance[k]||0)+q);commit();
+  const nb=Object.keys(back).length,nr=Object.keys(rest).length,acts=[];
+  if(nb)acts.push({label:'Não devolver',fn:()=>{for(const [k,q] of Object.entries(back))setBal(k,(S.balance[k]||0)-q);commit();}});
+  if(nr)acts.push({label:'Devolver '+(nb?'o resto':'ao Balance'),fn:()=>{for(const [k,q] of Object.entries(rest))setBal(k,(S.balance[k]||0)+q);commit();}});
+  toast(tn(t)+' desmarcado.'+(nb?' Devolvido ao Balance: '+listOf(back)+'.':'')+(nr?' Sem desconto antes, então não devolvido: '+listOf(rest)+'.':''),acts);
 }
 let confirmT=null;
 function tierAll(T){
-  if(ro())return;
+  if(ro())return;if(!compute().unl.has(T)){toast('O T'+T+' está travado.');return;}
   if(ui.confirmTier!==T){ui.confirmTier=T;render();clearTimeout(confirmT);confirmT=setTimeout(()=>{ui.confirmTier=0;render();},5000);return;}
   ui.confirmTier=0;clearTimeout(confirmT);let n=0;
   for(const t of TAL.filter(x=>x.t===T)){for(const k of Object.keys(t.c)){if(!(S.parts[t.id]&&S.parts[t.id][k])){setPart(t.id,k,true);}}n++;}
-  commit();toast('Tier '+T+': todos os '+n+' talentos marcados como concluídos.');
+  commit();toast('Tier '+T+': todos os '+n+' talentos marcados como concluídos, sem descontar do Balance.');
 }
-function toggleUnl(T){if(T===1||ro())return;S.unlocked=S.unlocked.includes(T)?S.unlocked.filter(x=>x!==T):[...S.unlocked,T].sort();commit();}
+function toggleUnl(T){
+  if(T===1||ro())return;const R=compute();
+  if(R.unl.has(T)){
+    if(TAL.some(t=>t.t>=T&&S.parts[t.id])||S.unlocked.some(x=>x>T)){toast('O T'+T+' continua liberado: há entregas ou liberação nele ou acima.');return;}
+    if(!S.unlocked.includes(T))return;
+    S.unlocked=S.unlocked.filter(x=>x!==T);commit();toast('Liberação do T'+T+' desfeita.');return;}
+  const pv=R.tstat[T-1];
+  if(!R.unl.has(T-1)||pv.done<pv.n){toast('Para liberar o T'+T+', o T'+(T-1)+' precisa estar 100% concluído ('+pv.done+' de '+pv.n+').');return;}
+  S.unlocked=[...new Set([...S.unlocked,T])].sort();const u=UNL[T];
+  if((S.money||0)>=u.m){S.money-=u.m;commit();toast('T'+T+' liberado. '+nf(u.m)+' descontados do dinheiro.',[{label:'Não descontar',fn:()=>{S.money=(S.money||0)+u.m;commit();}}]);}
+  else{commit();toast('T'+T+' liberado.');}
+}
 function setTab(k){if(!['resumo','itens','talentos','bonus'].includes(k))k='resumo';ui.tab=k;try{history.replaceState(null,'','#'+k);}catch(e){}render();if(!isDesk())window.scrollTo(0,0);}
 function openItem(id){if(!ITEMS[IX[id]])return;ui.sheet={type:'item',id};$('menu').hidden=true;render();if(isDesk()){const el=$('sh-bal');if(el){el.focus();try{el.select();}catch(e){}}}}
 function closeSheet(){ui.sheet=null;edit=null;render();}
+function goTal(tid){const t=TX[tid];if(!t)return;ui.ttab=t.t;if(compute().tal[tid].complete)ui.tfil='todos';setTab('talentos');setTimeout(()=>{const el=$('tc-'+tid);if(el){el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1600);}},30);}
 function sheetAdd(){const el=$('sh-add');if(!el||!ui.sheet||ui.sheet.type!=='item')return;const v=parseQty(el.value.replace(/^\+/,''),0);
-  if(!v){el.classList.add('bad');return;}const id=ui.sheet.id;setBal(id,(S.balance[id]||0)+v);commit();toast('Somado: +'+nf(v)+' '+shortNm(id)+'.');}
+  if(!v){el.classList.add('bad');return;}const id=ui.sheet.id;setBal(id,(S.balance[id]||0)+v);logDelta(id,v);commit();toast('Somado: +'+nf(v)+' '+shortNm(id)+'.');}
 
 const enc=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 const dec=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(decodeURIComponent(escape(atob(s))));};
 function linkWithData(){const here=location.href.split('#')[0];const base=mode==='local'&&/^https?:/.test(here)?here:PAGES;return base+'#importar='+enc(S);}
 function aiText(){
-  const R=compute(),L=[],unl=[1,...S.unlocked];
+  const R=compute(),L=[],unl=[...R.unl].sort();
   L.push('TALENTOS FANTASMA - ACOMPANHAMENTO DE MATERIAIS');
   L.push('Estado em '+new Date().toLocaleString('pt-BR')+'. Responda sempre em português do Brasil.');
   L.push('');
   L.push('COMO FUNCIONA');
   L.push('- 4 tiers (T1 10, T2 12, T3 17, T4 10 talentos). Cada talento custa vários itens e cada item pode ser entregue separadamente; o talento fica concluído quando todos os itens foram entregues.');
-  L.push('- Balance = quanto o usuário tem de cada item agora.');
-  L.push('- Falta por item = partes não entregues, nos tiers do total, menos o Balance. O Balance cobre as partes na ordem do jogo (T1 a T4, de cima para baixo).');
-  L.push('- Foco agora = primeiro item da ordem de farm com falta (Passivo por último); Próximo = o seguinte.');
+  L.push('- Balance = quanto o usuário tem de cada item agora. Entregar um item desconta do Balance; cada entrega é sempre a quantidade inteira.');
+  L.push('- Tiers em sequência: o tier N só libera com o tier N-1 100% concluído e pagamento (T2 50.000.000; T3 200.000.000; T4 400.000.000 e nível 550). Em tier travado não dá para entregar; os itens ficam guardados no Balance.');
+  L.push('- Guardando para = tiers para os quais o usuário junta itens. Falta por item = partes não entregues nesses tiers menos o Balance. Dentro de um tier não há ordem obrigatória: o Balance cobre primeiro os talentos mais perto de fechar.');
+  L.push('- Foco agora = primeiro item da ordem de farm que falta para fechar o tier atual; depois os outros tiers de Guardando para. Passivo por último.');
+  L.push('- Previsão = falta dividida pelo ritmo médio de drop dos últimos 7 dias registrados.');
   L.push('- Bônus ativo = talento concluído em tier liberado. Cada tier liberado (T2 a T4) dá +1% de dano e +1% de defesa Fantasma.');
   L.push('');
-  L.push('TIERS NO TOTAL: '+S.tiers.map(t=>'T'+t).join(', ')+' | TIERS LIBERADOS: '+unl.map(t=>'T'+t).join(', '));
+  L.push('GUARDANDO PARA: '+S.tiers.map(t=>'T'+t).join(', ')+' | TIERS LIBERADOS: '+unl.map(t=>'T'+t).join(', ')+' | Dinheiro: '+nf(S.money||0)+' | Nível: '+(S.level||'não informado'));
+  if(R.obj)L.push('Para fechar o T'+R.obj.t+': '+(R.obj.items.length?R.obj.items.map(x=>nf(x.miss)+' '+nm(x.id)+(x.eta>0?' ('+etaTxt(x.eta)+')':'')).join(', '):'tudo no Balance, falta entregar'));
+  if(R.RI)L.push('Ritmo (média de '+R.RI.span+' dia(s)): '+Object.entries(R.RI.rate).map(([k,v])=>nm(k)+' ~'+nf(v)+'/dia').join(', '));
   if(R.focus)L.push('Foco agora: '+label(R.focus)+' - falta '+nf(R.byId[R.focus].miss));
   if(R.next)L.push('Próximo: '+label(R.next)+' - falta '+nf(R.byId[R.next].miss));
   L.push('Progresso do farm: '+Math.round(R.overall*100)+'% | '+R.complete+' de '+R.rows.length+' itens completos | '+TAL.filter(t=>R.tal[t.id].complete).length+' de '+TAL.length+' talentos concluídos');
@@ -709,7 +925,7 @@ function aiText(){
   for(const k of Object.keys(BON)){const b=R.bon[k];L.push('- '+BON[k][0]+': +'+b.on+'% de +'+b.max+'%'+(b.pend?' (+'+b.pend+'% concluído aguardando liberar tier)':''));}
   L.push('');
   L.push('TALENTOS');
-  for(const T of [1,2,3,4]){const z=R.tstat[T];L.push('Tier '+T+': '+z.done+' de '+z.n+' concluídos'+(unl.includes(T)?' (liberado)':' (bloqueado)')+(S.tiers.includes(T)?'':' (fora do total)'));
+  for(const T of [1,2,3,4]){const z=R.tstat[T];L.push('Tier '+T+': '+z.done+' de '+z.n+' concluídos'+(unl.includes(T)?' (liberado)':' (travado)')+(S.tiers.includes(T)?'':' (fora de Guardando para)'));
     for(const t of TAL.filter(x=>x.t===T)){const s=R.tal[t.id];L.push('  '+tn(t)+' ['+STL[s.status][0]+'] +'+t.v+'% '+BON[t.cat][0]+(t.l?' (nível '+t.l+')':'')+' | '+s.parts.map(p=>nf(p.q)+' '+nm(p.id)+(p.done?' (entregue)':p.miss?' (falta '+nf(p.miss)+')':' (coberto pelo Balance)')).join(' + '));}}
   return L.join('\n');
 }
@@ -728,7 +944,7 @@ document.addEventListener('click',e=>{
   if(a==='menu'){menu.hidden=!menu.hidden;return;}
   if(a==='tema'){applyTema(isDark()?'claro':'escuro');return;}
   if(a==='tema-set'){applyTema(el.dataset.v);return;}
-  if(['ia','bk','rs','link','help'].includes(a))menu.hidden=true;
+  if(['ia','bk','rs','link','help','loot','ordem','undo'].includes(a))menu.hidden=true;
   switch(a){
     case 'tier':{if(ro())return;const t=+el.dataset.t;if(S.tiers.includes(t)){if(S.tiers.length===1){toast('Deixe pelo menos um tier no total.');return;}S.tiers=S.tiers.filter(x=>x!==t);}else S.tiers=[...S.tiers,t].sort();commit();break;}
     case 'tab':setTab(el.dataset.v);break;
@@ -743,7 +959,18 @@ document.addEventListener('click',e=>{
     case 'tundo':undoTalent(el.dataset.tid);break;
     case 'tierall':tierAll(+el.dataset.t);break;
     case 'unl':toggleUnl(+el.dataset.t);break;
-    case 'add':if(!ro()){const id=el.dataset.item;setBal(id,(S.balance[id]||0)+Number(el.dataset.v));commit();}break;
+    case 'add':if(!ro()){const id=el.dataset.item,cur=S.balance[id]||0;setBal(id,cur+Number(el.dataset.v));logDelta(id,(S.balance[id]||0)-cur);commit();}break;
+    case 'loot':if(ro())return;ui.sheet={type:'loot'};$('sheet').dataset.type='';render();setTimeout(()=>{if(isDesk()){const x=document.querySelector('#sheet [data-loot]');if(x)x.focus();}},0);break;
+    case 'lootmode':{ui.lootMode=el.dataset.v;const dr=ui.lootMode!=='total';document.querySelectorAll('#sheet [data-act=lootmode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===ui.lootMode)));document.querySelectorAll('#sheet [data-loot]').forEach(x=>{x.placeholder=dr?'+0':nf(Number(x.dataset.bal0)||0);});break;}
+    case 'lootall':{const v=lootVals();ui.lootAll=!ui.lootAll;rerenderSheet(()=>{for(const k in v){const x=document.querySelector('#sheet [data-loot="'+k+'"]');if(x)x.value=v[k];}});break;}
+    case 'lootgo':lootGo();break;
+    case 'ordem':ui.sheet={type:'ordem'};$('sheet').dataset.type='';render();break;
+    case 'ordmv':ordMove(el.dataset.item,+el.dataset.v);break;
+    case 'ordp':ordPassive(el.dataset.item);break;
+    case 'dlvgo':dlvGo(false);break;
+    case 'dlvno':dlvGo(true);break;
+    case 'tgo':goTal(el.dataset.tid);break;
+    case 'undo':undoLast();break;
     case 'addv':sheetAdd();break;
     case 'ia':copyText(aiText(),'Texto para IA');break;
     case 'bk':copyText(JSON.stringify({app:'talentos-fantasma',v:2,salvoEm:new Date().toISOString(),estado:S}),'Backup');break;
@@ -774,7 +1001,9 @@ document.addEventListener('input',e=>{const el=e.target;
 document.addEventListener('change',e=>{const el=e.target;if(!(el instanceof HTMLInputElement)||ro())return;
   if(el.dataset.bal){const id=el.dataset.bal,base=edit&&edit.k===el.dataset.k?edit.base:(S.balance[id]||0),v=parseQty(el.value,base);edit=null;
     if(v===null){toast('Valor inválido. Use 2622, +500, -200 ou 10k.');render();return;}
-    setBal(id,v);commit();}
+    setBal(id,v);logDelta(id,v-base);commit();}
+  else if(el.dataset.money){const v=parseQty(el.value,S.money||0);if(v===null){toast('Valor inválido. Ex.: 150000000, 150kk ou +5kk.');render();return;}S.money=Math.min(v,1e13);commit();}
+  else if(el.dataset.level){const v=parseInt(el.value.replace(/\D/g,''),10);S.level=Number.isFinite(v)?Math.min(v,9999):0;commit();}
   else if(el.dataset.ord){const id=el.dataset.ord,s=el.value.trim().toLowerCase();S.items[id]=Object.assign({},S.items[id]);
     if(s==='p'||s==='passivo')S.items[id].order='P';else if(/^\d{1,3}$/.test(s)&&+s>=1)S.items[id].order=+s;else if(s==='')delete S.items[id].order;
     else{toast('Use um número (1, 2, 3…) ou a palavra Passivo.');render();return;}
@@ -797,7 +1026,7 @@ window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(['re
 function goLocal(msg){
   mode='local';let x=null;
   try{x=JSON.parse(localStorage.getItem(KEY)||'null')||JSON.parse(localStorage.getItem(OLDKEY)||'null');}catch(e){}
-  S=norm(x);
+  S=norm(x);baseSnap();
   if(location.hash.startsWith('#importar=')){try{ui.importData=norm(dec(location.hash.slice(10)));}catch(e){toast('O link de dados está incompleto ou corrompido.');}}
   render();status(msg||'Salvo neste aparelho','w');
 }
@@ -815,8 +1044,8 @@ async function init(){
     clearTimeout(timer);
     if(snap.metadata&&snap.metadata.hasPendingWrites)return;
     const first=mode==='loading';mode='db';
-    if(snap.exists){const n=norm(snap.data());if(first||JSON.stringify(n)!==JSON.stringify(S)){S=n;renderSafe();}}
-    else if(first){S=blank();renderSafe();toast('Ainda não há dados salvos. Comece pelo Balance de cada item.');}
+    if(snap.exists){const n=norm(snap.data());if(first||JSON.stringify(n)!==JSON.stringify(S)){S=n;baseSnap();renderSafe();}}
+    else if(first){S=blank();baseSnap();renderSafe();toast('Ainda não há dados salvos. Comece pelo Balance de cada item.');}
     if(!canWrite)status('Somente leitura','w');
     else if(snap.metadata&&snap.metadata.fromCache)status('Sincronizando…','w');
     else if(!dirty&&!saving)status('Salvo na nuvem','ok');

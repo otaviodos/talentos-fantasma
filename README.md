@@ -8,6 +8,9 @@ Página para acompanhar o farm dos talentos do tipo Fantasma (Tiers 1 a 4).
 - **Bônus liberados:** soma dos talentos concluídos nos tiers liberados, mais +1% de dano e +1% de defesa por tier liberado.
 - **De onde vem cada item:** cada item mostra o ícone do jogo e o Pokémon que dropa ("todos Fantasma" = qualquer Pokémon do tipo Fantasma).
 - **Nomes dos itens** (menu ⋯): tela com o ícone de cada item para preencher o nome e o Pokémon que dropa.
+- **Registrar loot e previsão:** lance o que dropou (ou o total que tem); o histórico gera o ritmo dos últimos 7 dias e a previsão em dias.
+- **Tiers em sequência:** cada tier libera com o anterior 100% concluído e o pagamento (T2 50.000.000, T3 200.000.000, T4 400.000.000 e nível 550). Entregar no talento desconta do Balance.
+- **Ordem de farm:** lista para ordenar os itens; o Foco segue essa ordem, começando pelo que falta para fechar o tier atual.
 - **Tema escuro:** botão de sol/lua no topo; no menu ⋯ dá para escolher Auto, Claro ou Escuro.
 
 No celular funciona como um app (abas embaixo; dá para adicionar à tela inicial). No desktop mostra tudo de uma vez.
