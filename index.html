@@ -440,6 +440,7 @@ const ITEMS=[
 {id:'hat',name:'Primal Witch Hat',poke:'Mismagius',order:8},
 {id:'ge',name:'Ghost Essence',poke:'ALL',order:'P'},
 {id:'orb',name:'Mythic Ghost Orb',poke:'ALL',order:'P'},
+{id:'corb',name:'Celestial Ghost Orb',poke:'',order:'P'},
 {id:'t1a',name:'Ghost Bottle',poke:'Gastly',order:11},
 {id:'t1b',name:'Simple Ghost Orb',poke:'Shiny Gastly',order:12},
 {id:'t1c',name:'Green Ghost Bottle',poke:'Shiny Gastly',order:13},
@@ -461,12 +462,12 @@ const DN3='Golpes do tipo Fantasma causam 3% mais dano.',DN5='Golpes do tipo Fan
 const CAP='Aumenta a chance de capturar Pokémon do tipo Fantasma em 2%.',MOON='Moon Balls: chance de capturar Pokémon do tipo Fantasma aumentada em 2%.',CRIT='Aumenta a chance de captura crítica de Pokémon do tipo Fantasma em 2%.',SH4='Derrotar Pokémon do tipo Fantasma aumenta em 4% a chance de seu respawn ser shiny.',SH2='Derrotar Pokémon do tipo Fantasma aumenta em 2% a chance de seu respawn ser shiny.';
 const CC=p=>'Contra Pokémon do tipo Fantasma, aumenta a chance crítica em '+p+'%.',CD=p=>'Contra Pokémon do tipo Fantasma, aumenta o dano crítico em '+p+'%.',PR=p=>'Golpes do tipo Fantasma ganham '+p+'% de precisão contra evasão.',EV=p=>'Contra golpes do tipo Fantasma, seus Pokémon ganham '+p+'% de evasão.',RC='Contra golpes do tipo Fantasma, seus Pokémon ganham 5% de resistência crítica.';
 const MER='Tipo Fantasma: bolas contam +5% só no Sistema de Mérito. Não altera mínimo, outros bônus ou gasto. Sem Premier/Alliance.',PRE='Premier Balls: chance de capturar Pokémon do tipo Fantasma aumentada em 5%.',ALI='Alliance Balls: chance de capturar Pokémon do tipo Fantasma aumentada em 5%.',MM='Pokémon do tipo Fantasma soltam mega stones míticas seladas 25% mais vezes.',ML='Pokémon do tipo Fantasma soltam mega stones lendárias seladas 10% mais vezes.';
-const c2=p=>({ge:2000,[p]:5000,orb:3}),c3=p=>({ge:3000,hat:3500,[p]:3500,orb:6}),c4=p=>({ge:5000,t4p:5000,[p]:5000,orb:3});
+const c2=p=>({ge:2000,[p]:5000,orb:3}),c3=p=>({ge:3000,hat:3500,[p]:3500,orb:6}),c4=p=>({ge:5000,t4p:5000,[p]:5000,corb:3});
 const RAW=[
 [1,DN3,{t1a:50},'dano',3],[1,DF3,{t1a:50},'defesa',3],[1,DN5,{t1b:5,t1c:3},'dano',5],[1,DF5,{t1b:5,t1c:3},'defesa',5],[1,DN5,{orb:3,t1e:3,t1f:120},'dano',5],[1,DF5,{orb:3,t1e:3,t1f:120},'defesa',5],[1,DN5,{orb:3,t1e:3,t1f:500,hat:750,t4p:1000},'dano',5,350],[1,DN3,{orb:3,t1e:3,t1f:120},'dano',3],[1,DN3,{orb:2,ge:100,t1g:500},'dano',3],[1,DN5,{orb:3,ge:500,t1h:10000},'dano',5,350],
 [2,CAP,c2('bc'),'cap',2],[2,CAP,c2('ds'),'cap',2],[2,CAP,c2('ce'),'cap',2],[2,MOON,c2('halo'),'moon',2],[2,MOON,c2('hands'),'moon',2],[2,MOON,c2('mimi'),'moon',2],[2,CRIT,c2('miss'),'crit',2],[2,CRIT,c2('bc'),'crit',2],[2,CRIT,c2('ds'),'crit',2],[2,SH4,c2('ce'),'shiny',4],[2,SH4,c2('halo'),'shiny',4],[2,SH2,c2('hands'),'shiny',2],
 [3,CC(3),c3('mimi'),'cc',3],[3,CC(2),c3('miss'),'cc',2],[3,CD(3),c3('bc'),'cd',3],[3,CD(3),c3('ds'),'cd',3],[3,CD(4),c3('ce'),'cd',4],[3,PR(2),c3('halo'),'prec',2],[3,PR(2),c3('hands'),'prec',2],[3,PR(1),c3('mimi'),'prec',1],[3,EV(2),c3('miss'),'eva',2],[3,EV(2),c3('bc'),'eva',2],[3,EV(1),c3('ds'),'eva',1],[3,RC,c3('ce'),'resc',5],[3,RC,c3('halo'),'resc',5],[3,RC,c3('hands'),'resc',5],[3,RC,c3('mimi'),'resc',5],[3,RC,c3('miss'),'resc',5],[3,RC,c3('bc'),'resc',5],
-[4,MER,c4('ds'),'mer',5],[4,MER,c4('ce'),'mer',5],[4,PRE,c4('halo'),'pre',5],[4,PRE,c4('hands'),'pre',5],[4,ALI,c4('mimi'),'ali',5],[4,ALI,c4('miss'),'ali',5],[4,MM,{ge:5000,ms1:3,ms2:2,orb:3},'mm',25],[4,MM,{ge:5000,ms3:5,orb:3},'mm',25],[4,ML,{ge:5000,ms1:2,ms2:3,orb:3},'ml',10],[4,ML,{ge:5000,ms1:3,ms2:2,orb:3},'ml',10]];
+[4,MER,c4('ds'),'mer',5],[4,MER,c4('ce'),'mer',5],[4,PRE,c4('halo'),'pre',5],[4,PRE,c4('hands'),'pre',5],[4,ALI,c4('mimi'),'ali',5],[4,ALI,c4('miss'),'ali',5],[4,MM,{ge:5000,ms1:3,ms2:2,corb:3},'mm',25],[4,MM,{ge:5000,ms3:5,corb:3},'mm',25],[4,ML,{ge:5000,ms1:2,ms2:3,corb:3},'ml',10],[4,ML,{ge:5000,ms1:3,ms2:2,corb:3},'ml',10]];
 const TAL=[],TX={},cnt={};
 RAW.forEach(([t,x,c,cat,v,l])=>{cnt[t]=(cnt[t]||0)+1;const o={id:'t'+t+'-'+String(cnt[t]).padStart(2,'0'),t,n:cnt[t],x,c,cat,v,l:l||0,i:TAL.length};TAL.push(o);TX[o.id]=o;});
 const PAGES='https://otaviodos.github.io/talentos-fantasma/';
@@ -805,7 +806,7 @@ function itemSheet(R){
 }
 function lootSheet(R){
   const drop=ui.lootMode!=='total';
-  const all=(ui.lootAll?ITEMS.map(i=>i.id):R.rows.filter(actv).map(r=>r.id)).sort((a,b)=>okey(a)-okey(b)),pas=ITEMS.filter(i=>ordOf(i.id)==='P').map(i=>i.id).sort((a,b)=>okey(a)-okey(b)),ids=all.filter(id=>!pas.includes(id));
+  const all=(ui.lootAll?ITEMS.map(i=>i.id):R.rows.filter(actv).map(r=>r.id)).sort((a,b)=>okey(a)-okey(b)),pas=ITEMS.filter(i=>ordOf(i.id)==='P'&&(ui.lootAll||R.byId[i.id])).map(i=>i.id).sort((a,b)=>okey(a)-okey(b)),ids=all.filter(id=>!pas.includes(id));
   const lrow=(id,rq)=>{const b=S.balance[id]||0;return '<label class="lrow'+(rq?' lreq':'')+'">'+ico(id,32)+'<span class="lnm"><b>'+esc(shortNm(id))+'</b><small>'+(dropShort(id)?esc(dropShort(id))+' · ':'')+'tem '+nf(b)+'</small></span><input type="text" inputmode="numeric" enterkeyhint="next" autocomplete="off" data-loot="'+id+'"'+(rq?' data-pas="1"':'')+' data-k="loot-'+id+'" data-bal0="'+b+'" placeholder="'+(drop?'+0':nf(b))+'" aria-label="'+esc(nm(id))+'"'+(rq?' required':'')+'></label>';};
   return '<div class="shh"><div><b id="shT">Registrar loot</b><div class="pk">Preencha só os itens que mudaram. Vai para o Balance e para o histórico da previsão.</div></div>'+closeBtn+'</div>'
   +'<div class="ph" style="margin:0"><span class="seg" role="group" aria-label="Como lançar"><button type="button" data-act="lootmode" data-v="drop" aria-pressed="'+drop+'">Dropei (soma)</button><button type="button" data-act="lootmode" data-v="total" aria-pressed="'+!drop+'">Tenho (total)</button></span></div>'
