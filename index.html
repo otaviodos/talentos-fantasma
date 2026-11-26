@@ -817,11 +817,11 @@ function itemSheet(R){
 function lootSheet(R){
   const drop=ui.lootMode!=='total';
   const all=(ui.lootAll?ITEMS.map(i=>i.id):R.rows.filter(actv).map(r=>r.id)).sort((a,b)=>okey(a)-okey(b)),pas=ITEMS.filter(i=>ordOf(i.id)==='P'&&(ui.lootAll||R.byId[i.id])).map(i=>i.id).sort((a,b)=>okey(a)-okey(b)),ids=all.filter(id=>!pas.includes(id)),cur=R.focus&&ids.includes(R.focus)?R.focus:null,rest=ids.filter(id=>id!==cur);
-  const lrow=(id,rq)=>{const b=S.balance[id]||0;return '<label class="lrow'+(rq?' lreq':'')+'">'+ico(id,32)+'<span class="lnm"><b>'+esc(shortNm(id))+'</b><small>'+(dropShort(id)?esc(dropShort(id))+' · ':'')+'tem '+nf(b)+'</small></span><input type="text" inputmode="numeric" enterkeyhint="next" autocomplete="off" data-loot="'+id+'"'+(rq?' data-pas="1"':'')+' data-k="loot-'+id+'" data-bal0="'+b+'" placeholder="'+(drop?'+0':nf(b))+'" aria-label="'+esc(nm(id))+'"'+(rq?' required':'')+'></label>';};
+  const lrow=(id,rq)=>{const b=S.balance[id]||0;return '<label class="lrow'+(rq?' lreq':'')+'">'+ico(id,32)+'<span class="lnm"><b>'+esc(shortNm(id))+'</b><small>'+(dropShort(id)?esc(dropShort(id))+' · ':'')+'tem '+nf(b)+'</small></span><input type="text" inputmode="numeric" enterkeyhint="next" autocomplete="off" data-loot="'+id+'"'+(rq?' data-pas="1"':'')+' data-k="loot-'+id+'" data-bal0="'+b+'" placeholder="'+(drop?'+0':nf(b))+'" aria-label="'+esc(nm(id))+'"'+'></label>';};
   return '<div class="shh"><div><b id="shT">Registrar loot</b><div class="pk">Preencha só os itens que mudaram. Vai para o Balance e para o histórico da previsão.</div></div>'+closeBtn+'</div>'
   +'<div class="ph" style="margin:0"><span class="seg" role="group" aria-label="Como lançar"><button type="button" data-act="lootmode" data-v="drop" aria-pressed="'+drop+'">Dropei (soma)</button><button type="button" data-act="lootmode" data-v="total" aria-pressed="'+!drop+'">Tenho (total)</button></span></div>'
   +(cur?'<div class="olbl">FARMANDO AGORA</div><div class="lootlist lnow">'+lrow(cur,false)+'</div>':'')
-  +(pas.length?'<div class="olbl">PASSIVOS · PREENCHA SEMPRE, MESMO QUE SEJA 0</div><div class="lootlist">'+pas.map(id=>lrow(id,true)).join('')+'</div>':'')
+  +(pas.length?'<div class="olbl">PASSIVOS · EM BRANCO CONTA COMO 0</div><div class="lootlist">'+pas.map(id=>lrow(id,true)).join('')+'</div>':'')
   +(rest.length?(cur?'<details class="lmore"'+(ui.lootMore?' open':'')+'><summary>Próximos e outros itens ('+rest.length+')</summary>':'<div class="olbl">ITENS</div>')+'<div class="lootlist">'+rest.map(id=>lrow(id,false)).join('')+'</div>'+(cur?'</details>':''):'')
   +'<div class="fact"><button type="button" class="btn pri" data-act="lootgo"'+(ro()?' disabled':'')+'>Lançar</button><button type="button" class="lnk" data-act="lootall">'+(ui.lootAll?'Mostrar só o estoque':'Mostrar todos os itens')+'</button></div>'
   +'<p class="hint">Aceita 1590, 1.590, 1,5k e 2kk. Em “Tenho (total)” o número substitui o Balance; a diferença conta como drop de hoje.</p>';
@@ -835,8 +835,6 @@ function lootGo(){
     const v=drop?parseQty(x.replace(/^\+/,''),0):parseQty(x,cur);if(v===null){el.classList.add('bad');bad=true;continue;}
     const nv=drop?cur+v:v;if(nv!==cur)ch.push([id,cur,nv]);}
   if(bad){toast('Corrija os valores marcados em vermelho.');return;}
-  const miss=[...document.querySelectorAll('#sheet [data-pas]')].filter(el=>!el.value.trim());
-  if(miss.length){miss.forEach(el=>el.classList.add('bad'));miss[0].focus();toast('Preencha os passivos ('+miss.map(el=>shortNm(el.dataset.loot)).join(' e ')+'), mesmo que seja 0.');return;}
   if(!ch.length){toast('Nada para lançar.');return;}
   const ph=JSON.stringify(S.hist),pu=JSON.stringify(S.upd);
   for(const [id,cur,nv] of ch){setBal(id,nv);logDelta(id,nv-cur);}
@@ -888,7 +886,7 @@ function namesSheet(){
 function namesText(){return 'NOMES DOS ITENS - Talentos Fantasma (para atualizar o projeto)\nid | nome | Pokémon que dropa | usado em\n'+ITEMS.map(it=>it.id+' | '+nm(it.id)+(noName(it.id)?' (provisório)':'')+' | '+(pokeOf(it.id)==='ALL'?'Todos os Fantasma':pokeOf(it.id)||'(a definir)')+' | '+useTxt(it.id)).join('\n');}
 function helpHtml(){return '<div class="shh"><div><b id="shT">Como funciona</b></div>'+closeBtn+'</div><ul class="help">'
 +'<li><b>Balance</b>: quanto você tem agora de cada item. Aceita 2622, +500 (soma), -200 (tira), 10k e 2kk.</li>'
-+'<li><b>Registrar loot</b>: lance o que dropou (soma) ou o total que tem. Os passivos (Ghost Essence e Orb) ficam no topo e são obrigatórios, mesmo que seja 0. Cada lançamento vai para o histórico, que calcula o seu ritmo dos últimos 7 dias e a <b>previsão em dias</b>.</li>'
++'<li><b>Registrar loot</b>: lance o que dropou (soma) ou o total que tem. Os passivos (Ghost Essence e Orb) ficam sempre visíveis; em branco conta como 0. Cada lançamento vai para o histórico, que calcula o seu ritmo dos últimos 7 dias e a <b>previsão em dias</b>.</li>'
 +'<li><b>Entregar</b>: toque no item do talento. A página marca a entrega e desconta do Balance; no aviso há “Não descontar”. Se o Balance não cobre, ela pergunta quanto você tem no jogo. Tocar de novo desmarca e devolve ao Balance.</li>'
 +'<li><b>Tiers em sequência</b>: um tier só libera com o anterior 100% concluído e o pagamento (T2: 50.000.000; T3: 200.000.000; T4: 400.000.000 e nível 550). Em tier travado não dá para entregar; os itens ficam guardados no Balance.</li>'
 +'<li><b>Estocando até</b>: até qual tier você está guardando itens no stash. A falta, o progresso e o Foco contam todos os tiers até ele.</li>'
