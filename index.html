@@ -214,6 +214,8 @@ input.bad{border-color:var(--bad)!important;background:var(--badSoft)!important}
 .lrow{display:grid;grid-template-columns:32px minmax(0,1fr) 128px;gap:10px;align-items:center;padding:6px 8px;border:1px solid var(--line);border-radius:10px}
 .lrow input,.dlin input{border:1.5px solid var(--line2);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 8px;font-size:16px;min-height:40px;width:100%;text-align:right;font-variant-numeric:tabular-nums;font-family:inherit}
 .lrow input.bad,.dlin input.bad{border-color:var(--bad)}
+.lnow .lrow{border:2px solid var(--orange);background:var(--amb);padding:10px}.lnow .lnm b{font-size:16px}.lnow input{font-size:18px;min-height:46px;border-color:var(--orange)}
+.lmore{margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:0 10px}.lmore[open]{padding-bottom:10px}.lmore summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-size:13px;font-weight:600;color:var(--ink2);list-style:none}.lmore summary::before{content:'▸';margin-right:8px;transition:transform .15s}.lmore[open] summary::before{transform:rotate(90deg)}.lmore summary::-webkit-details-marker{display:none}
 .lrow.lreq{border-color:var(--ambLine);background:var(--amb2)}
 .paslist{margin-top:12px;border-top:1px solid var(--ambLine);padding-top:8px}
 .lnm,.onm{display:grid;min-width:0}.lnm b,.onm b{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lnm small,.onm small{font-size:12px;color:var(--mut)}
@@ -814,12 +816,13 @@ function itemSheet(R){
 }
 function lootSheet(R){
   const drop=ui.lootMode!=='total';
-  const all=(ui.lootAll?ITEMS.map(i=>i.id):R.rows.filter(actv).map(r=>r.id)).sort((a,b)=>okey(a)-okey(b)),pas=ITEMS.filter(i=>ordOf(i.id)==='P'&&(ui.lootAll||R.byId[i.id])).map(i=>i.id).sort((a,b)=>okey(a)-okey(b)),ids=all.filter(id=>!pas.includes(id));
+  const all=(ui.lootAll?ITEMS.map(i=>i.id):R.rows.filter(actv).map(r=>r.id)).sort((a,b)=>okey(a)-okey(b)),pas=ITEMS.filter(i=>ordOf(i.id)==='P'&&(ui.lootAll||R.byId[i.id])).map(i=>i.id).sort((a,b)=>okey(a)-okey(b)),ids=all.filter(id=>!pas.includes(id)),cur=R.focus&&ids.includes(R.focus)?R.focus:null,rest=ids.filter(id=>id!==cur);
   const lrow=(id,rq)=>{const b=S.balance[id]||0;return '<label class="lrow'+(rq?' lreq':'')+'">'+ico(id,32)+'<span class="lnm"><b>'+esc(shortNm(id))+'</b><small>'+(dropShort(id)?esc(dropShort(id))+' · ':'')+'tem '+nf(b)+'</small></span><input type="text" inputmode="numeric" enterkeyhint="next" autocomplete="off" data-loot="'+id+'"'+(rq?' data-pas="1"':'')+' data-k="loot-'+id+'" data-bal0="'+b+'" placeholder="'+(drop?'+0':nf(b))+'" aria-label="'+esc(nm(id))+'"'+(rq?' required':'')+'></label>';};
   return '<div class="shh"><div><b id="shT">Registrar loot</b><div class="pk">Preencha só os itens que mudaram. Vai para o Balance e para o histórico da previsão.</div></div>'+closeBtn+'</div>'
   +'<div class="ph" style="margin:0"><span class="seg" role="group" aria-label="Como lançar"><button type="button" data-act="lootmode" data-v="drop" aria-pressed="'+drop+'">Dropei (soma)</button><button type="button" data-act="lootmode" data-v="total" aria-pressed="'+!drop+'">Tenho (total)</button></span></div>'
-  +(pas.length?'<div class="olbl">PASSIVOS · PREENCHA SEMPRE, MESMO QUE SEJA 0</div><div class="lootlist">'+pas.map(id=>lrow(id,true)).join('')+'</div><div class="olbl">ITENS</div>':'')
-  +'<div class="lootlist">'+ids.map(id=>lrow(id,false)).join('')+'</div>'
+  +(cur?'<div class="olbl">FARMANDO AGORA</div><div class="lootlist lnow">'+lrow(cur,false)+'</div>':'')
+  +(pas.length?'<div class="olbl">PASSIVOS · PREENCHA SEMPRE, MESMO QUE SEJA 0</div><div class="lootlist">'+pas.map(id=>lrow(id,true)).join('')+'</div>':'')
+  +(rest.length?(cur?'<details class="lmore"'+(ui.lootMore?' open':'')+'><summary>Próximos e outros itens ('+rest.length+')</summary>':'<div class="olbl">ITENS</div>')+'<div class="lootlist">'+rest.map(id=>lrow(id,false)).join('')+'</div>'+(cur?'</details>':''):'')
   +'<div class="fact"><button type="button" class="btn pri" data-act="lootgo"'+(ro()?' disabled':'')+'>Lançar</button><button type="button" class="lnk" data-act="lootall">'+(ui.lootAll?'Mostrar só o estoque':'Mostrar todos os itens')+'</button></div>'
   +'<p class="hint">Aceita 1590, 1.590, 1,5k e 2kk. Em “Tenho (total)” o número substitui o Balance; a diferença conta como drop de hoje.</p>';
 }
@@ -1112,7 +1115,7 @@ document.addEventListener('click',e=>{
     case 'tierall':tierAll(+el.dataset.t);break;
     case 'unl':toggleUnl(+el.dataset.t);break;
     case 'add':if(!ro()){const id=el.dataset.item,cur=S.balance[id]||0;setBal(id,cur+Number(el.dataset.v));logDelta(id,(S.balance[id]||0)-cur);commit();}break;
-    case 'loot':if(ro())return;ui.sheet={type:'loot'};$('sheet').dataset.type='';render();setTimeout(()=>{if(isDesk()){const x=document.querySelector('#sheet [data-loot]');if(x)x.focus();}},0);break;
+    case 'loot':if(ro())return;ui.sheet={type:'loot'};ui.lootMore=false;$('sheet').dataset.type='';render();setTimeout(()=>{if(isDesk()){const x=document.querySelector('#sheet .lnow [data-loot]')||document.querySelector('#sheet [data-loot]');if(x)x.focus();}},0);break;
     case 'lootmode':{ui.lootMode=el.dataset.v;const dr=ui.lootMode!=='total';document.querySelectorAll('#sheet [data-act=lootmode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===ui.lootMode)));document.querySelectorAll('#sheet [data-loot]').forEach(x=>{x.placeholder=dr?'+0':nf(Number(x.dataset.bal0)||0);});break;}
     case 'lootall':{const v=lootVals();ui.lootAll=!ui.lootAll;rerenderSheet(()=>{for(const k in v){const x=document.querySelector('#sheet [data-loot="'+k+'"]');if(x)x.value=v[k];}});break;}
     case 'lootgo':lootGo();break;
@@ -1204,6 +1207,7 @@ document.addEventListener('pointermove',e=>{
 },{passive:false});
 document.addEventListener('pointerup',e=>{if(drag&&e.pointerId===drag.pid){if(drag.on)finishDrag(true);else drag=null;}});
 document.addEventListener('pointercancel',e=>{if(drag&&e.pointerId===drag.pid){if(drag.on)finishDrag(false);else drag=null;}});
+document.addEventListener('toggle',e=>{if(e.target.matches&&e.target.matches('#sheet .lmore'))ui.lootMore=e.target.open;},true);
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){if(drag&&drag.on){cancelDrag();return;}$('menu').hidden=true;if(ui.sheet)closeSheet();return;}
   if(e.altKey&&/^Arrow/.test(e.key)&&e.target.matches&&e.target.matches('.sq[data-item]')&&!ro()){e.preventDefault();ordMove(e.target.dataset.item,/Left|Up/.test(e.key)?-1:1);commit();return;}
